@@ -1,4 +1,4 @@
-# textlint-rule-preset-google [![Build Status](https://travis-ci.org/textlint-rule/textlint-rule-preset-google.svg?branch=master)](https://travis-ci.org/textlint-rule/textlint-rule-preset-google)
+# textlint-rule-preset-google [![CI](https://github.com/robhanlon22/textlint-rule-preset-google/actions/workflows/ci.yml/badge.svg)](https://github.com/robhanlon22/textlint-rule-preset-google/actions/workflows/ci.yml)
 
 [Google Developer Documentation Style Guide](https://developers.google.com/style/) for [textlint](https://github.com/textlint/textlint "textlint").
 
@@ -107,9 +107,9 @@ textlint --rule preset-google README.md
   - [x] In general, the first word in the text that follows a colon should be in lowercase.
 - [Commas](https://developers.google.com/style/commas)
   - [x] Serial commas
-  - [ ] Commas after introductory words and phrases
-  - [ ] Commas separating two independent clauses
-  - [ ] Commas separating independent from dependent clauses
+  - [x] Commas after introductory words and phrases
+  - [x] Commas separating two independent clauses
+  - [x] Commas separating independent from dependent clauses
   - [x] Setting off other kinds of clauses
 - [Dashes](https://developers.google.com/style/dashes)
   - :heavy_check_mark: `textlint-rule-google-dashes`
@@ -120,7 +120,7 @@ textlint --rule preset-google README.md
   - [x] Use quoted text
   - [x] Punctuation and spacing
 - [Exclamation points](https://developers.google.com/style/exclamation-points)
-  - :heavy_check_mark: `textlint-rule-google-possessives`
+  - :heavy_check_mark: `textlint-rule-google-exclamation-points`
   - [x] Don't use `!` and `?`
 - [Hyphens](https://developers.google.com/style/hyphens)
   - :heavy_check_mark: `textlint-rule-google-hyphens`
@@ -146,7 +146,7 @@ textlint --rule preset-google README.md
 - [Slashes](https://developers.google.com/style/slashes)
   - :heavy_check_mark: `textlint-rule-google-slashes`
   - [ ] Slashes with dates
-  - [ ] Slashes with file paths and URLs
+  - [x] Slashes with file paths and URLs
   - [x] Slashes with alternatives
   - [x] Slashes with fractions
   - [x] Slashes with abbreviations
