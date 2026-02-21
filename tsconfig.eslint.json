@@ -7,7 +7,10 @@
     "rootDir": ".",
     "baseUrl": ".",
     "paths": {
-      "textlint-tester": ["packages/types/textlint-tester-shim.d.ts"]
+      "textlint-tester": ["packages/types/textlint-tester-shim.d.ts"],
+      "@textlint-rule/textlint-report-helper-for-google-preset": [
+        "packages/textlint-report-helper-for-google-preset/src/textlint-report-helper-for-google-preset.ts"
+      ]
     }
   },
   "include": ["packages/**/*.ts", "tools/**/*.ts", "vitest.config.ts"],

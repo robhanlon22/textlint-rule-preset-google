@@ -3,7 +3,7 @@ import {
   matchTestReplace,
   type TestMatchReplaceReturnDict,
 } from "match-test-replace";
-import type { ASTNodeTypes, TxtNode } from "@textlint/ast-node-types";
+import type { TextlintRuleContext } from "@textlint/types";
 import textlintRuleHelper from "textlint-rule-helper";
 import StringSourceModule from "textlint-util-to-string";
 
@@ -13,7 +13,7 @@ interface StringSourceLike {
   toString(): string;
   originalIndexFromIndex(index: number): number;
 }
-type StringSourceConstructor = new (node: TxtNode) => StringSourceLike;
+type StringSourceConstructor = new (node: GoogleRuleNode) => StringSourceLike;
 const StringSourceValue = StringSourceModule as unknown as
   | { StringSource?: StringSourceConstructor }
   | StringSourceConstructor;
@@ -41,22 +41,22 @@ export {
 } from "./en-pos-util.js";
 
 export const shouldIgnoreNodeOfStrNode = (
-  node: TxtNode,
+  node: GoogleRuleNode,
   context: GoogleRuleContext,
 ): boolean => {
-  const helper = new RuleHelper(context);
+  const helper = new RuleHelper(
+    context as unknown as Readonly<TextlintRuleContext>,
+  );
   const { Syntax } = context;
-  return helper.isChildNode(node, [
-    Syntax.Link,
-    Syntax.Image,
-    Syntax.BlockQuote,
-    Syntax.Emphasis,
-  ]);
+  return helper.isChildNode(
+    node as unknown as Parameters<typeof helper.isChildNode>[0],
+    [Syntax.Link, Syntax.Image, Syntax.BlockQuote, Syntax.Emphasis],
+  );
 };
 
 export interface StrReporterArgs {
-  node: TxtNode;
-  dictionaries: TestMatchReplaceReturnDict[];
+  node: GoogleRuleNode;
+  dictionaries: MatchReplaceDictionary[];
   report: ReportFunction;
   RuleError: RuleErrorCtor;
   fixer: RuleFixer;
@@ -73,7 +73,10 @@ export const strReporter = ({
 }: StrReporterArgs): void => {
   const text = getSource(node);
   dictionaries.forEach((dict) => {
-    const matchTestReplaceReturn = matchTestReplace(text, dict);
+    const matchTestReplaceReturn = matchTestReplace(
+      text,
+      dict as TestMatchReplaceReturnDict,
+    );
     if (!matchTestReplaceReturn.ok) {
       return;
     }
@@ -103,9 +106,9 @@ export const strReporter = ({
 };
 
 export interface ParagraphReporterArgs {
-  Syntax: typeof ASTNodeTypes;
-  node: TxtNode;
-  dictionaries: TestMatchReplaceReturnDict[];
+  Syntax: GoogleRuleContext["Syntax"];
+  node: GoogleRuleNode;
+  dictionaries: MatchReplaceDictionary[];
   report: ReportFunction;
   RuleError: RuleErrorCtor;
   fixer: RuleFixer;
@@ -127,14 +130,23 @@ export const paragraphReporter = ({
   const ignoreNodeManager = new IgnoreNodeManager();
   // Ignore following pattern
   // Paragraph > Link Code Html ...
-  ignoreNodeManager.ignoreChildrenByTypes(node, [
+  const ignoredNodeTypes = [
     Syntax.Code,
     Syntax.Link,
     Syntax.BlockQuote,
     Syntax.Html,
-  ]);
+  ] as Parameters<typeof ignoreNodeManager.ignoreChildrenByTypes>[1];
+  ignoreNodeManager.ignoreChildrenByTypes(
+    node as unknown as Parameters<
+      typeof ignoreNodeManager.ignoreChildrenByTypes
+    >[0],
+    ignoredNodeTypes,
+  );
   dictionaries.forEach((dict) => {
-    const matchTestReplaceReturn = matchTestReplace(text, dict);
+    const matchTestReplaceReturn = matchTestReplace(
+      text,
+      dict as TestMatchReplaceReturnDict,
+    );
     if (!matchTestReplaceReturn.ok) {
       return;
     }

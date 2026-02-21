@@ -4,13 +4,24 @@ import {
   getPos,
   PosType,
 } from "@textlint-rule/textlint-report-helper-for-google-preset";
+import type { TextlintRuleContext } from "@textlint/types";
 import textlintRuleHelper from "textlint-rule-helper";
 
 const { RuleHelper } = textlintRuleHelper;
 const DocumentURL = "https://developers.google.com/style/dashes";
 
 const report: GoogleRuleReporter = (context) => {
-  const { Syntax, RuleError, getSource, fixer, report } = context;
+  const Syntax = context.Syntax;
+  const RuleError = context.RuleError;
+  const fixer = context.fixer;
+  const getSource: GoogleRuleContext["getSource"] = (
+    node,
+    beforeCount,
+    afterCount,
+  ) => context.getSource(node, beforeCount, afterCount);
+  const reportError: GoogleRuleContext["report"] = (node, error) => {
+    context.report(node, error);
+  };
   // Notes: the order is important when Apply fixes
   const dictionaries: MatchReplaceDictionary[] = [
     {
@@ -75,16 +86,16 @@ const report: GoogleRuleReporter = (context) => {
     },
   ];
 
-  const helper = new RuleHelper(context);
+  const helper = new RuleHelper(
+    context as unknown as Readonly<TextlintRuleContext>,
+  );
   return {
     [Syntax.Str](node) {
       if (
-        helper.isChildNode(node, [
-          Syntax.Link,
-          Syntax.Image,
-          Syntax.BlockQuote,
-          Syntax.Emphasis,
-        ])
+        helper.isChildNode(
+          node as unknown as Parameters<typeof helper.isChildNode>[0],
+          [Syntax.Link, Syntax.Image, Syntax.BlockQuote, Syntax.Emphasis],
+        )
       ) {
         return;
       }
@@ -94,7 +105,7 @@ const report: GoogleRuleReporter = (context) => {
       strReporter({
         node,
         dictionaries,
-        report,
+        report: reportError,
         getSource,
         RuleError,
         fixer,

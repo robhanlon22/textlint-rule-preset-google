@@ -28,7 +28,9 @@ const defaultOptions: ExclamationOptions = {
 };
 
 const linter: GoogleRuleReporter = (context, options = defaultOptions) => {
-  const { report: baseReport } = context;
+  const baseReport: GoogleRuleContext["report"] = (node, error) => {
+    context.report(node, error);
+  };
   const overlayContext = Object.create(context) as GoogleRuleContext;
   Object.defineProperty(overlayContext, "report", {
     value(
@@ -45,7 +47,10 @@ const linter: GoogleRuleReporter = (context, options = defaultOptions) => {
     writable: true,
   });
 
-  return noExclamationQuestionMarkReporter(overlayContext, options);
+  return noExclamationQuestionMarkReporter(
+    overlayContext,
+    options as ExclamationOptions | undefined,
+  );
 };
 
 export default linter;

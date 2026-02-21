@@ -5,8 +5,22 @@ import {
 } from "@textlint-rule/textlint-report-helper-for-google-preset";
 
 const DocumentURL = "https://developers.google.com/style/possessives";
+export const defaultMessage =
+  'To form a possessive of a singular noun (regardless of whether it ends in s) or a plural noun that doesn\'t end in "s", add "\'s" to the end of the word' +
+  "\n" +
+  DocumentURL;
 const report: GoogleRuleReporter = (context) => {
-  const { Syntax, RuleError, getSource, fixer, report } = context;
+  const Syntax = context.Syntax;
+  const RuleError = context.RuleError;
+  const fixer = context.fixer;
+  const getSource: GoogleRuleContext["getSource"] = (
+    node,
+    beforeCount,
+    afterCount,
+  ) => context.getSource(node, beforeCount, afterCount);
+  const reportError: GoogleRuleContext["report"] = (node, error) => {
+    context.report(node, error);
+  };
   const dictionaries: MatchReplaceDictionary[] = [
     // NG: plural word + 's
     {
@@ -19,10 +33,7 @@ const report: GoogleRuleReporter = (context) => {
         // Plural word
         return wordPos === "NNS" && isEndedS;
       },
-      message: () =>
-        'A plural noun that does end in "s", add an apostrophe(\') but no additional "s" or use "of"' +
-        "\n" +
-        DocumentURL,
+      message: () => defaultMessage,
     },
     // NG: singular noun + '
     {
@@ -47,10 +58,7 @@ const report: GoogleRuleReporter = (context) => {
         // singular noun(singular noun or Proper noun)
         return wordPos === "NNP" || wordPos === "NN";
       },
-      message: () =>
-        'To form a possessive of a singular noun (regardless of whether it ends in s) or a plural noun that doesn\'t end in "s", add "\'s" to the end of the word' +
-        "\n" +
-        DocumentURL,
+      message: () => defaultMessage,
     },
   ];
 
@@ -60,7 +68,7 @@ const report: GoogleRuleReporter = (context) => {
         Syntax,
         node,
         dictionaries,
-        report,
+        report: reportError,
         getSource,
         RuleError,
         fixer,

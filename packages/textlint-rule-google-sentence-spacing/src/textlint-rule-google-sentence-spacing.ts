@@ -2,7 +2,7 @@
 
 import textlintRuleHelper from "textlint-rule-helper";
 import StringSourceModule from "textlint-util-to-string";
-import type { TxtNode } from "@textlint/ast-node-types";
+import type { TextlintRuleContext } from "@textlint/types";
 
 const { RuleHelper, IgnoreNodeManager } = textlintRuleHelper;
 const DocumentURL = "https://developers.google.com/style/sentence-spacing";
@@ -11,7 +11,7 @@ interface StringSourceLike {
   toString(): string;
   originalIndexFromIndex(index: number): number;
 }
-type StringSourceConstructor = new (node: TxtNode) => StringSourceLike;
+type StringSourceConstructor = new (node: GoogleRuleNode) => StringSourceLike;
 const StringSourceValue = StringSourceModule as unknown as
   | { StringSource?: StringSourceConstructor }
   | StringSourceConstructor;
@@ -32,28 +32,40 @@ interface SentenceSpacing {
 }
 
 const report: GoogleRuleReporter = (context) => {
-  const { Syntax, RuleError, fixer, report } = context;
-  const helper = new RuleHelper(context);
+  const Syntax = context.Syntax;
+  const RuleError = context.RuleError;
+  const fixer = context.fixer;
+  const reportError: GoogleRuleContext["report"] = (node, error) => {
+    context.report(node, error);
+  };
+  const helper = new RuleHelper(
+    context as unknown as Readonly<TextlintRuleContext>,
+  );
   // Ignore following pattern
   // Paragraph > Link Code Html ...
   return {
     [Syntax.Paragraph](node) {
       if (
-        helper.isChildNode(node, [
-          Syntax.Image,
-          Syntax.BlockQuote,
-          Syntax.Emphasis,
-        ])
+        helper.isChildNode(
+          node as unknown as Parameters<typeof helper.isChildNode>[0],
+          [Syntax.Image, Syntax.BlockQuote, Syntax.Emphasis],
+        )
       ) {
         return;
       }
       const ignoreNodeManager = new IgnoreNodeManager();
-      ignoreNodeManager.ignoreChildrenByTypes(node, [
+      const ignoredNodeTypes = [
         Syntax.Code,
         Syntax.Link,
         Syntax.BlockQuote,
         Syntax.Html,
-      ]);
+      ] as Parameters<typeof ignoreNodeManager.ignoreChildrenByTypes>[1];
+      ignoreNodeManager.ignoreChildrenByTypes(
+        node as unknown as Parameters<
+          typeof ignoreNodeManager.ignoreChildrenByTypes
+        >[0],
+        ignoredNodeTypes,
+      );
       const source = new TypedStringSource(node);
       const sourceText = source.toString();
       const spaces: SentenceSpacing[] = [];
@@ -80,7 +92,7 @@ const report: GoogleRuleReporter = (context) => {
           }
           const message = `Leave only one space between sentences. Number of space: ${String(space.indent)}
 ${DocumentURL}`;
-          report(
+          reportError(
             node,
             new RuleError(message, {
               index: originalIndex,

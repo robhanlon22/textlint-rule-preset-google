@@ -55,7 +55,9 @@ https://developers.google.com/style/colons#bold-text-preceding-colon
       new RuleError(message, {
         index: strNodeOfBoldNode.range[0] - node.range[0],
         fix: fixer.replaceText(
-          strNodeOfBoldNode,
+          strNodeOfBoldNode as Parameters<
+            GoogleRuleContext["fixer"]["replaceText"]
+          >[0],
           `${getSource(strNodeOfBoldNode)}:`,
         ),
       }),

@@ -1,35 +1,71 @@
-import type {
-  TxtNode,
-  TxtNodeType,
-  TxtNodePosition,
-} from "@textlint/ast-node-types";
-import type {
-  TextlintRuleModule,
-  TextlintRuleReporter,
-} from "@textlint/kernel";
-
 declare global {
-  type GoogleRuleContext = Parameters<TextlintRuleReporter>[0];
-  type GoogleRuleReporter = TextlintRuleReporter;
-  type GoogleRuleModule = TextlintRuleModule;
-  type MatchReplaceDictionary =
-    import("match-test-replace").TestMatchReplaceReturnDict;
+  interface GoogleRuleNode {
+    type?: string;
+    raw?: string;
+    value?: string;
+    range: readonly [number, number] | [number, number];
+    children?: GoogleRuleNode[];
+    parent?: GoogleRuleNode;
+    [key: string]: unknown;
+  }
+
+  type GoogleRuleContext = Omit<
+    import("@textlint/types").TextlintRuleContext,
+    "Syntax" | "report" | "getSource"
+  > & {
+    Syntax: Record<string, string>;
+    report(node: GoogleRuleNode, error: unknown): void;
+    getSource(
+      node?: GoogleRuleNode,
+      beforeCount?: number,
+      afterCount?: number,
+    ): string;
+    [key: string]: unknown;
+  };
+
+  type GoogleRuleListener = (node: GoogleRuleNode) => void | Promise<void>;
+
+  type GoogleRuleReporter = (
+    context: GoogleRuleContext,
+    options?: unknown,
+  ) => Record<string, GoogleRuleListener | undefined>;
+
+  type GoogleRuleModule =
+    | GoogleRuleReporter
+    | {
+        linter: GoogleRuleReporter;
+        fixer: GoogleRuleReporter;
+      };
+
+  interface MatchReplaceDictionaryArgs {
+    index: number;
+    match: string;
+    captures: string[];
+    all: string;
+  }
+
+  interface MatchReplaceDictionary {
+    pattern: RegExp;
+    test?: (args: MatchReplaceDictionaryArgs) => boolean;
+    replace?: (args: MatchReplaceDictionaryArgs) => string | undefined;
+    message?: (args: MatchReplaceDictionaryArgs) => string;
+  }
 }
 
 declare module "textlint-rule-helper" {
   interface RuleHelperInstance {
-    getParents(node: TxtNode): TxtNode[];
-    isChildNode(node: TxtNode, types: TxtNodeType[]): boolean;
+    getParents(node: GoogleRuleNode): GoogleRuleNode[];
+    isChildNode(node: GoogleRuleNode, types: string[]): boolean;
   }
 
   interface IgnoreNodeManagerInstance {
     isIgnoredIndex(index: number): boolean;
     isIgnoredRange(range: [number, number]): boolean;
     isIgnored(node: { index: number }): boolean;
-    ignore(node: TxtNode): void;
+    ignore(node: GoogleRuleNode): void;
     ignoreRange(range: [number, number]): void;
     ignoreChildrenByTypes(
-      targetNode: TxtNode,
+      targetNode: GoogleRuleNode,
       ignoredNodeTypes: string[],
     ): void;
   }
@@ -45,21 +81,21 @@ declare module "textlint-rule-helper" {
 
 declare module "textlint-util-to-string" {
   class StringSource {
-    constructor(node: TxtNode);
+    constructor(node: GoogleRuleNode);
     toString(): string;
     originalIndexFromIndex(generatedIndex: number, isEnd?: boolean): number;
     originalPositionFromPosition(
-      position: TxtNodePosition,
+      position: { line: number; column: number },
       isEnd?: boolean,
-    ): TxtNodePosition;
+    ): { line: number; column: number };
     originalIndexFromPosition(
-      generatedPosition: TxtNodePosition,
+      generatedPosition: { line: number; column: number },
       isEnd?: boolean,
     ): number;
     originalPositionFromIndex(
       generatedIndex: number,
       isEnd?: boolean,
-    ): TxtNodePosition;
+    ): { line: number; column: number };
   }
 
   export { StringSource };
