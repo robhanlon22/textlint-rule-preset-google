@@ -1,5 +1,4 @@
 // MIT © 2017 azu
-"use strict";
 import { paragraphReporter } from "@textlint-rule/textlint-report-helper-for-google-preset";
 
 const REPLACE_ABBR_DICT = {
@@ -66,7 +65,9 @@ https://developers.google.com/style/slashes#slashes-with-abbreviations
         },
     };
 };
-module.exports = {
+const rule = {
     linter: report,
     fixer: report,
 };
+
+export default rule;

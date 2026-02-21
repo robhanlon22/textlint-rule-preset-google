@@ -1,5 +1,4 @@
 // MIT © 2017 azu
-"use strict";
 import TextLintTester from "textlint-tester";
 import rule from "../src/textlint-rule-google-plurals-parentheses";
 const tester = new TextLintTester();

@@ -13,7 +13,7 @@
     "name": "@textlint-rule/textlint-rule-google-capitalization",
     "version": "0.1.2",
     "description": "Reference: https://developers.google.com/style/capitalization",
-    "main": "lib/textlint-rule-google-capitalization.js",
+    "main": "./lib/textlint-rule-google-capitalization.js",
     "dependencies": {
         "textlint-rule-en-capitalization": "^2.0.3"
     },
@@ -44,5 +44,8 @@
     },
     "publishConfig": {
         "access": "public"
-    }
+    },
+    "type": "module",
+    "exports": "./lib/textlint-rule-google-capitalization.js",
+    "types": "./lib/textlint-rule-google-capitalization.d.ts"
 }

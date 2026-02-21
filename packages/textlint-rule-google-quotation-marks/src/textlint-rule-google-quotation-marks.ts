@@ -1,5 +1,4 @@
 // MIT © 2017 azu
-"use strict";
 import {
     paragraphReporter,
     getPosFromSingleWord,
@@ -58,7 +57,9 @@ In the latter case, put the primary speaker's quote in double quotation marks an
         },
     };
 };
-module.exports = {
+const rule = {
     linter: report,
     fixer: report,
 };
+
+export default rule;

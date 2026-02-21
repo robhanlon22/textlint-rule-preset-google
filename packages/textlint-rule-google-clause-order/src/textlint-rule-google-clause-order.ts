@@ -1,5 +1,4 @@
 // MIT © 2017 azu
-"use strict";
 import { paragraphReporter, getPos } from "@textlint-rule/textlint-report-helper-for-google-preset";
 
 // https://developers.google.com/style/clause-order
@@ -42,7 +41,9 @@ const report = (context) => {
         },
     };
 };
-module.exports = {
+const rule = {
     linter: report,
     fixer: report,
 };
+
+export default rule;

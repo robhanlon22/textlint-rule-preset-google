@@ -13,7 +13,7 @@
     "name": "@textlint-rule/textlint-rule-google-tone",
     "version": "0.1.2",
     "description": "Google Developer Documentation Style Guide:  Style and authorial tone ",
-    "main": "lib/textlint-rule-google-tone.js",
+    "main": "./lib/textlint-rule-google-tone.js",
     "scripts": {
         "test": "vitest run --config ../../vitest.config.ts --dir .",
         "prettier": "prettier --write '**/*.{js,jsx,ts,tsx,css}'",
@@ -50,5 +50,8 @@
     },
     "publishConfig": {
         "access": "public"
-    }
+    },
+    "type": "module",
+    "exports": "./lib/textlint-rule-google-tone.js",
+    "types": "./lib/textlint-rule-google-tone.d.ts"
 }

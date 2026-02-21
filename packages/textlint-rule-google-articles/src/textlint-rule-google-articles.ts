@@ -1,5 +1,4 @@
 // MIT © 2017 azu
-"use strict";
 import { shouldIgnoreNodeOfStrNode, strReporter } from "@textlint-rule/textlint-report-helper-for-google-preset";
 import { classifyArticle } from "english-article-classifier";
 
@@ -63,7 +62,9 @@ const report = (context, options = {}) => {
         },
     };
 };
-module.exports = {
+const rule = {
     linter: report,
     fixer: report,
 };
+
+export default rule;

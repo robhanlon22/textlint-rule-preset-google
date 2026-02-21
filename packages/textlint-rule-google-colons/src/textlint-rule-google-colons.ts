@@ -1,11 +1,10 @@
 // MIT © 2017 azu
-"use strict";
 import {
     paragraphReporter,
     getPosFromSingleWord,
     PosType,
 } from "@textlint-rule/textlint-report-helper-for-google-preset";
-import { checkBoldTextPrecedingColon } from "./checkBoldTextPrecedingColon";
+import { checkBoldTextPrecedingColon } from "./checkBoldTextPrecedingColon.js";
 
 const DocumentURL = "https://developers.google.com/style/colons";
 //  Helping Verbs
@@ -88,7 +87,9 @@ https://developers.google.com/style/colons#colons-within-sentences
         },
     };
 };
-module.exports = {
+const rule = {
     linter: report,
     fixer: report,
 };
+
+export default rule;

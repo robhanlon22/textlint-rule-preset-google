@@ -1,8 +1,8 @@
 // MIT © 2017 azu
-"use strict";
 import { strReporter, getPos, PosType } from "@textlint-rule/textlint-report-helper-for-google-preset";
+import textlintRuleHelper from "textlint-rule-helper";
 
-const { RuleHelper } = require("textlint-rule-helper");
+const { RuleHelper } = textlintRuleHelper as any;
 const DocumentURL = "https://developers.google.com/style/dashes";
 const report = (context) => {
     const { Syntax, RuleError, getSource, fixer, report } = context;
@@ -88,7 +88,9 @@ const report = (context) => {
         },
     };
 };
-module.exports = {
+const rule = {
     linter: report,
     fixer: report,
 };
+
+export default rule;

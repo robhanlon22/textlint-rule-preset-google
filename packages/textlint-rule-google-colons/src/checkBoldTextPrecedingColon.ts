@@ -1,5 +1,4 @@
 // MIT © 2017 azu
-"use strict";
 export const checkBoldTextPrecedingColon = ({ node, Syntax, RuleError, getSource, fixer, report }) => {
     const children = node.children;
     if (!children) {

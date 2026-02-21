@@ -1,6 +1,5 @@
 // MIT © 2017 azu
-"use strict";
-const noExclamationQuestionMark = require("textlint-rule-no-exclamation-question-mark");
+import noExclamationQuestionMark from "textlint-rule-no-exclamation-question-mark";
 const defaultOptions = {
     // allow to use !
     allowHalfWidthExclamation: false,
@@ -25,4 +24,4 @@ const linter = (context, options = defaultOptions) => {
     });
     return noExclamationQuestionMark(overlayContext, options);
 };
-module.exports = linter;
+export default linter;

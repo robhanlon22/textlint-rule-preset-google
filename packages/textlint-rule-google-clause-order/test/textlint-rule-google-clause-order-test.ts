@@ -1,9 +1,7 @@
 import TextLintTester from "textlint-tester";
 const tester = new TextLintTester();
 // rule
-import * as clauseOrderModule from "../src/textlint-rule-google-clause-order";
-const rule = (clauseOrderModule as any).default ?? (clauseOrderModule as any);
-const defaultMessage = (clauseOrderModule as any).defaultMessage;
+import rule, { defaultMessage } from "../src/textlint-rule-google-clause-order";
 tester.run("textlint-rule-google-clause-order", rule, {
     valid: [
         "Say you want to tell the audience to do something in a particular circumstance. If possible, mention the circumstance before you provide the instruction; that way, the reader can skip the instruction if the circumstance doesn't apply.",

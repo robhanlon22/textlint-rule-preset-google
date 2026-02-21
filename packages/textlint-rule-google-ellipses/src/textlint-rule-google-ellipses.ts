@@ -1,5 +1,4 @@
 // MIT © 2017 azu
-"use strict";
 import { paragraphReporter, getPosFromSingleWord } from "@textlint-rule/textlint-report-helper-for-google-preset";
 
 const DocumentURL = "https://developers.google.com/style/ellipses";
@@ -57,7 +56,9 @@ const report = (context) => {
         },
     };
 };
-module.exports = {
+const rule = {
     linter: report,
     fixer: report,
 };
+
+export default rule;

@@ -1,13 +1,15 @@
 // MIT © 2017 azu
-"use strict";
-const fs = require("fs");
-const path = require("path");
+import fs from "node:fs";
+import path from "node:path";
+import { fileURLToPath } from "node:url";
+
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const packagesDirectory = path.join(__dirname, "../../packages");
-module.exports.getPackages = (blacklistModules = []) => {
+
+export const getPackages = (blacklistModules: string[] = []) => {
     return fs
         .readdirSync(packagesDirectory)
         .filter((pkgName) => !blacklistModules.includes(pkgName))
         .sort()
         .map((pkgName) => path.resolve(packagesDirectory, pkgName));
 };
-export {};

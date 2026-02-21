@@ -1,8 +1,10 @@
 // MIT © 2017 azu
-"use strict";
-const fs = require("fs");
-const path = require("path");
-const getPackages = require("./lib/package-list").getPackages;
+import fs from "node:fs";
+import path from "node:path";
+import { fileURLToPath } from "node:url";
+import { getPackages } from "./lib/package-list.js";
+
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const blacklistModules = ["textlint-report-helper-for-google-preset", "textlint-rule-preset-google"];
 const updatePackageDepencencies = (pkg, dependencies) => {
     const updatedDependencies = Object.assign({}, pkg.dependencies, dependencies);
@@ -40,26 +42,34 @@ const createRuleDependencies = (packageNames, version) => {
  * @param packageNames
  */
 const createRuleAndConfig = (packageNames) => {
-    const rules = {};
-    const rulesConfig = {};
+    const imports = [];
+    const ruleEntries = [];
+    const rulesConfigEntries = [];
+    const toIdentifier = (value: string) => value.replace(/-([a-z])/g, (_, char) => char.toUpperCase());
     packageNames.forEach((packageName) => {
         const shortName = packageName.replace("@textlint-rule/textlint-rule-google-", "");
-        rules[shortName] = `require("${packageName}")`;
-        rulesConfig[shortName] = true;
+        const identifier = toIdentifier(shortName);
+        imports.push(`import ${identifier} from "${packageName}";`);
+        ruleEntries.push(`        "${shortName}": ${identifier}`);
+        rulesConfigEntries.push(`        "${shortName}": true`);
     });
-    return `// prettier-ignore
-module.exports = ${JSON.stringify(
-        {
-            rules,
-            rulesConfig,
-        },
-        null,
-        4,
-    )};
-`.replace(/"require\(\\"(.*)\\"\)"/g, `require("$1")`);
+    return `${imports.join("\n")}
+
+// prettier-ignore
+const rule = {
+    "rules": {
+${ruleEntries.join(",\n")}
+    },
+    "rulesConfig": {
+${rulesConfigEntries.join(",\n")}
+    }
 };
 
-const monorepoVersion = require("../package.json").version;
+export default rule;
+`;
+};
+
+const monorepoVersion = JSON.parse(fs.readFileSync(path.join(__dirname, "../package.json"), "utf-8")).version as string;
 const packagesDirectory = path.join(__dirname, "../packages");
 // each package version fixed
 
@@ -78,7 +88,7 @@ getPackages().forEach((packageDirectory) => {
 // package.json
 console.info("Start to update package.json");
 const rulePresetPkgPath = path.join(packagesDirectory, "textlint-rule-preset-google/package.json");
-const rulePresetPkg = require(rulePresetPkgPath);
+const rulePresetPkg = JSON.parse(fs.readFileSync(rulePresetPkgPath, "utf-8"));
 const ruleDependencies = createRuleDependencies(packageNames, monorepoVersion);
 const newRulePresetPkg = updatePackageDepencencies(rulePresetPkg, ruleDependencies);
 fs.writeFileSync(rulePresetPkgPath, JSON.stringify(newRulePresetPkg, null, 2), "utf-8");
@@ -89,4 +99,3 @@ const srcPath = path.join(packagesDirectory, "textlint-rule-preset-google/src/te
 const srcContent = createRuleAndConfig(packageNames);
 fs.writeFileSync(srcPath, srcContent, "utf-8");
 console.info("Updated package.json");
-export {};

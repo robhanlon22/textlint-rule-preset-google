@@ -1,12 +1,13 @@
 // MIT © 2017 azu
 import { matchTestReplace, TestMatchReplaceReturnDict } from "match-test-replace";
 import { ASTNodeTypes } from "@textlint/ast-node-types";
+import textlintRuleHelper from "textlint-rule-helper";
+import StringSourceModule from "textlint-util-to-string";
 
-const { RuleHelper, IgnoreNodeManager } = require("textlint-rule-helper");
-const StringSourceModule = require("textlint-util-to-string");
-const StringSource = StringSourceModule.StringSource || StringSourceModule;
+const { RuleHelper, IgnoreNodeManager } = textlintRuleHelper as any;
+const StringSource = (StringSourceModule as any).StringSource || StringSourceModule;
 
-export { getPos, getPosFromSingleWord, PosType, isSameGroupPosType } from "./en-pos-util";
+export { getPos, getPosFromSingleWord, PosType, isSameGroupPosType } from "./en-pos-util.js";
 // str
 export const shouldIgnoreNodeOfStrNode = (node: any, context: any) => {
     const helper = new RuleHelper(context);

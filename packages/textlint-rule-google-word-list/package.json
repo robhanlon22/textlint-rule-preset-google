@@ -13,7 +13,7 @@
     "name": "@textlint-rule/textlint-rule-google-word-list",
     "version": "0.1.2",
     "description": "See https://developers.google.com/style/word-list",
-    "main": "lib/textlint-rule-google-word-list.js",
+    "main": "./lib/textlint-rule-google-word-list.js",
     "dependencies": {
         "@textlint-rule/textlint-report-helper-for-google-preset": "^0.1.2"
     },
@@ -46,5 +46,8 @@
     },
     "publishConfig": {
         "access": "public"
-    }
+    },
+    "type": "module",
+    "exports": "./lib/textlint-rule-google-word-list.js",
+    "types": "./lib/textlint-rule-google-word-list.d.ts"
 }

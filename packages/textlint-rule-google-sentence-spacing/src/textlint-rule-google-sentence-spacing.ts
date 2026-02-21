@@ -1,9 +1,10 @@
 // MIT © 2017 azu
-"use strict";
 
-const { RuleHelper, IgnoreNodeManager } = require("textlint-rule-helper");
-const StringSourceModule = require("textlint-util-to-string");
-const StringSource = StringSourceModule.StringSource || StringSourceModule;
+import textlintRuleHelper from "textlint-rule-helper";
+import StringSourceModule from "textlint-util-to-string";
+
+const { RuleHelper, IgnoreNodeManager } = textlintRuleHelper as any;
+const StringSource = (StringSourceModule as any).StringSource || StringSourceModule;
 const DocumentURL = "https://developers.google.com/style/sentence-spacing";
 const report = (context) => {
     const { Syntax, RuleError, fixer, report } = context;
@@ -54,7 +55,9 @@ ${DocumentURL}`;
         },
     };
 };
-module.exports = {
+const rule = {
     linter: report,
     fixer: report,
 };
+
+export default rule;

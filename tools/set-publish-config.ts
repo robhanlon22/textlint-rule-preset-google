@@ -1,8 +1,7 @@
 // MIT © 2017 azu
-"use strict";
-const fs = require("fs");
-const path = require("path");
-const getPackages = require("./lib/package-list").getPackages;
+import fs from "node:fs";
+import path from "node:path";
+import { getPackages } from "./lib/package-list.js";
 const updatePackage = (pkg, updatablePkg) => {
     return Object.assign({}, pkg, updatablePkg);
 };
@@ -27,4 +26,3 @@ getPackages().forEach((packageDirectory) => {
     });
     fs.writeFileSync(packageJSONPath, JSON.stringify(newPkg, null, 2), "utf-8");
 });
-export {};

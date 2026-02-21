@@ -1,5 +1,4 @@
 // MIT © 2017 azu
-"use strict";
 import {
     paragraphReporter,
     getPosFromSingleWord,
@@ -85,7 +84,9 @@ https://developers.google.com/style/commas#setting-off-other-kinds-of-clauses
         },
     };
 };
-module.exports = {
+const rule = {
     linter: report,
     fixer: report,
 };
+
+export default rule;

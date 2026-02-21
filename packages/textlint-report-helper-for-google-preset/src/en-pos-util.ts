@@ -1,13 +1,12 @@
 // MIT © 2017 azu
 import { Tag } from "en-pos";
 import { EnglishParser, PosType as PosTypeLiteral } from "nlcst-parse-english";
-
-const toString = require("nlcst-to-string");
-const findUnistNode = require("unist-util-find");
+import toString from "nlcst-to-string";
+import findUnistNode from "unist-util-find";
+import lexicon from "en-lexicon";
 const parser = new EnglishParser();
 
 // Additional lexicon
-const lexicon = require("en-lexicon");
 lexicon.extend({
     browser: "NN",
 });

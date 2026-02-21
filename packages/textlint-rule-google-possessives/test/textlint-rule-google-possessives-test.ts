@@ -1,11 +1,8 @@
 // MIT © 2017 azu
-"use strict";
 import TextLintTester from "textlint-tester";
 const tester = new TextLintTester();
 // rule
-import * as possessivesModule from "../src/textlint-rule-google-possessives";
-const rule = (possessivesModule as any).default ?? (possessivesModule as any);
-const defaultMessage = (possessivesModule as any).defaultMessage;
+import rule, { defaultMessage } from "../src/textlint-rule-google-possessives";
 // ruleName, rule, { valid, invalid }
 tester.run("textlint-rule-google-possessives", rule, {
     valid: [

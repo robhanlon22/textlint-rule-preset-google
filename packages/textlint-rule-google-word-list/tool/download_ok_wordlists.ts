@@ -1,13 +1,15 @@
 // MIT © 2017 azu
-"use strict";
 /**
  * Download dont use word list
  * https://developers.google.com/style/word-list
  */
-const fs = require("fs");
-const path = require("path");
-const cheerio = require("cheerio");
-const client = require("cheerio-httpcli");
+import fs from "node:fs";
+import path from "node:path";
+import { fileURLToPath } from "node:url";
+import cheerio from "cheerio";
+import client from "cheerio-httpcli";
+
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const toText = (html) => {
     const $ = cheerio.load(html);
     return $.text();

@@ -1,6 +1,5 @@
 // MIT © 2017 azu
-"use strict";
-const capitalizationRule = require("textlint-rule-en-capitalization");
+import capitalizationRule from "textlint-rule-en-capitalization";
 const DocumentURL = "https://developers.google.com/style/capitalization";
 const defaultOptions = {
     // allow lower-case words in anywhere
@@ -23,7 +22,9 @@ const createReporter = (capitalizationReport) => {
         return capitalizationReport(overlayContext, options);
     };
 };
-module.exports = {
+const rule = {
     linter: createReporter(capitalizationRule.linter),
     fixer: createReporter(capitalizationRule.fixer),
 };
+
+export default rule;

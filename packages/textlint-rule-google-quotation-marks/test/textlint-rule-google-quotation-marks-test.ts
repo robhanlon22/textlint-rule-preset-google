@@ -1,5 +1,4 @@
 // MIT © 2017 azu
-"use strict";
 import TextLintTester from "textlint-tester";
 const tester = new TextLintTester();
 import rule from "../src/textlint-rule-google-quotation-marks";

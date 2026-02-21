@@ -13,7 +13,7 @@
     "name": "@textlint-rule/textlint-report-helper-for-google-preset",
     "version": "0.1.2",
     "description": "Report Helper function for google-preset.",
-    "main": "lib/textlint-report-helper-for-google-preset.js",
+    "main": "./lib/textlint-report-helper-for-google-preset.js",
     "scripts": {
         "prettier": "prettier --write '**/*.{js,jsx,ts,tsx,css}'",
         "build": "tsc -p tsconfig.json",
@@ -55,5 +55,7 @@
     },
     "publishConfig": {
         "access": "public"
-    }
+    },
+    "type": "module",
+    "exports": "./lib/textlint-report-helper-for-google-preset.js"
 }

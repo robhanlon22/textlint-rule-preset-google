@@ -13,7 +13,7 @@
     "name": "@textlint-rule/textlint-rule-preset-google",
     "version": "0.1.2",
     "description": "Google Developer Documentation Style Guide for textlint.",
-    "main": "lib/textlint-rule-preset-google.js",
+    "main": "./lib/textlint-rule-preset-google.js",
     "scripts": {
         "test": "vitest run --config ../../vitest.config.ts --dir .",
         "prettier": "prettier --write '**/*.{js,jsx,ts,tsx,css}'",
@@ -61,5 +61,8 @@
     },
     "publishConfig": {
         "access": "public"
-    }
+    },
+    "type": "module",
+    "exports": "./lib/textlint-rule-preset-google.js",
+    "types": "./lib/textlint-rule-preset-google.d.ts"
 }

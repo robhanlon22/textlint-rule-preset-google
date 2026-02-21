@@ -13,7 +13,7 @@
     "name": "@textlint-rule/textlint-rule-google-hyphens",
     "version": "0.1.2",
     "description": "Reference: https://developers.google.com/style/hyphens",
-    "main": "lib/textlint-rule-google-hyphens.js",
+    "main": "./lib/textlint-rule-google-hyphens.js",
     "scripts": {
         "test": "vitest run --config ../../vitest.config.ts --dir .",
         "prettier": "prettier --write '**/*.{js,jsx,ts,tsx,css}'",
@@ -44,5 +44,8 @@
     },
     "publishConfig": {
         "access": "public"
-    }
+    },
+    "type": "module",
+    "exports": "./lib/textlint-rule-google-hyphens.js",
+    "types": "./lib/textlint-rule-google-hyphens.d.ts"
 }

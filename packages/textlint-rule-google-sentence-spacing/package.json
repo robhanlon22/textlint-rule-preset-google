@@ -13,7 +13,7 @@
     "name": "@textlint-rule/textlint-rule-google-sentence-spacing",
     "version": "0.1.2",
     "description": "Reference: https://developers.google.com/style/sentence-spacing",
-    "main": "lib/textlint-rule-google-sentence-spacing.js",
+    "main": "./lib/textlint-rule-google-sentence-spacing.js",
     "scripts": {
         "test": "vitest run --config ../../vitest.config.ts --dir .",
         "prettier": "prettier --write '**/*.{js,jsx,ts,tsx,css}'",
@@ -46,5 +46,8 @@
     },
     "publishConfig": {
         "access": "public"
-    }
+    },
+    "type": "module",
+    "exports": "./lib/textlint-rule-google-sentence-spacing.js",
+    "types": "./lib/textlint-rule-google-sentence-spacing.d.ts"
 }
