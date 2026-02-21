@@ -23,7 +23,7 @@
         "prettier": "^3.8.1"
     },
     "scripts": {
-        "test": "mocha --require ts-node/register/transpile-only \"test/**/*.ts\"",
+        "test": "vitest run --config ../../vitest.config.ts --dir .",
         "prettier": "prettier --write '**/*.{js,jsx,ts,tsx,css}'",
         "prepublish": "npm run --if-present build",
         "build": "tsc -p tsconfig.json",

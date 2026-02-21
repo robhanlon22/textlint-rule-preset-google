@@ -1,7 +1,7 @@
-const TextLintTester = require("textlint-tester");
+import TextLintTester from "textlint-tester";
 const tester = new TextLintTester();
 // rule
-const rule = require("../src/textlint-rule-google-dashes");
+import rule from "../src/textlint-rule-google-dashes";
 tester.run("textlint-rule-google-dashes", rule, {
     valid: [
         "To indicate a break in the flow of a sentence—or an interruption—use an em dash, also known as a long dash. Don't put a space before or after it.",

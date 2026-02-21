@@ -1,8 +1,8 @@
 // MIT © 2017 azu
 "use strict";
-const TextLintTester = require("textlint-tester");
+import TextLintTester from "textlint-tester";
 const tester = new TextLintTester();
-const rule = require("../src/textlint-rule-google-units-of-measure");
+import rule from "../src/textlint-rule-google-units-of-measure";
 tester.run("textlint-rule-google-units-of-measure.js", rule, {
     valid: [
         "Recommended: 64 GB is OK.",

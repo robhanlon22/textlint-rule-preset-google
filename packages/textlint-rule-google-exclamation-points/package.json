@@ -15,7 +15,7 @@
     "description": "Reference https://developers.google.com/style/exclamation-points",
     "main": "lib/textlint-rule-google-exclamation-points.js",
     "scripts": {
-        "test": "mocha --require ts-node/register/transpile-only \"test/**/*.ts\"",
+        "test": "vitest run --config ../../vitest.config.ts --dir .",
         "prettier": "prettier --write '**/*.{js,jsx,ts,tsx,css}'",
         "prepublish": "npm run --if-present build",
         "build": "tsc -p tsconfig.json",

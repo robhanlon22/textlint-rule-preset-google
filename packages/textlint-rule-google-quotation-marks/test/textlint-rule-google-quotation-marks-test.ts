@@ -1,8 +1,8 @@
 // MIT © 2017 azu
 "use strict";
-const TextLintTester = require("textlint-tester");
+import TextLintTester from "textlint-tester";
 const tester = new TextLintTester();
-const rule = require("../src/textlint-rule-google-quotation-marks");
+import rule from "../src/textlint-rule-google-quotation-marks";
 tester.run("textlint-rule-google-quotation-marks", rule, {
     valid: [
         'See the section titled "Care and feeding of the emu."',

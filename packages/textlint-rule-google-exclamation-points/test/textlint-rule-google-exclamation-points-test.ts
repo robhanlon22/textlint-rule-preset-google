@@ -1,7 +1,7 @@
-const TextLintTester = require("textlint-tester");
+import TextLintTester from "textlint-tester";
 const tester = new TextLintTester();
 // rule
-const rule = require("../src/textlint-rule-google-exclamation-points");
+import rule from "../src/textlint-rule-google-exclamation-points";
 const URL = "\nhttps://developers.google.com/style/exclamation-points";
 tester.run("textlint-rule-google-contractions", rule, {
     valid: ["Don't use exclamation points in text except when they're part of a code example."],

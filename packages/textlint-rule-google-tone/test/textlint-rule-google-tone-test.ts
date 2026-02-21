@@ -1,7 +1,7 @@
-const TextLintTester = require("textlint-tester");
+import TextLintTester from "textlint-tester";
 const tester = new TextLintTester();
 // rule
-const rule = require("../src/textlint-rule-google-tone");
+import rule from "../src/textlint-rule-google-tone";
 // ruleName, rule, { valid, invalid }
 const message = `using "please" in a set of instructions is overdoing the politeness.\n
         URL: https://developers.google.com/style/tone#politeness-and-use-of-please`;

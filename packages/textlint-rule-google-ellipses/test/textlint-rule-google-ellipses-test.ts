@@ -1,9 +1,9 @@
 // MIT © 2017 azu
 "use strict";
-const TextLintTester = require("textlint-tester");
+import TextLintTester from "textlint-tester";
 const tester = new TextLintTester();
 // rule
-const rule = require("../src/textlint-rule-google-ellipses");
+import rule from "../src/textlint-rule-google-ellipses";
 tester.run("textlint-rule-google-ellipses", rule, {
     valid: [
         'My high school English teacher made me learn that Shakespeare quote: "All the world\'s a stage, ... And one man in his time plays many parts."',

@@ -1,7 +1,7 @@
-const TextLintTester = require("textlint-tester");
+import TextLintTester from "textlint-tester";
 const tester = new TextLintTester();
 // rule
-const rule = require("../src/textlint-rule-google-word-list");
+import rule from "../src/textlint-rule-google-word-list";
 // ruleName, rule, { valid, invalid }
 tester.run("textlint-rule-google-word-list", rule, {
     // OK list

@@ -1,7 +1,7 @@
 // MIT © 2017 azu
 "use strict";
-const TextLintTester = require("textlint-tester");
-const rule = require("../src/textlint-rule-google-colons");
+import TextLintTester from "textlint-tester";
+import rule from "../src/textlint-rule-google-colons";
 const tester = new TextLintTester();
 tester.run("textlint-rule-google-colons", rule, {
     valid: [

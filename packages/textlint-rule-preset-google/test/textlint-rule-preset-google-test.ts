@@ -1,8 +1,9 @@
 // LICENSE : MIT
 "use strict";
-const assert = require("assert");
-const rules = require("../src/textlint-rule-preset-google").rules;
-const rulesConfig = require("../src/textlint-rule-preset-google").rulesConfig;
+import assert from "node:assert";
+import preset from "../src/textlint-rule-preset-google";
+const rules = (preset as any).rules;
+const rulesConfig = (preset as any).rulesConfig;
 describe("textlint-rule-preset-google", function () {
     it("should not have missing key", function () {
         const ruleKeys = Object.keys(rules).sort();
