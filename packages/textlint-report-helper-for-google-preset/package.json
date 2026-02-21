@@ -14,12 +14,6 @@
   "version": "0.1.2",
   "description": "Report Helper function for google-preset.",
   "main": "./lib/textlint-report-helper-for-google-preset.js",
-  "scripts": {
-    "prettier": "prettier --write '**/*.{js,jsx,ts,tsx,css,md,json,yml,yaml}'",
-    "build": "tsc -p tsconfig.json",
-    "watch": "tsc -p tsconfig.json --watch",
-    "prepublish": "npm run --if-present build"
-  },
   "keywords": [
     "textlint",
     "helper"

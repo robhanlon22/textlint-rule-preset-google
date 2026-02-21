@@ -13,12 +13,14 @@
   "scripts": {
     "bootstrap": "pnpm install && pnpm run build",
     "clean": "rimraf dist-tools packages/*/lib",
-    "build": "pnpm run build:tools && pnpm -r --filter \"./packages/*\" --if-present run build",
+    "build": "pnpm run build:tools && pnpm run build:packages",
     "build:tools": "tsc -p tsconfig.tools.json",
-    "test": "pnpm -r --filter \"./packages/*\" --if-present run test",
-    "publish": "pnpm -r --filter \"./packages/*\" publish",
+    "test": "vitest run --config vitest.config.ts",
+    "publish": "pnpm run build && pnpm -r --filter \"./packages/*\" publish",
     "prettier": "prettier --write '**/*.{js,jsx,ts,tsx,css,md,json,yml,yaml}'",
-    "precommit": "lint-staged"
+    "precommit": "lint-staged",
+    "build:packages": "pnpm -r --filter \"./packages/*\" exec tsc -p tsconfig.json",
+    "watch": "pnpm -r --filter \"./packages/*\" exec tsc -p tsconfig.json --watch"
   },
   "keywords": [
     "textlintrule"

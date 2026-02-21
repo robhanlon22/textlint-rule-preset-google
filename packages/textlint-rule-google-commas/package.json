@@ -14,13 +14,6 @@
   "version": "0.1.2",
   "description": "Reference: https://developers.google.com/style/commas",
   "main": "./lib/textlint-rule-google-commas.js",
-  "scripts": {
-    "test": "vitest run --config ../../vitest.config.ts --dir .",
-    "prettier": "prettier --write '**/*.{js,jsx,ts,tsx,css,md,json,yml,yaml}'",
-    "prepublish": "npm run --if-present build",
-    "build": "tsc -p tsconfig.json",
-    "watch": "tsc -p tsconfig.json --watch"
-  },
   "repository": {
     "type": "git",
     "url": "https://github.com/textlint-rule/textlint-rule-preset-google.git"

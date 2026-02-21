@@ -21,13 +21,6 @@
     "cheerio": "^1.2.0",
     "cheerio-httpcli": "^0.8.3"
   },
-  "scripts": {
-    "test": "vitest run --config ../../vitest.config.ts --dir .",
-    "prettier": "prettier --write '**/*.{js,jsx,ts,tsx,css,md,json,yml,yaml}'",
-    "prepublish": "npm run --if-present build",
-    "build": "tsc -p tsconfig.json",
-    "watch": "tsc -p tsconfig.json --watch"
-  },
   "keywords": [
     "textlintrule"
   ],

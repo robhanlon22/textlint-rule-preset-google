@@ -14,13 +14,6 @@
   "version": "0.1.2",
   "description": "https://developers.google.com/style/contractions",
   "main": "./lib/textlint-rule-google-contractions.js",
-  "scripts": {
-    "test": "vitest run --config ../../vitest.config.ts --dir .",
-    "prettier": "prettier --write '**/*.{js,jsx,ts,tsx,css,md,json,yml,yaml}'",
-    "prepublish": "npm run --if-present build",
-    "build": "tsc -p tsconfig.json",
-    "watch": "tsc -p tsconfig.json --watch"
-  },
   "keywords": [
     "textlintrule"
   ],
