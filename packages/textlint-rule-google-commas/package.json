@@ -1,44 +1,44 @@
 {
-    "directories": {
-        "lib": "lib",
-        "test": "test"
-    },
-    "author": "azu",
-    "license": "MIT",
-    "files": [
-        "bin/",
-        "lib/",
-        "src/"
-    ],
-    "name": "@textlint-rule/textlint-rule-google-commas",
-    "version": "0.1.2",
-    "description": "Reference: https://developers.google.com/style/commas",
-    "main": "./lib/textlint-rule-google-commas.js",
-    "scripts": {
-        "test": "vitest run --config ../../vitest.config.ts --dir .",
-        "prettier": "prettier --write '**/*.{js,jsx,ts,tsx,css}'",
-        "prepublish": "npm run --if-present build",
-        "build": "tsc -p tsconfig.json",
-        "watch": "tsc -p tsconfig.json --watch"
-    },
-    "repository": {
-        "type": "git",
-        "url": "https://github.com/textlint-rule/textlint-rule-preset-google.git"
-    },
-    "bugs": {
-        "url": "https://github.com/textlint-rule/textlint-rule-preset-google/issues"
-    },
-    "homepage": "https://github.com/textlint-rule/textlint-rule-preset-google/tree/master/packages/textlint-rule-google-commas/",
-    "dependencies": {
-        "@textlint-rule/textlint-report-helper-for-google-preset": "^0.1.2"
-    },
-    "keywords": [
-        "textlintrule"
-    ],
-    "publishConfig": {
-        "access": "public"
-    },
-    "type": "module",
-    "exports": "./lib/textlint-rule-google-commas.js",
-    "types": "./lib/textlint-rule-google-commas.d.ts"
+  "directories": {
+    "lib": "lib",
+    "test": "test"
+  },
+  "author": "azu",
+  "license": "MIT",
+  "files": [
+    "bin/",
+    "lib/",
+    "src/"
+  ],
+  "name": "@textlint-rule/textlint-rule-google-commas",
+  "version": "0.1.2",
+  "description": "Reference: https://developers.google.com/style/commas",
+  "main": "./lib/textlint-rule-google-commas.js",
+  "scripts": {
+    "test": "vitest run --config ../../vitest.config.ts --dir .",
+    "prettier": "prettier --write '**/*.{js,jsx,ts,tsx,css,md,json,yml,yaml}'",
+    "prepublish": "npm run --if-present build",
+    "build": "tsc -p tsconfig.json",
+    "watch": "tsc -p tsconfig.json --watch"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/textlint-rule/textlint-rule-preset-google.git"
+  },
+  "bugs": {
+    "url": "https://github.com/textlint-rule/textlint-rule-preset-google/issues"
+  },
+  "homepage": "https://github.com/textlint-rule/textlint-rule-preset-google/tree/master/packages/textlint-rule-google-commas/",
+  "dependencies": {
+    "@textlint-rule/textlint-report-helper-for-google-preset": "^0.1.2"
+  },
+  "keywords": [
+    "textlintrule"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "type": "module",
+  "exports": "./lib/textlint-rule-google-commas.js",
+  "types": "./lib/textlint-rule-google-commas.d.ts"
 }

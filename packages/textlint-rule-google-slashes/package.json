@@ -1,45 +1,45 @@
 {
-    "directories": {
-        "lib": "lib",
-        "test": "test"
-    },
-    "author": "azu",
-    "license": "MIT",
-    "files": [
-        "bin/",
-        "lib/",
-        "src/"
-    ],
-    "name": "@textlint-rule/textlint-rule-google-slashes",
-    "version": "0.1.2",
-    "description": "Reference: https://developers.google.com/style/slashes",
-    "main": "./lib/textlint-rule-google-slashes.js",
-    "scripts": {
-        "test": "vitest run --config ../../vitest.config.ts --dir .",
-        "prettier": "prettier --write '**/*.{js,jsx,ts,tsx,css}'",
-        "prepublish": "npm run --if-present build",
-        "build": "tsc -p tsconfig.json",
-        "watch": "tsc -p tsconfig.json --watch"
-    },
-    "keywords": [
-        "textlintrule"
-    ],
-    "repository": {
-        "type": "git",
-        "url": "https://github.com/textlint-rule/textlint-rule-preset-google.git"
-    },
-    "bugs": {
-        "url": "https://github.com/textlint-rule/textlint-rule-preset-google/issues"
-    },
-    "homepage": "https://github.com/textlint-rule/textlint-rule-preset-google/tree/master/packages/textlint-rule-google-slashes/",
-    "dependencies": {
-        "@textlint-rule/textlint-report-helper-for-google-preset": "^0.1.2",
-        "textlint-rule-helper": "^2.5.0"
-    },
-    "publishConfig": {
-        "access": "public"
-    },
-    "type": "module",
-    "exports": "./lib/textlint-rule-google-slashes.js",
-    "types": "./lib/textlint-rule-google-slashes.d.ts"
+  "directories": {
+    "lib": "lib",
+    "test": "test"
+  },
+  "author": "azu",
+  "license": "MIT",
+  "files": [
+    "bin/",
+    "lib/",
+    "src/"
+  ],
+  "name": "@textlint-rule/textlint-rule-google-slashes",
+  "version": "0.1.2",
+  "description": "Reference: https://developers.google.com/style/slashes",
+  "main": "./lib/textlint-rule-google-slashes.js",
+  "scripts": {
+    "test": "vitest run --config ../../vitest.config.ts --dir .",
+    "prettier": "prettier --write '**/*.{js,jsx,ts,tsx,css,md,json,yml,yaml}'",
+    "prepublish": "npm run --if-present build",
+    "build": "tsc -p tsconfig.json",
+    "watch": "tsc -p tsconfig.json --watch"
+  },
+  "keywords": [
+    "textlintrule"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/textlint-rule/textlint-rule-preset-google.git"
+  },
+  "bugs": {
+    "url": "https://github.com/textlint-rule/textlint-rule-preset-google/issues"
+  },
+  "homepage": "https://github.com/textlint-rule/textlint-rule-preset-google/tree/master/packages/textlint-rule-google-slashes/",
+  "dependencies": {
+    "@textlint-rule/textlint-report-helper-for-google-preset": "^0.1.2",
+    "textlint-rule-helper": "^2.5.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "type": "module",
+  "exports": "./lib/textlint-rule-google-slashes.js",
+  "types": "./lib/textlint-rule-google-slashes.d.ts"
 }
