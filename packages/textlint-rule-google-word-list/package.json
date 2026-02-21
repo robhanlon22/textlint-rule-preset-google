@@ -1,50 +1,50 @@
 {
-  "directories": {
-    "lib": "lib",
-    "test": "test"
-  },
-  "author": "azu",
-  "license": "MIT",
-  "files": [
-    "bin/",
-    "lib/",
-    "src/"
-  ],
-  "name": "@textlint-rule/textlint-rule-google-word-list",
-  "version": "0.1.2",
-  "description": "See https://developers.google.com/style/word-list",
-  "main": "lib/textlint-rule-google-word-list.js",
-  "dependencies": {
-    "@textlint-rule/textlint-report-helper-for-google-preset": "^0.1.2"
-  },
-  "devDependencies": {
-    "cheerio": "^1.0.0-rc.2",
-    "cheerio-httpcli": "^0.7.1",
-    "prettier": "^1.7.4"
-  },
-  "scripts": {
-    "test": "mocha --require ts-node/register/transpile-only \"test/**/*.ts\"",
-    "prettier": "prettier --write '**/*.{js,jsx,ts,tsx,css}'",
-    "prepublish": "npm run --if-present build",
-    "build": "tsc -p tsconfig.json",
-    "watch": "tsc -p tsconfig.json --watch"
-  },
-  "keywords": [
-    "textlintrule"
-  ],
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/textlint-rule/textlint-rule-preset-google.git"
-  },
-  "bugs": {
-    "url": "https://github.com/textlint-rule/textlint-rule-preset-google/issues"
-  },
-  "homepage": "https://github.com/textlint-rule/textlint-rule-preset-google/tree/master/packages/textlint-rule-google-word-list/",
-  "prettier": {
-    "printWidth": 120,
-    "tabWidth": 4
-  },
-  "publishConfig": {
-    "access": "public"
-  }
+    "directories": {
+        "lib": "lib",
+        "test": "test"
+    },
+    "author": "azu",
+    "license": "MIT",
+    "files": [
+        "bin/",
+        "lib/",
+        "src/"
+    ],
+    "name": "@textlint-rule/textlint-rule-google-word-list",
+    "version": "0.1.2",
+    "description": "See https://developers.google.com/style/word-list",
+    "main": "lib/textlint-rule-google-word-list.js",
+    "dependencies": {
+        "@textlint-rule/textlint-report-helper-for-google-preset": "^0.1.2"
+    },
+    "devDependencies": {
+        "cheerio": "^1.2.0",
+        "cheerio-httpcli": "^0.8.3",
+        "prettier": "^3.8.1"
+    },
+    "scripts": {
+        "test": "mocha --require ts-node/register/transpile-only \"test/**/*.ts\"",
+        "prettier": "prettier --write '**/*.{js,jsx,ts,tsx,css}'",
+        "prepublish": "npm run --if-present build",
+        "build": "tsc -p tsconfig.json",
+        "watch": "tsc -p tsconfig.json --watch"
+    },
+    "keywords": [
+        "textlintrule"
+    ],
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/textlint-rule/textlint-rule-preset-google.git"
+    },
+    "bugs": {
+        "url": "https://github.com/textlint-rule/textlint-rule-preset-google/issues"
+    },
+    "homepage": "https://github.com/textlint-rule/textlint-rule-preset-google/tree/master/packages/textlint-rule-google-word-list/",
+    "prettier": {
+        "printWidth": 120,
+        "tabWidth": 4
+    },
+    "publishConfig": {
+        "access": "public"
+    }
 }

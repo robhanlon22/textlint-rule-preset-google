@@ -13,7 +13,7 @@ tester.run("textlint-rule-google-contractions", rule, {
         "To delete the entire document, click Delete.",
         "Double contractions contain not just one but two contracted words. Some examples of double contractions are as follows:",
         "In some cases, it's OK to use a noun+verb contraction, such as \"If you want to display information, a table's your best option.\" But in general, it's best to avoid that kind of contraction.",
-        "The second example above is better because using 's in place of is could cause the reader to think that \"browser's\" is the possessive form."
+        "The second example above is better because using 's in place of is could cause the reader to think that \"browser's\" is the possessive form.",
     ],
     invalid: [
         {
@@ -21,36 +21,36 @@ tester.run("textlint-rule-google-contractions", rule, {
             output: "The browser is fast, simple, and secure.",
             errors: [
                 {
-                    message: nounVerbMessage
-                }
-            ]
+                    message: nounVerbMessage,
+                },
+            ],
         },
         {
             text: "These machines're slow.",
             output: "These machines are slow.",
             errors: [
                 {
-                    message: nounVerbMessage
-                }
-            ]
+                    message: nounVerbMessage,
+                },
+            ],
         },
         {
             text: "The following guides're a good way to learn to use Universal Analytics.",
             output: "The following guides are a good way to learn to use Universal Analytics.",
             errors: [
                 {
-                    message: nounVerbMessage
-                }
-            ]
+                    message: nounVerbMessage,
+                },
+            ],
         },
         {
             text: "you shouldn't've done.",
             output: "you should not have done.",
             errors: [
                 {
-                    message: noDoubleContractions
-                }
-            ]
-        }
-    ]
+                    message: noDoubleContractions,
+                },
+            ],
+        },
+    ],
 });

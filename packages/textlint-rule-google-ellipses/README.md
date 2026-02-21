@@ -26,7 +26,6 @@ Via CLI
 textlint --rule @textlint-rule/google-ellipses README.md
 ```
 
-
 ## Changelog
 
 See [Releases page](https://github.com/textlint-rule/textlint-rule-preset-google/releases).

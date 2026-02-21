@@ -193,31 +193,31 @@ tester.run("textlint-rule-google-word-list", rule, {
         "with",
         "zip",
         // allow
-        "touch & hold is ok"
+        "touch & hold is ok",
     ],
     invalid: [
         {
             text: "This is an application.",
             output: "This is an app.",
-            errors: [{}]
+            errors: [{}],
         },
         {
             text: "This app apply autoupdate.",
             output: "This app apply automatically update.",
-            errors: [{}]
+            errors: [{}],
         },
         {
             text: "click here",
-            errors: [{}]
+            errors: [{}],
         },
         {
             text: "touch the display",
-            errors: [{}]
+            errors: [{}],
         },
         {
             text: "administrator",
             output: "admin",
-            errors: [{}]
-        }
-    ]
+            errors: [{}],
+        },
+    ],
 });

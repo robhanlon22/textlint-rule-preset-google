@@ -26,7 +26,6 @@ Via CLI
 textlint --rule google-units-of-measure README.md
 ```
 
-
 ## Changelog
 
 See [Releases page](https://github.com/textlint-rule/textlint-rule-preset-google/releases).

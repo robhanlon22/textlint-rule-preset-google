@@ -6,8 +6,8 @@ const packagesDirectory = path.join(__dirname, "../../packages");
 module.exports.getPackages = (blacklistModules = []) => {
     return fs
         .readdirSync(packagesDirectory)
-        .filter(pkgName => !blacklistModules.includes(pkgName))
+        .filter((pkgName) => !blacklistModules.includes(pkgName))
         .sort()
-        .map(pkgName => path.resolve(packagesDirectory, pkgName));
+        .map((pkgName) => path.resolve(packagesDirectory, pkgName));
 };
 export {};

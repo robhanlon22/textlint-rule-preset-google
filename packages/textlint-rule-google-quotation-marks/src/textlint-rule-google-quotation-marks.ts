@@ -3,11 +3,11 @@
 import {
     paragraphReporter,
     getPosFromSingleWord,
-    PosType
+    PosType,
 } from "@textlint-rule/textlint-report-helper-for-google-preset";
 
 const DocumentURL = "https://developers.google.com/style/quotation-marks#single-quotation-marks";
-const report = context => {
+const report = (context) => {
     const dictionaries = [
         // Commas and periods with quotation marks
         // We can not handle this rule
@@ -39,8 +39,8 @@ const report = context => {
                 return `"${captures[0]}'${captures[1]}'${captures[2]}"`;
             },
             message: () => `The outside quotation mark shoule be ", the inside quotation mark should be '.
-In the latter case, put the primary speaker's quote in double quotation marks and the quote inside the primary speaker's quote in single quotation marks, in the standard American style. `
-        }
+In the latter case, put the primary speaker's quote in double quotation marks and the quote inside the primary speaker's quote in single quotation marks, in the standard American style. `,
+        },
     ];
 
     const { Syntax, RuleError, getSource, fixer, report } = context;
@@ -53,12 +53,12 @@ In the latter case, put the primary speaker's quote in double quotation marks an
                 report,
                 getSource,
                 RuleError,
-                fixer
+                fixer,
             });
-        }
+        },
     };
 };
 module.exports = {
     linter: report,
-    fixer: report
+    fixer: report,
 };

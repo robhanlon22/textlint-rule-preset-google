@@ -9,7 +9,7 @@ tester.run("textlint-rule-google-clause-order", rule, {
         "To get the user's phone number, call `user.phoneNumber.get()`.",
         "To clean up, call the `collectGarbage()` method.",
         "For more information, see [link to other document].",
-        "To delete the entire document, click Delete."
+        "To delete the entire document, click Delete.",
     ],
     invalid: [
         {
@@ -18,9 +18,9 @@ tester.run("textlint-rule-google-clause-order", rule, {
             errors: [
                 {
                     message: defaultMessage,
-                    index: 0
-                }
-            ]
+                    index: 0,
+                },
+            ],
         },
         {
             text: "See link for more detail.",
@@ -28,9 +28,9 @@ tester.run("textlint-rule-google-clause-order", rule, {
             errors: [
                 {
                     message: defaultMessage,
-                    index: 0
-                }
-            ]
+                    index: 0,
+                },
+            ],
         },
         // TODO: Can't support yet
         // includes Link node patter
@@ -50,9 +50,9 @@ tester.run("textlint-rule-google-clause-order", rule, {
             errors: [
                 {
                     message: defaultMessage,
-                    index: 0
-                }
-            ]
-        }
-    ]
+                    index: 0,
+                },
+            ],
+        },
+    ],
 });

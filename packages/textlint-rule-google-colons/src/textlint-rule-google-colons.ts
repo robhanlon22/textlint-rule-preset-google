@@ -3,7 +3,7 @@
 import {
     paragraphReporter,
     getPosFromSingleWord,
-    PosType
+    PosType,
 } from "@textlint-rule/textlint-report-helper-for-google-preset";
 import { checkBoldTextPrecedingColon } from "./checkBoldTextPrecedingColon";
 
@@ -35,10 +35,10 @@ const helpingVerbs = [
     "will",
     "may",
     "might",
-    "must"
+    "must",
 ];
 
-const report = context => {
+const report = (context) => {
     const dictionaries = [
         // Introductory phrase preceding colon
         {
@@ -49,7 +49,7 @@ const report = context => {
             },
             message: () => `The text that precedes the colon must be able to stand alone as a complete sentence.
 https://developers.google.com/style/colons#introductory-phrase-preceding-colon
-`
+`,
         },
         // Colons within sentences
         {
@@ -60,8 +60,8 @@ https://developers.google.com/style/colons#introductory-phrase-preceding-colon
             },
             message: () => `In general, the first word in the text that follows a colon should be in lowercase.
 https://developers.google.com/style/colons#colons-within-sentences
-`
-        }
+`,
+        },
     ];
 
     const { Syntax, RuleError, getSource, fixer, report } = context;
@@ -74,7 +74,7 @@ https://developers.google.com/style/colons#colons-within-sentences
                 report,
                 getSource,
                 RuleError,
-                fixer
+                fixer,
             });
             return paragraphReporter({
                 node,
@@ -83,12 +83,12 @@ https://developers.google.com/style/colons#colons-within-sentences
                 report,
                 getSource,
                 RuleError,
-                fixer
+                fixer,
             });
-        }
+        },
     };
 };
 module.exports = {
     linter: report,
-    fixer: report
+    fixer: report,
 };

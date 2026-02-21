@@ -4,7 +4,7 @@ import { shouldIgnoreNodeOfStrNode, strReporter } from "@textlint-rule/textlint-
 import { classifyArticle } from "english-article-classifier";
 
 const DocumentURL = "https://developers.google.com/style/articles";
-const isCapital = text => {
+const isCapital = (text) => {
     return /^[A-Z]/.test(text);
 };
 const report = (context, options = {}) => {
@@ -12,7 +12,7 @@ const report = (context, options = {}) => {
     const forceAn = Array.isArray(options.an) ? options.an : [];
     const classifyOptions = {
         forceA,
-        forceAn
+        forceAn,
     };
     const dictionaries = [
         {
@@ -28,7 +28,7 @@ const report = (context, options = {}) => {
             message: ({ captures }) => {
                 const result = classifyArticle(captures[1], classifyOptions);
                 return `Should be begin with "an"` + "\nReason: " + result.reason + "\n" + DocumentURL;
-            }
+            },
         },
         {
             pattern: /\b(an) ([\w.-]+)\b/i,
@@ -43,8 +43,8 @@ const report = (context, options = {}) => {
             message: ({ captures }) => {
                 const result = classifyArticle(captures[1], classifyOptions);
                 return `Should be begin with "a"` + "\nReason: " + result.reason + "\n" + DocumentURL;
-            }
-        }
+            },
+        },
     ];
     const { Syntax, RuleError, getSource, fixer, report } = context;
     return {
@@ -58,12 +58,12 @@ const report = (context, options = {}) => {
                 report,
                 getSource,
                 RuleError,
-                fixer
+                fixer,
             });
-        }
+        },
     };
 };
 module.exports = {
     linter: report,
-    fixer: report
+    fixer: report,
 };

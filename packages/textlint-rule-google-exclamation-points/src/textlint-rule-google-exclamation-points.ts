@@ -9,7 +9,7 @@ const defaultOptions = {
     // allow to use ?
     allowHalfWidthQuestion: false,
     // allow to use ？
-    allowFullWidthQuestion: false
+    allowFullWidthQuestion: false,
 };
 const linter = (context, options = defaultOptions) => {
     const { report } = context;
@@ -21,7 +21,7 @@ const linter = (context, options = defaultOptions) => {
         },
         enumerable: true,
         configurable: true,
-        writable: true
+        writable: true,
     });
     return noExclamationQuestionMark(overlayContext, options);
 };

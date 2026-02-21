@@ -3,7 +3,8 @@ import { matchTestReplace, TestMatchReplaceReturnDict } from "match-test-replace
 import { ASTNodeTypes } from "@textlint/ast-node-types";
 
 const { RuleHelper, IgnoreNodeManager } = require("textlint-rule-helper");
-const StringSource = require("textlint-util-to-string");
+const StringSourceModule = require("textlint-util-to-string");
+const StringSource = StringSourceModule.StringSource || StringSourceModule;
 
 export { getPos, getPosFromSingleWord, PosType, isSameGroupPosType } from "./en-pos-util";
 // str
@@ -24,19 +25,19 @@ export interface StrReporterArgs {
 
 export const strReporter = ({ node, dictionaries, report, RuleError, fixer, getSource }: StrReporterArgs) => {
     const text = getSource(node);
-    dictionaries.forEach(dict => {
+    dictionaries.forEach((dict) => {
         const matchTestReplaceReturn = matchTestReplace(text, dict);
         if (matchTestReplaceReturn.ok === false) {
             return;
         }
-        matchTestReplaceReturn.results.forEach(result => {
+        matchTestReplaceReturn.results.forEach((result) => {
             const index = result.index;
             if (!result.replace) {
                 report(
                     node,
                     new RuleError(result.message, {
-                        index
-                    })
+                        index,
+                    }),
                 );
                 return;
             }
@@ -46,8 +47,8 @@ export const strReporter = ({ node, dictionaries, report, RuleError, fixer, getS
                 node,
                 new RuleError(result.message, {
                     index,
-                    fix: fixer.replaceTextRange(range, result.replace)
-                })
+                    fix: fixer.replaceTextRange(range, result.replace),
+                }),
             );
         });
     });
@@ -70,7 +71,7 @@ export const paragraphReporter = ({
     getSource,
     report,
     RuleError,
-    fixer
+    fixer,
 }: ParagraphReporterArgs) => {
     const originalText = getSource(node);
     const source = new StringSource(node);
@@ -79,12 +80,12 @@ export const paragraphReporter = ({
     // Ignore following pattern
     // Paragraph > Link Code Html ...
     ignoreNodeManager.ignoreChildrenByTypes(node, [Syntax.Code, Syntax.Link, Syntax.BlockQuote, Syntax.Html]);
-    dictionaries.forEach(dict => {
+    dictionaries.forEach((dict) => {
         const matchTestReplaceReturn = matchTestReplace(text, dict);
         if (matchTestReplaceReturn.ok === false) {
             return;
         }
-        matchTestReplaceReturn.results.forEach(result => {
+        matchTestReplaceReturn.results.forEach((result) => {
             // relative index
             const indexFromNode = source.originalIndexFromIndex(result.index);
             const endIndexFromNode = source.originalIndexFromIndex(result.index + result.match.length);
@@ -99,8 +100,8 @@ export const paragraphReporter = ({
                 report(
                     node,
                     new RuleError(result.message, {
-                        index: indexFromNode
-                    })
+                        index: indexFromNode,
+                    }),
                 );
                 return;
             }
@@ -109,8 +110,8 @@ export const paragraphReporter = ({
                 report(
                     node,
                     new RuleError(result.message, {
-                        index: indexFromNode
-                    })
+                        index: indexFromNode,
+                    }),
                 );
                 return;
             }
@@ -118,8 +119,8 @@ export const paragraphReporter = ({
                 node,
                 new RuleError(result.message, {
                     index: indexFromNode,
-                    fix: fixer.replaceTextRange(rangeFromNode, result.replace)
-                })
+                    fix: fixer.replaceTextRange(rangeFromNode, result.replace),
+                }),
             );
         });
     });

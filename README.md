@@ -35,14 +35,14 @@ textlint --rule preset-google README.md
 - [Style-guide highlights](https://developers.google.com/style/highlights)
 - General principles
 - [Style and tone](https://developers.google.com/style/tone)
-   - [ ] Some things to avoid where possible
-     - [ ] Placeholder phrases like "please note" and "at this time."
-     - [ ] Starting all sentences with the same phrase (such as "You can" or "Todo").
-     - [ ] Phrasing in terms of "let's" do something.
-     - [ ] Using phrases like "simply" or "It's that simple" or "It's easy" in a
-     - [ ] procedure, unless it's an extraordinarily simple/easy procedure.
-   - [x] [Politeness and use of "please"](https://developers.google.com/style/tone#politeness-and-use-of-please "Politeness and use of &#34;please&#34;")
-     - :heavy_check_mark: `textlint-rule-google-tone`
+    - [ ] Some things to avoid where possible
+        - [ ] Placeholder phrases like "please note" and "at this time."
+        - [ ] Starting all sentences with the same phrase (such as "You can" or "Todo").
+        - [ ] Phrasing in terms of "let's" do something.
+        - [ ] Using phrases like "simply" or "It's that simple" or "It's easy" in a
+        - [ ] procedure, unless it's an extraordinarily simple/easy procedure.
+    - [x] [Politeness and use of "please"](https://developers.google.com/style/tone#politeness-and-use-of-please 'Politeness and use of "please"')
+        - :heavy_check_mark: `textlint-rule-google-tone`
 - [Documenting future features](https://developers.google.com/style/future)
 - [Accessible content](https://developers.google.com/style/accessibility)
 - [Writing for a global audience](https://developers.google.com/style/translation)
@@ -52,7 +52,7 @@ textlint --rule preset-google README.md
 - [Abbreviations](https://developers.google.com/style/abbreviations)
     - :heavy_check_mark: `textlint-rule-google-abbreviations`
     - [x] Prefer English terms over Latin abbreviations. Don't use "i.e." or "e.g.";
-      - instead, use "that is" or "for example," respectively.
+        - instead, use "that is" or "for example," respectively.
     - [x] Periods with abbreviations
 - [Active voice](https://developers.google.com/style/voice)
     - [ ] use active voice instead of passive voice

@@ -12,29 +12,29 @@ tester.run("textlint-rule-google-hyphens", rule, {
             output: "Free, simple, and publicly available implementations",
             errors: [
                 {
-                    index: 18
-                }
-            ]
+                    index: 18,
+                },
+            ],
         },
         {
             text: "To get profile information for the currently-authorized user",
             output: "To get profile information for the currently authorized user",
             errors: [
                 {
-                    index: 35
-                }
-            ]
+                    index: 35,
+                },
+            ],
         },
         //Range of numbers
         {
             text: "from 8-20 files",
             output: "8-20 files",
-            errors: [{}]
+            errors: [{}],
         },
         {
             text: "between 8-20 files",
             output: "8-20 files",
-            errors: [{}]
-        }
-    ]
+            errors: [{}],
+        },
+    ],
 });

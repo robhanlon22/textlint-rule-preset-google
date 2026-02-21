@@ -9,7 +9,7 @@ tester.run("textlint-rule-google-tone", rule, {
     valid: [
         "To view the document, click View.",
         "To get the user's phone number, call `user.phoneNumber.get()`.",
-        "To clean up, call the `collectGarbage()` method."
+        "To clean up, call the `collectGarbage()` method.",
     ],
     invalid: [
         {
@@ -18,9 +18,9 @@ tester.run("textlint-rule-google-tone", rule, {
             errors: [
                 {
                     message: message,
-                    index: 0
-                }
-            ]
+                    index: 0,
+                },
+            ],
         },
         {
             text: "For more information, please see document.",
@@ -28,9 +28,9 @@ tester.run("textlint-rule-google-tone", rule, {
             errors: [
                 {
                     message: message,
-                    index: 0
-                }
-            ]
-        }
-    ]
+                    index: 0,
+                },
+            ],
+        },
+    ],
 });

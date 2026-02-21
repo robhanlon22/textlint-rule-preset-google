@@ -16,9 +16,9 @@ tester.run("textlint-rule-google-", rule, {
         {
             text: "This is a FAQ.",
             options: {
-                a: ["FAQ"]
-            }
-        }
+                a: ["FAQ"],
+            },
+        },
     ],
     invalid: [
         // multiple
@@ -27,21 +27,21 @@ tester.run("textlint-rule-google-", rule, {
             output: "This is a pen.",
             errors: [
                 {
-                    index: 8
-                }
-            ]
+                    index: 8,
+                },
+            ],
         },
         {
             text: "This is an pen. This is not A umbrella",
             output: "This is a pen. This is not An umbrella",
             errors: [
                 {
-                    index: 8
+                    index: 8,
                 },
                 {
-                    index: 28
-                }
-            ]
-        }
-    ]
+                    index: 28,
+                },
+            ],
+        },
+    ],
 });

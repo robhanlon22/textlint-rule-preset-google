@@ -28,7 +28,6 @@ Via CLI
 textlint --rule @textlint-rule/google-abbreviations README.md
 ```
 
-
 ## Changelog
 
 See [Releases page](https://github.com/textlint-rule/textlint-rule-preset-google/releases).

@@ -1,10 +1,10 @@
 {
-  "extends": "./tsconfig.base.json",
-  "compilerOptions": {
-    "outDir": "./dist-tools",
-    "rootDir": "./tools",
-    "declaration": false
-  },
-  "include": ["tools/**/*.ts"],
-  "exclude": ["node_modules"]
+    "extends": "./tsconfig.base.json",
+    "compilerOptions": {
+        "outDir": "./dist-tools",
+        "rootDir": "./tools",
+        "declaration": false
+    },
+    "include": ["tools/**/*.ts"],
+    "exclude": ["node_modules"]
 }

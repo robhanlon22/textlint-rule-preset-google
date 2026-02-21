@@ -3,7 +3,7 @@
 import {
     paragraphReporter,
     getPos,
-    getPosFromSingleWord
+    getPosFromSingleWord,
 } from "@textlint-rule/textlint-report-helper-for-google-preset";
 
 // https://developers.google.com/style/clause-order
@@ -13,7 +13,7 @@ export const nounVerbMessage =
 export const noDoubleContractions =
     "Don't use double contractions: Double contractions contain not just one but two contracted words.\n" +
     "URL: https://developers.google.com/style/contractions";
-const report = context => {
+const report = (context) => {
     const dictionaries = [
         {
             pattern: /(\w+)'s (\w+)/,
@@ -28,7 +28,7 @@ const report = context => {
             replace: ({ captures }) => {
                 return `${captures[0]} is ${captures[1]}`;
             },
-            message: () => nounVerbMessage
+            message: () => nounVerbMessage,
         },
         {
             // These machines’re slow.
@@ -44,7 +44,7 @@ const report = context => {
             replace: ({ captures }) => {
                 return `${captures[0]} are ${captures[1]}`;
             },
-            message: () => nounVerbMessage
+            message: () => nounVerbMessage,
         },
         {
             // The following guides're (a) good way to learn to use Universal Analytics.
@@ -62,29 +62,29 @@ const report = context => {
             replace: ({ captures }) => {
                 return `${captures[0]} are ${captures[1]} ${captures[2]}`;
             },
-            message: () => nounVerbMessage
+            message: () => nounVerbMessage,
         },
         // Don't use double contractions
         {
             pattern: /mightn't've/,
             replace: () => "might not have",
-            message: () => noDoubleContractions
+            message: () => noDoubleContractions,
         },
         {
             pattern: /mustn't've/,
             replace: () => "must not have",
-            message: () => noDoubleContractions
+            message: () => noDoubleContractions,
         },
         {
             pattern: /wouldn't've/,
             replace: () => "would not have",
-            message: () => noDoubleContractions
+            message: () => noDoubleContractions,
         },
         {
             pattern: /shouldn't've/,
             replace: () => "should not have",
-            message: () => noDoubleContractions
-        }
+            message: () => noDoubleContractions,
+        },
     ];
 
     const { Syntax, RuleError, getSource, fixer, report } = context;
@@ -97,12 +97,12 @@ const report = context => {
                 getSource,
                 report,
                 RuleError,
-                fixer
+                fixer,
             });
-        }
+        },
     };
 };
 module.exports = {
     linter: report,
-    fixer: report
+    fixer: report,
 };

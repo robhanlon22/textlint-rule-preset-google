@@ -3,11 +3,11 @@
 import {
     paragraphReporter,
     getPosFromSingleWord,
-    PosType
+    PosType,
 } from "@textlint-rule/textlint-report-helper-for-google-preset";
 
 const DocumentURL = "https://developers.google.com/style/hyphens";
-const report = context => {
+const report = (context) => {
     const dictionaries = [
         // word(s)
         // if "words" is plural, report as error
@@ -20,8 +20,8 @@ const report = context => {
             },
             message: () => ` Don't put optional plurals in parentheses.
 ${DocumentURL}
-`
-        }
+`,
+        },
     ];
 
     const { Syntax, RuleError, getSource, fixer, report } = context;
@@ -34,12 +34,12 @@ ${DocumentURL}
                 report,
                 getSource,
                 RuleError,
-                fixer
+                fixer,
             });
-        }
+        },
     };
 };
 module.exports = {
     linter: report,
-    fixer: report
+    fixer: report,
 };

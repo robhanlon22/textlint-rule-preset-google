@@ -8,7 +8,7 @@ const fs = require("fs");
 const path = require("path");
 const cheerio = require("cheerio");
 const client = require("cheerio-httpcli");
-const toText = html => {
+const toText = (html) => {
     const $ = cheerio.load(html);
     return $.text();
 };
@@ -28,25 +28,19 @@ const toText = html => {
                 // clean html tag
                 if (!match) {
                     return {
-                        word: $(element)
-                            .text()
-                            .trim(),
-                        message: toText(descriptionHtml).trim()
+                        word: $(element).text().trim(),
+                        message: toText(descriptionHtml).trim(),
                     };
                 }
                 const description = descriptionHtml.slice(0, match.index);
                 return {
-                    word: $(element)
-                        .text()
-                        .trim(),
-                    message: toText(description).trim()
+                    word: $(element).text().trim(),
+                    message: toText(description).trim(),
                 };
             }
             return {
-                word: $(element)
-                    .text()
-                    .trim(),
-                message: ""
+                word: $(element).text().trim(),
+                message: "",
             };
         })
         .get();

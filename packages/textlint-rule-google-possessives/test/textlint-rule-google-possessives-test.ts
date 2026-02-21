@@ -21,69 +21,69 @@ tester.run("textlint-rule-google-possessives", rule, {
         "users'", // plural,
         "Elise Williams's",
         "the Williamses'",
-        "women's" // <
+        "women's", // <
     ],
     invalid: [
         {
             text: "businesses's",
             errors: [
                 {
-                    index: 0
-                }
-            ]
+                    index: 0,
+                },
+            ],
         },
         {
             text: "Buzz'",
             errors: [
                 {
-                    index: 0
-                }
-            ]
+                    index: 0,
+                },
+            ],
         },
         {
             text: "Carlos'",
             errors: [
                 {
                     index: 0,
-                    message: defaultMessage
-                }
-            ]
+                    message: defaultMessage,
+                },
+            ],
         },
         {
             text: "class'",
             errors: [
                 {
                     index: 0,
-                    message: defaultMessage
-                }
-            ]
+                    message: defaultMessage,
+                },
+            ],
         },
         {
             text: "examples's",
             errors: [
                 {
                     index: 0,
-                    message: defaultMessage
-                }
-            ]
+                    message: defaultMessage,
+                },
+            ],
         },
         {
             text: "users's",
             errors: [
                 {
                     index: 0,
-                    message: defaultMessage
-                }
-            ]
+                    message: defaultMessage,
+                },
+            ],
         },
         {
             text: "values's",
             errors: [
                 {
                     index: 0,
-                    message: defaultMessage
-                }
-            ]
-        }
-    ]
+                    message: defaultMessage,
+                },
+            ],
+        },
+    ],
 });

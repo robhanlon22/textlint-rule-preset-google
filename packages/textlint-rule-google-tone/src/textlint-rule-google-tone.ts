@@ -2,7 +2,7 @@
 "use strict";
 import { paragraphReporter, getPos } from "@textlint-rule/textlint-report-helper-for-google-preset";
 
-const report = context => {
+const report = (context) => {
     // Politeness and use of "please"
     // https://developers.google.com/style/tone#politeness-and-use-of-please
     const dictionaries = [
@@ -15,7 +15,7 @@ const report = context => {
                 return `To ${captures[0]} ${captures[1]}, ${captures[2]}`;
             },
             message: () => `using "please" in a set of instructions is overdoing the politeness.\n
-        URL: https://developers.google.com/style/tone#politeness-and-use-of-please`
+        URL: https://developers.google.com/style/tone#politeness-and-use-of-please`,
         },
         {
             pattern: /(For more \w+), please (\w+)/,
@@ -26,8 +26,8 @@ const report = context => {
                 return `${captures[0]}, ${captures[1]}`;
             },
             message: () => `using "please" in a set of instructions is overdoing the politeness.\n
-        URL: https://developers.google.com/style/tone#politeness-and-use-of-please`
-        }
+        URL: https://developers.google.com/style/tone#politeness-and-use-of-please`,
+        },
     ];
 
     const { Syntax, RuleError, getSource, fixer, report } = context;
@@ -40,12 +40,12 @@ const report = context => {
                 report,
                 getSource,
                 RuleError,
-                fixer
+                fixer,
             });
-        }
+        },
     };
 };
 module.exports = {
     linter: report,
-    fixer: report
+    fixer: report,
 };

@@ -5,11 +5,11 @@ export const checkBoldTextPrecedingColon = ({ node, Syntax, RuleError, getSource
     if (!children) {
         return;
     }
-    const BoldNodeList = children.filter(childNode => {
+    const BoldNodeList = children.filter((childNode) => {
         return childNode.type === Syntax.Strong;
     });
 
-    BoldNodeList.forEach(boldNode => {
+    BoldNodeList.forEach((boldNode) => {
         const currentIndex = children.indexOf(boldNode);
         const nextNodeOfBold = children[currentIndex + 1];
         if (!nextNodeOfBold) {
@@ -41,16 +41,16 @@ https://developers.google.com/style/colons#bold-text-preceding-colon
             strNodeOfBoldNode,
             new RuleError(message, {
                 index: strNodeOfBoldNode.range[0] - node.range[0],
-                fix: fixer.replaceText(strNodeOfBoldNode, `${getSource(strNodeOfBoldNode)}:`)
-            })
+                fix: fixer.replaceText(strNodeOfBoldNode, `${getSource(strNodeOfBoldNode)}:`),
+            }),
         );
         // remove `:` from next node
         report(
             nextNodeOfBold,
             new RuleError(message, {
                 index: 0,
-                fix: fixer.removeRange([0, 1])
-            })
+                fix: fixer.removeRange([0, 1]),
+            }),
         );
     });
 };

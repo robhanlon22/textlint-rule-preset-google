@@ -7,7 +7,7 @@ const blacklistModules = ["textlint-report-helper-for-google-preset", "textlint-
 const updatePackageDepencencies = (pkg, dependencies) => {
     const updatedDependencies = Object.assign({}, pkg.dependencies, dependencies);
     return Object.assign({}, pkg, {
-        dependencies: updatedDependencies
+        dependencies: updatedDependencies,
     });
 };
 const updatePackage = (pkg, updatablePkg) => {
@@ -16,7 +16,7 @@ const updatePackage = (pkg, updatablePkg) => {
 /**
  * Update textlint-rule-preset-google
  */
-const packageNames = getPackages(blacklistModules).map(packageDirectory => {
+const packageNames = getPackages(blacklistModules).map((packageDirectory) => {
     const packageJSONPath = path.join(packageDirectory, "package.json");
     const pkg = JSON.parse(fs.readFileSync(packageJSONPath, "utf-8"));
     return pkg.name;
@@ -30,7 +30,7 @@ const packageNames = getPackages(blacklistModules).map(packageDirectory => {
  */
 const createRuleDependencies = (packageNames, version) => {
     const dependencies = {};
-    packageNames.forEach(packageName => {
+    packageNames.forEach((packageName) => {
         dependencies[packageName] = `^${version}`;
     });
     return dependencies;
@@ -39,10 +39,10 @@ const createRuleDependencies = (packageNames, version) => {
  * create "rules" and "rulesConfig" module source text
  * @param packageNames
  */
-const createRuleAndConfig = packageNames => {
+const createRuleAndConfig = (packageNames) => {
     const rules = {};
     const rulesConfig = {};
-    packageNames.forEach(packageName => {
+    packageNames.forEach((packageName) => {
         const shortName = packageName.replace("@textlint-rule/textlint-rule-google-", "");
         rules[shortName] = `require("${packageName}")`;
         rulesConfig[shortName] = true;
@@ -51,10 +51,10 @@ const createRuleAndConfig = packageNames => {
 module.exports = ${JSON.stringify(
         {
             rules,
-            rulesConfig
+            rulesConfig,
         },
         null,
-        4
+        4,
     )};
 `.replace(/"require\(\\"(.*)\\"\)"/g, `require("$1")`);
 };
@@ -66,11 +66,11 @@ const packagesDirectory = path.join(__dirname, "../packages");
 /**
  * Version = package.json version
  */
-getPackages().forEach(packageDirectory => {
+getPackages().forEach((packageDirectory) => {
     const packageJSONPath = path.join(packageDirectory, "package.json");
     const pkg = JSON.parse(fs.readFileSync(packageJSONPath, "utf-8"));
     const newPkg = updatePackage(pkg, {
-        version: monorepoVersion
+        version: monorepoVersion,
     });
     fs.writeFileSync(packageJSONPath, JSON.stringify(newPkg, null, 2), "utf-8");
 });

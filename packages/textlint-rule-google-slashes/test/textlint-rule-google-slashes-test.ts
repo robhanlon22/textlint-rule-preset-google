@@ -17,20 +17,19 @@ tester.run("textlint-rule-google-slashes", rule, {
         "This is https://github.com/almin/almin/tree/master/examples/todomvc",
         "- https://github.com/almin/almin/tree/master/examples/todomvc\n",
         '- [almin/examples/counter/test at master · almin/almin](https://github.com/almin/almin/tree/master/examples/counter/test "almin/examples/counter/test at master · almin/almin")',
-        '[almin/examples/counter/test at master · almin/almin](https://github.com/almin/almin/tree/master/examples/counter/test "almin/examples/counter/test at master · almin/almin")'
+        '[almin/examples/counter/test at master · almin/almin](https://github.com/almin/almin/tree/master/examples/counter/test "almin/examples/counter/test at master · almin/almin")',
     ],
     invalid: [
         // Slashes with alternatives
         {
-            text:
-                "For example, a disaster relief map is not subject to the usage limits even if it has been developed/hosted by a commercial entity.",
+            text: "For example, a disaster relief map is not subject to the usage limits even if it has been developed/hosted by a commercial entity.",
             errors: [
                 {
                     message: `Don't use slashes to separate alternatives.
 https://developers.google.com/style/slashes#slashes-with-alternatives
-`
-                }
-            ]
+`,
+                },
+            ],
         },
         {
             text: "Call this method 5/6 times.",
@@ -38,9 +37,9 @@ https://developers.google.com/style/slashes#slashes-with-alternatives
                 {
                     message: `Don't use slashes with fractions, as they can be ambiguous.
 https://developers.google.com/style/slashes#slashes-with-fractions
-`
-                }
-            ]
+`,
+                },
+            ],
         },
         // Slashes with fractions
         {
@@ -49,9 +48,9 @@ https://developers.google.com/style/slashes#slashes-with-fractions
                 {
                     message: `Don't use slashes with fractions, as they can be ambiguous.
 https://developers.google.com/style/slashes#slashes-with-fractions
-`
-                }
-            ]
+`,
+                },
+            ],
         },
         // Slashes with abbreviations
         {
@@ -61,9 +60,9 @@ https://developers.google.com/style/slashes#slashes-with-fractions
                 {
                     message: `Don't use abbreviations that rely on slashes. Instead, spell the words out.
 https://developers.google.com/style/slashes#slashes-with-abbreviations
-`
-                }
-            ]
+`,
+                },
+            ],
         },
         {
             text: "lint w/ textlint",
@@ -72,9 +71,9 @@ https://developers.google.com/style/slashes#slashes-with-abbreviations
                 {
                     message: `Don't use abbreviations that rely on slashes. Instead, spell the words out.
 https://developers.google.com/style/slashes#slashes-with-abbreviations
-`
-                }
-            ]
+`,
+                },
+            ],
         },
         {
             text: "Use L/R when discussing stereo panning.",
@@ -83,9 +82,9 @@ https://developers.google.com/style/slashes#slashes-with-abbreviations
                 {
                     message: `Don't use abbreviations that rely on slashes. Instead, spell the words out.
 https://developers.google.com/style/slashes#slashes-with-abbreviations
-`
-                }
-            ]
+`,
+                },
+            ],
         },
         {
             text: "Use M/S in your mastering chain.",
@@ -94,9 +93,9 @@ https://developers.google.com/style/slashes#slashes-with-abbreviations
                 {
                     message: `Don't use abbreviations that rely on slashes. Instead, spell the words out.
 https://developers.google.com/style/slashes#slashes-with-abbreviations
-`
-                }
-            ]
-        }
-    ]
+`,
+                },
+            ],
+        },
+    ],
 });

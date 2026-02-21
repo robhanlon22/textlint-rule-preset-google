@@ -3,7 +3,7 @@
 Reference [Exclamation points  |  Google Developer Documentation Style Guide  |  Google Developers](https://developers.google.com/style/exclamation-points)
 
 See also:
-          
+
 - [azu/textlint-rule-no-exclamation-question-mark: textlint rule that disallow exclamation and question mark.](https://github.com/azu/textlint-rule-no-exclamation-question-mark)
 
 ## Install
@@ -44,7 +44,6 @@ textlint --rule @textlint-rule/google-exclamation-points README.md
     "allowFullWidthQuestion": false
 }
 ```
-
 
 ## Changelog
 

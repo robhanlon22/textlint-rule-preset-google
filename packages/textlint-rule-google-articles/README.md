@@ -34,8 +34,8 @@ Specify article by `a` and `an`.
 {
     "rules": {
         "@textlint-rule/google-articles": {
-          "a": ["forceAWord"],
-          "an":["forceAnWord"]
+            "a": ["forceAWord"],
+            "an": ["forceAnWord"]
         }
     }
 }

@@ -4,7 +4,7 @@ import { strReporter, getPos, PosType } from "@textlint-rule/textlint-report-hel
 
 const { RuleHelper } = require("textlint-rule-helper");
 const DocumentURL = "https://developers.google.com/style/dashes";
-const report = context => {
+const report = (context) => {
     const { Syntax, RuleError, getSource, fixer, report } = context;
     // Notes: the order is important when Apply fixes
     const dictionaries = [
@@ -40,7 +40,7 @@ const report = context => {
             replace: ({ captures }) => {
                 return `${captures[0]}: ${captures[3]}`;
             },
-            message: () => "Use colons(:) instead of dashes(-) in lists" + "\n" + DocumentURL
+            message: () => "Use colons(:) instead of dashes(-) in lists" + "\n" + DocumentURL,
         },
         {
             // use "—"(em dash) instead of " - "(hyphen)
@@ -64,8 +64,8 @@ const report = context => {
                 }
                 return `${captures[0]}—${captures[1]}`;
             },
-            message: () => 'Use "—"(em dash) instead of " - "(hyphen)' + "\n" + DocumentURL
-        }
+            message: () => 'Use "—"(em dash) instead of " - "(hyphen)' + "\n" + DocumentURL,
+        },
     ];
 
     const helper = new RuleHelper(context);
@@ -83,12 +83,12 @@ const report = context => {
                 report,
                 getSource,
                 RuleError,
-                fixer
+                fixer,
             });
-        }
+        },
     };
 };
 module.exports = {
     linter: report,
-    fixer: report
+    fixer: report,
 };

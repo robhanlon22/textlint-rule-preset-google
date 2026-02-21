@@ -4,11 +4,11 @@ import {
     paragraphReporter,
     getPosFromSingleWord,
     PosType,
-    isSameGroupPosType
+    isSameGroupPosType,
 } from "@textlint-rule/textlint-report-helper-for-google-preset";
 
 const DocumentURL = "https://developers.google.com/style/hyphens";
-const report = context => {
+const report = (context) => {
     const dictionaries = [
         // Serial commas
         {
@@ -32,7 +32,7 @@ const report = context => {
                 return `In a series of three or more items, use a comma before the final "and" or "or.".
 https://developers.google.com/style/commas#serial-commas
 `;
-            }
+            },
         },
         // Commas after introductory words and phrases
         // Commas separating two independent clauses
@@ -57,7 +57,7 @@ https://developers.google.com/style/commas#serial-commas
                 return `In general, put a semicolon or a period or a dash before a conjunctive adverb, such as "otherwise" or "however" or "therefore," and put a comma after the conjunctive adverb.
 https://developers.google.com/style/commas#setting-off-other-kinds-of-clauses
 `;
-            }
+            },
         },
         {
             pattern: /([.;–]) (however|otherwise|therefore) /g,
@@ -66,8 +66,8 @@ https://developers.google.com/style/commas#setting-off-other-kinds-of-clauses
                 return `In general, put a semicolon or a period or a dash before a conjunctive adverb, such as "otherwise" or "however" or "therefore," and put a comma after the conjunctive adverb.
 https://developers.google.com/style/commas#setting-off-other-kinds-of-clauses
 `;
-            }
-        }
+            },
+        },
     ];
 
     const { Syntax, RuleError, getSource, fixer, report } = context;
@@ -80,12 +80,12 @@ https://developers.google.com/style/commas#setting-off-other-kinds-of-clauses
                 report,
                 getSource,
                 RuleError,
-                fixer
+                fixer,
             });
-        }
+        },
     };
 };
 module.exports = {
     linter: report,
-    fixer: report
+    fixer: report,
 };

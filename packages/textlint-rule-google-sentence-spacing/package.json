@@ -1,50 +1,50 @@
 {
-  "directories": {
-    "lib": "lib",
-    "test": "test"
-  },
-  "author": "azu",
-  "license": "MIT",
-  "files": [
-    "bin/",
-    "lib/",
-    "src/"
-  ],
-  "name": "@textlint-rule/textlint-rule-google-sentence-spacing",
-  "version": "0.1.2",
-  "description": "Reference: https://developers.google.com/style/sentence-spacing",
-  "main": "lib/textlint-rule-google-sentence-spacing.js",
-  "scripts": {
-    "test": "mocha --require ts-node/register/transpile-only \"test/**/*.ts\"",
-    "prettier": "prettier --write '**/*.{js,jsx,ts,tsx,css}'",
-    "prepublish": "npm run --if-present build",
-    "build": "tsc -p tsconfig.json",
-    "watch": "tsc -p tsconfig.json --watch"
-  },
-  "keywords": [
-    "textlintrule"
-  ],
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/textlint-rule/textlint-rule-preset-google.git"
-  },
-  "bugs": {
-    "url": "https://github.com/textlint-rule/textlint-rule-preset-google/issues"
-  },
-  "homepage": "https://github.com/textlint-rule/textlint-rule-preset-google/tree/master/packages/textlint-rule-google-sentence-spacing/",
-  "devDependencies": {
-    "prettier": "^1.7.4"
-  },
-  "prettier": {
-    "printWidth": 120,
-    "tabWidth": 4
-  },
-  "dependencies": {
-    "sentence-splitter": "2.3.2",
-    "textlint-rule-helper": "^2.0.0",
-    "textlint-util-to-string": "^2.1.1"
-  },
-  "publishConfig": {
-    "access": "public"
-  }
+    "directories": {
+        "lib": "lib",
+        "test": "test"
+    },
+    "author": "azu",
+    "license": "MIT",
+    "files": [
+        "bin/",
+        "lib/",
+        "src/"
+    ],
+    "name": "@textlint-rule/textlint-rule-google-sentence-spacing",
+    "version": "0.1.2",
+    "description": "Reference: https://developers.google.com/style/sentence-spacing",
+    "main": "lib/textlint-rule-google-sentence-spacing.js",
+    "scripts": {
+        "test": "mocha --require ts-node/register/transpile-only \"test/**/*.ts\"",
+        "prettier": "prettier --write '**/*.{js,jsx,ts,tsx,css}'",
+        "prepublish": "npm run --if-present build",
+        "build": "tsc -p tsconfig.json",
+        "watch": "tsc -p tsconfig.json --watch"
+    },
+    "keywords": [
+        "textlintrule"
+    ],
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/textlint-rule/textlint-rule-preset-google.git"
+    },
+    "bugs": {
+        "url": "https://github.com/textlint-rule/textlint-rule-preset-google/issues"
+    },
+    "homepage": "https://github.com/textlint-rule/textlint-rule-preset-google/tree/master/packages/textlint-rule-google-sentence-spacing/",
+    "devDependencies": {
+        "prettier": "^3.8.1"
+    },
+    "prettier": {
+        "printWidth": 120,
+        "tabWidth": 4
+    },
+    "dependencies": {
+        "sentence-splitter": "5.0.0",
+        "textlint-rule-helper": "^2.5.0",
+        "textlint-util-to-string": "^3.3.4"
+    },
+    "publishConfig": {
+        "access": "public"
+    }
 }

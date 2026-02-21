@@ -17,13 +17,13 @@ const updatePackage = (pkg, updatablePkg) => {
  *
  * Keep package publishing metadata explicit.
  */
-getPackages().forEach(packageDirectory => {
+getPackages().forEach((packageDirectory) => {
     const packageJSONPath = path.join(packageDirectory, "package.json");
     const pkg = JSON.parse(fs.readFileSync(packageJSONPath, "utf-8"));
     const newPkg = updatePackage(pkg, {
         publishConfig: {
-            access: "public"
-        }
+            access: "public",
+        },
     });
     fs.writeFileSync(packageJSONPath, JSON.stringify(newPkg, null, 2), "utf-8");
 });

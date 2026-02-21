@@ -15,11 +15,11 @@ This is ` obj.code   =    1;  `.
 
 [   .   .   . link is ok    .     .     . ](http://example.com)
 
-# Allow first and last spaces 
+# Allow first and last spaces
 
   sentence is 1. sentence 2. sentence 3.
-sentence is 1. sentence 2. sentence 3.  
-  sentence is 1. sentence 2. sentence 3.  
+sentence is 1. sentence 2. sentence 3.
+  sentence is 1. sentence 2. sentence 3.
 ```
 
 **NG**:
@@ -28,8 +28,6 @@ sentence is 1. sentence 2. sentence 3.
 There are two sentence.  But have two space.
 sentence is 1.  sentence 2.  sentence 3.
 ```
-
-
 
 ## Install
 
@@ -54,7 +52,6 @@ Via CLI
 ```
 textlint --rule @textlint-rule/google-sentence-spacing README.md
 ```
-
 
 ## Changelog
 

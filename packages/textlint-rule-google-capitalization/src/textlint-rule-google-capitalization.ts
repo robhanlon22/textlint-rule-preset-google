@@ -4,9 +4,9 @@ const capitalizationRule = require("textlint-rule-en-capitalization");
 const DocumentURL = "https://developers.google.com/style/capitalization";
 const defaultOptions = {
     // allow lower-case words in anywhere
-    allowWords: []
+    allowWords: [],
 };
-const createReporter = capitalizationReport => {
+const createReporter = (capitalizationReport) => {
     return (context, options = defaultOptions) => {
         const { report } = context;
         const overlayContext = Object.create(context);
@@ -18,12 +18,12 @@ const createReporter = capitalizationReport => {
             },
             enumerable: true,
             configurable: true,
-            writable: true
+            writable: true,
         });
         return capitalizationReport(overlayContext, options);
     };
 };
 module.exports = {
     linter: createReporter(capitalizationRule.linter),
-    fixer: createReporter(capitalizationRule.fixer)
+    fixer: createReporter(capitalizationRule.fixer),
 };

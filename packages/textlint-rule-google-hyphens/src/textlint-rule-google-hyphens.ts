@@ -3,11 +3,11 @@
 import {
     paragraphReporter,
     getPosFromSingleWord,
-    PosType
+    PosType,
 } from "@textlint-rule/textlint-report-helper-for-google-preset";
 
 const DocumentURL = "https://developers.google.com/style/hyphens";
-const report = context => {
+const report = (context) => {
     const dictionaries = [
         // Adverbs ending in "ly"
         {
@@ -19,7 +19,7 @@ const report = context => {
             replace: ({ captures }) => {
                 return `${captures[0]} ${captures[1]}`;
             },
-            message: () => `Don't hyphenate adverbs ending in "ly" except where needed for clarity.`
+            message: () => `Don't hyphenate adverbs ending in "ly" except where needed for clarity.`,
         },
         // TODO: When to hyphenate
         // TODO: Compound words
@@ -29,8 +29,8 @@ const report = context => {
             replace: ({ captures }) => {
                 return `${captures[1]}`;
             },
-            message: () => `Use a hyphen to indicate a range of numbers. Don't add words such as "from" or "between".`
-        }
+            message: () => `Use a hyphen to indicate a range of numbers. Don't add words such as "from" or "between".`,
+        },
         // Spaces around hyphens => textlint-rule-google-dashes
     ];
 
@@ -44,12 +44,12 @@ const report = context => {
                 report,
                 getSource,
                 RuleError,
-                fixer
+                fixer,
             });
-        }
+        },
     };
 };
 module.exports = {
     linter: report,
-    fixer: report
+    fixer: report,
 };

@@ -4,7 +4,7 @@ Reference:
 
 - [Dashes  |  Google Developer Documentation Style Guide  |  Google Developers](https://developers.google.com/style/dashes "Dashes  |  Google Developer Documentation Style Guide  |  Google Developers")
 - [Ranges of numbers](https://developers.google.com/style/numbers "Ranges of numbers")
-- [punctuation - Em-dash vs colon: "Remind me: what's your name again?" or "Remind me—what's your name again?" - English Language & Usage Stack Exchange](https://english.stackexchange.com/questions/151971/em-dash-vs-colon-remind-me-whats-your-name-again-or-remind-me-whats-your "punctuation - Em-dash vs colon: &#34;Remind me: what&#39;s your name again?&#34; or &#34;Remind me—what&#39;s your name again?&#34; - English Language &amp; Usage Stack Exchange")
+- [punctuation - Em-dash vs colon: "Remind me: what's your name again?" or "Remind me—what's your name again?" - English Language & Usage Stack Exchange](https://english.stackexchange.com/questions/151971/em-dash-vs-colon-remind-me-whats-your-name-again-or-remind-me-whats-your (punctuation - Em-dash vs colon: "Remind me: what's your name again?" or "Remind me—what's your name again?" - English Language & Usage Stack Exchange))
 - [Dash - Wikipedia](https://en.wikipedia.org/wiki/Dash#Em_dash "Dash - Wikipedia")
 
 ## Install
@@ -34,8 +34,7 @@ textlint --rule @textlint-rule/google-dashes README.md
 ## TODO
 
 - [ ] use colon instead of dash or hyphen
-  - Currently, support partially
-
+    - Currently, support partially
 
 ## Changelog
 

@@ -9,7 +9,7 @@ const parser = new EnglishParser();
 // Additional lexicon
 const lexicon = require("en-lexicon");
 lexicon.extend({
-    browser: "NN"
+    browser: "NN",
 });
 /**
  * Pos Type
@@ -59,7 +59,7 @@ export const PosType = {
     PoundSign: "#",
     CurrencySymbols: "$",
     OtherSymbols: "SYM",
-    EmojisEmoticons: "EM"
+    EmojisEmoticons: "EM",
 };
 
 export const getPosFromSingleWord = (word: string): PosTypeLiteral => {

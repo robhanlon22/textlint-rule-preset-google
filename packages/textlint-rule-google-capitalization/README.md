@@ -32,12 +32,12 @@ You can set whitelist words.
 
 ```json5
 {
-    "rules": {
+    rules: {
         "@textlint-rule/google-capitalization": {
             // allow lower-case words in anywhere
-            allowWords: []
-        }
-    }
+            allowWords: [],
+        },
+    },
 }
 ```
 

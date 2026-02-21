@@ -1,48 +1,48 @@
 {
-  "directories": {
-    "lib": "lib",
-    "test": "test"
-  },
-  "author": "azu",
-  "license": "MIT",
-  "files": [
-    "bin/",
-    "lib/",
-    "src/"
-  ],
-  "name": "@textlint-rule/textlint-rule-google-exclamation-points",
-  "version": "0.1.2",
-  "description": "Reference https://developers.google.com/style/exclamation-points",
-  "main": "lib/textlint-rule-google-exclamation-points.js",
-  "scripts": {
-    "test": "mocha --require ts-node/register/transpile-only \"test/**/*.ts\"",
-    "prettier": "prettier --write '**/*.{js,jsx,ts,tsx,css}'",
-    "prepublish": "npm run --if-present build",
-    "build": "tsc -p tsconfig.json",
-    "watch": "tsc -p tsconfig.json --watch"
-  },
-  "keywords": [
-    "textlintrule"
-  ],
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/textlint-rule/textlint-rule-preset-google.git"
-  },
-  "bugs": {
-    "url": "https://github.com/textlint-rule/textlint-rule-preset-google/issues"
-  },
-  "homepage": "https://github.com/textlint-rule/textlint-rule-preset-google/tree/master/packages/textlint-rule-google-exclamation-points/",
-  "devDependencies": {
-    "prettier": "^1.7.4"
-  },
-  "prettier": {
-    "printWidth": 120,
-    "tabWidth": 4
-  },
-  "dependencies": {
-    "textlint-rule-no-exclamation-question-mark": "^1.0.2"
-  },
-  "publishConfig": {
-    "access": "public"
-  }
+    "directories": {
+        "lib": "lib",
+        "test": "test"
+    },
+    "author": "azu",
+    "license": "MIT",
+    "files": [
+        "bin/",
+        "lib/",
+        "src/"
+    ],
+    "name": "@textlint-rule/textlint-rule-google-exclamation-points",
+    "version": "0.1.2",
+    "description": "Reference https://developers.google.com/style/exclamation-points",
+    "main": "lib/textlint-rule-google-exclamation-points.js",
+    "scripts": {
+        "test": "mocha --require ts-node/register/transpile-only \"test/**/*.ts\"",
+        "prettier": "prettier --write '**/*.{js,jsx,ts,tsx,css}'",
+        "prepublish": "npm run --if-present build",
+        "build": "tsc -p tsconfig.json",
+        "watch": "tsc -p tsconfig.json --watch"
+    },
+    "keywords": [
+        "textlintrule"
+    ],
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/textlint-rule/textlint-rule-preset-google.git"
+    },
+    "bugs": {
+        "url": "https://github.com/textlint-rule/textlint-rule-preset-google/issues"
+    },
+    "homepage": "https://github.com/textlint-rule/textlint-rule-preset-google/tree/master/packages/textlint-rule-google-exclamation-points/",
+    "devDependencies": {
+        "prettier": "^3.8.1"
+    },
+    "prettier": {
+        "printWidth": 120,
+        "tabWidth": 4
+    },
+    "dependencies": {
+        "textlint-rule-no-exclamation-question-mark": "^1.1.0"
+    },
+    "publishConfig": {
+        "access": "public"
+    }
 }

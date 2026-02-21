@@ -3,7 +3,7 @@
 import { paragraphReporter, getPosFromSingleWord } from "@textlint-rule/textlint-report-helper-for-google-preset";
 
 const DocumentURL = "https://developers.google.com/style/possessives";
-const report = context => {
+const report = (context) => {
     const { Syntax, RuleError, getSource, fixer, report } = context;
     const dictionaries = [
         // NG: plural word + 's
@@ -20,7 +20,7 @@ const report = context => {
             message: () =>
                 'A plural noun that does end in "s", add an apostrophe(\') but no additional "s" or use "of"' +
                 "\n" +
-                DocumentURL
+                DocumentURL,
         },
         // NG: singular noun + '
         {
@@ -46,8 +46,8 @@ const report = context => {
             message: () =>
                 'To form a possessive of a singular noun (regardless of whether it ends in s) or a plural noun that doesn\'t end in "s", add "\'s" to the end of the word' +
                 "\n" +
-                DocumentURL
-        }
+                DocumentURL,
+        },
     ];
 
     return {
@@ -59,12 +59,12 @@ const report = context => {
                 report,
                 getSource,
                 RuleError,
-                fixer
+                fixer,
             });
-        }
+        },
     };
 };
 module.exports = {
     linter: report,
-    fixer: report
+    fixer: report,
 };

@@ -6,14 +6,14 @@ import { paragraphReporter, getPos } from "@textlint-rule/textlint-report-helper
 export const defaultMessage =
     "Put conditional clauses before instructions, not after.\n" +
     "URL: https://developers.google.com/style/clause-order";
-const report = context => {
+const report = (context) => {
     const dictionaries = [
         {
             pattern: /See (.*) for more (information|details|detail)./,
             replace: ({ captures }) => {
                 return `For more ${captures[1]}, see ${captures[0]}.`;
             },
-            message: () => defaultMessage
+            message: () => defaultMessage,
         },
         {
             pattern: /Click ([\w-]+) if you want to (.+)./,
@@ -23,8 +23,8 @@ const report = context => {
             replace: ({ captures }) => {
                 return `To ${captures[1]}, click ${captures[0]}.`;
             },
-            message: () => defaultMessage
-        }
+            message: () => defaultMessage,
+        },
     ];
 
     const { Syntax, RuleError, getSource, fixer, report } = context;
@@ -37,12 +37,12 @@ const report = context => {
                 report,
                 getSource,
                 RuleError,
-                fixer
+                fixer,
             });
-        }
+        },
     };
 };
 module.exports = {
     linter: report,
-    fixer: report
+    fixer: report,
 };

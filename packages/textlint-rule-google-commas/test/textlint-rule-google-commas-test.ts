@@ -18,14 +18,14 @@ tester.run("textlint-rule-google-commas", rule, {
         "The manager acknowledged the last team member who entered the room, and started the meeting.",
         // Setting off other kinds of clauses
         "Name of the group, which has a maximum length of 200 characters.",
-        "The variable must have a value; otherwise, the server returns an error."
+        "The variable must have a value; otherwise, the server returns an error.",
     ],
     invalid: [
         // Serial commas
         {
             text: "I dedicate this book to my parents, Ayn Rand and God.",
             output: "I dedicate this book to my parents, Ayn Rand, and God.",
-            errors: [{}]
+            errors: [{}],
         },
         // Commas after introductory words and phrases
         // Commas separating two independent clauses
@@ -67,7 +67,7 @@ tester.run("textlint-rule-google-commas", rule, {
         {
             text: "The variable must have a value; otherwise the server returns an error.",
             output: "The variable must have a value; otherwise, the server returns an error.",
-            errors: [{}]
-        }
-    ]
+            errors: [{}],
+        },
+    ],
 });

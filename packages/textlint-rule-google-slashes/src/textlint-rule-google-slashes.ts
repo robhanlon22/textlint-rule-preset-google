@@ -5,9 +5,9 @@ import { paragraphReporter } from "@textlint-rule/textlint-report-helper-for-goo
 const REPLACE_ABBR_DICT = {
     "c/o": "care of",
     "w/": "with",
-    "w/o": "without"
+    "w/o": "without",
 };
-const report = context => {
+const report = (context) => {
     const dictionaries = [
         // Slashes with dates => other rule
         {
@@ -18,7 +18,7 @@ const report = context => {
             },
             message: () => `Don't use slashes to separate alternatives.
 https://developers.google.com/style/slashes#slashes-with-alternatives
-`
+`,
         },
         // TODO: Slashes with file paths and URLs
 
@@ -28,7 +28,7 @@ https://developers.google.com/style/slashes#slashes-with-alternatives
             pattern: /\b(\d+)\/(\d+)\b/g,
             message: () => `Don't use slashes with fractions, as they can be ambiguous.
 https://developers.google.com/style/slashes#slashes-with-fractions
-`
+`,
         },
         // Slashes with abbreviations
         // https://developers.google.com/style/slashes#slashes-with-abbreviations
@@ -47,8 +47,8 @@ https://developers.google.com/style/slashes#slashes-with-fractions
             },
             message: () => `Don't use abbreviations that rely on slashes. Instead, spell the words out.
 https://developers.google.com/style/slashes#slashes-with-abbreviations
-`
-        }
+`,
+        },
     ];
 
     const { Syntax, RuleError, getSource, fixer, report } = context;
@@ -61,12 +61,12 @@ https://developers.google.com/style/slashes#slashes-with-abbreviations
                 report,
                 getSource,
                 RuleError,
-                fixer
+                fixer,
             });
-        }
+        },
     };
 };
 module.exports = {
     linter: report,
-    fixer: report
+    fixer: report,
 };
