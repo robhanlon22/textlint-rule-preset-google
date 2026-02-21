@@ -1,31 +1,35 @@
 // MIT © 2017 azu
 import TextLintTester from "textlint-tester";
-import rule from "../src/textlint-rule-google-plurals-parentheses";
+import rule from "../src/textlint-rule-google-plurals-parentheses.js";
 const tester = new TextLintTester();
-tester.run("textlint-rule-google-plurals-parentheses", rule, {
-  valid: [
-    "To find your API key, visit the Credentials page.",
-    "The value of the parent depends on the values of its children.",
-  ],
-  invalid: [
-    {
-      text: "To find your API key(s), visit the Credentials page.",
-      errors: [
-        {
-          index: 17,
-        },
-      ],
-    },
-    {
-      text: "The value of the parent depends on the value(s) of its child(ren).",
-      errors: [
-        {
-          index: 39,
-        },
-        {
-          index: 55,
-        },
-      ],
-    },
-  ],
-});
+tester.run(
+  "textlint-rule-google-plurals-parentheses",
+  rule as GoogleRuleModule,
+  {
+    valid: [
+      "To find your API key, visit the Credentials page.",
+      "The value of the parent depends on the values of its children.",
+    ],
+    invalid: [
+      {
+        text: "To find your API key(s), visit the Credentials page.",
+        errors: [
+          {
+            index: 17,
+          },
+        ],
+      },
+      {
+        text: "The value of the parent depends on the value(s) of its child(ren).",
+        errors: [
+          {
+            index: 39,
+          },
+          {
+            index: 55,
+          },
+        ],
+      },
+    ],
+  },
+);

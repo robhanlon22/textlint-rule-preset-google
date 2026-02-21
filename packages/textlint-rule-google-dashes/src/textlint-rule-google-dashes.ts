@@ -6,12 +6,13 @@ import {
 } from "@textlint-rule/textlint-report-helper-for-google-preset";
 import textlintRuleHelper from "textlint-rule-helper";
 
-const { RuleHelper } = textlintRuleHelper as any;
+const { RuleHelper } = textlintRuleHelper;
 const DocumentURL = "https://developers.google.com/style/dashes";
-const report = (context) => {
+
+const report: GoogleRuleReporter = (context) => {
   const { Syntax, RuleError, getSource, fixer, report } = context;
   // Notes: the order is important when Apply fixes
-  const dictionaries = [
+  const dictionaries: MatchReplaceDictionary[] = [
     {
       // Prefer colon to dash.
       // Partial support:
@@ -55,7 +56,7 @@ const report = (context) => {
       replace: ({ all, captures }) => {
         const beforeWord = captures[0];
         const afterWord = captures[1];
-        const dashCount = (all.match(/ - /g) || []).length;
+        const dashCount = (all.match(/ - /g) ?? []).length;
         const beforeWordPos = getPos(all, beforeWord);
         const afterWordPos = getPos(all, afterWord);
         const isListStyle =
@@ -90,7 +91,7 @@ const report = (context) => {
       // use colon instead of dash or hyphen can't work on Paragraph
       // Because, replace `code` with wrong range...
       // Temporary, we use strReporter
-      return strReporter({
+      strReporter({
         node,
         dictionaries,
         report,
@@ -101,6 +102,7 @@ const report = (context) => {
     },
   };
 };
+
 const rule = {
   linter: report,
   fixer: report,

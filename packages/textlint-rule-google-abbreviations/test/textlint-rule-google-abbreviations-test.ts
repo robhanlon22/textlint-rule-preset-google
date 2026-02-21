@@ -1,8 +1,8 @@
 // MIT © 2017 azu
 import TextLintTester from "textlint-tester";
-import rule from "../src/textlint-rule-google-abbreviations";
+import rule from "../src/textlint-rule-google-abbreviations.js";
 const tester = new TextLintTester();
-tester.run("textlint-rule-google-abbreviations", rule, {
+tester.run("textlint-rule-google-abbreviations", rule as GoogleRuleModule, {
   valid: [
     "anorexia can be caused by cancer, aids, a mental disorder (That is anorexia nervosa), or other diseases.",
     "For example, this is an example",

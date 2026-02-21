@@ -2,12 +2,36 @@
 
 import textlintRuleHelper from "textlint-rule-helper";
 import StringSourceModule from "textlint-util-to-string";
+import type { TxtNode } from "@textlint/ast-node-types";
 
-const { RuleHelper, IgnoreNodeManager } = textlintRuleHelper as any;
-const StringSource =
-  (StringSourceModule as any).StringSource || StringSourceModule;
+const { RuleHelper, IgnoreNodeManager } = textlintRuleHelper;
 const DocumentURL = "https://developers.google.com/style/sentence-spacing";
-const report = (context) => {
+
+interface StringSourceLike {
+  toString(): string;
+  originalIndexFromIndex(index: number): number;
+}
+type StringSourceConstructor = new (node: TxtNode) => StringSourceLike;
+const StringSourceValue = StringSourceModule as unknown as
+  | { StringSource?: StringSourceConstructor }
+  | StringSourceConstructor;
+const TypedStringSource: StringSourceConstructor =
+  typeof StringSourceValue === "function"
+    ? StringSourceValue
+    : (() => {
+        const stringSource = StringSourceValue.StringSource;
+        if (!stringSource) {
+          throw new TypeError("StringSource constructor is missing");
+        }
+        return stringSource;
+      })();
+
+interface SentenceSpacing {
+  index: number;
+  indent: number;
+}
+
+const report: GoogleRuleReporter = (context) => {
   const { Syntax, RuleError, fixer, report } = context;
   const helper = new RuleHelper(context);
   // Ignore following pattern
@@ -30,14 +54,11 @@ const report = (context) => {
         Syntax.BlockQuote,
         Syntax.Html,
       ]);
-      const source = new StringSource(node);
+      const source = new TypedStringSource(node);
       const sourceText = source.toString();
-      /**
-       * @type {[{index:number,indent:number]}
-       */
-      const spaces = [];
+      const spaces: SentenceSpacing[] = [];
       const sentenceSpacingPattern = /[.!?]( {2,})(?=\S)/g;
-      let sentenceSpacingMatch;
+      let sentenceSpacingMatch: RegExpExecArray | null;
       while (
         (sentenceSpacingMatch = sentenceSpacingPattern.exec(sourceText)) !==
         null
@@ -57,7 +78,7 @@ const report = (context) => {
           if (ignoreNodeManager.isIgnoredIndex(originalIndex)) {
             return;
           }
-          const message = `Leave only one space between sentences. Number of space: ${space.indent}
+          const message = `Leave only one space between sentences. Number of space: ${String(space.indent)}
 ${DocumentURL}`;
           report(
             node,
@@ -73,6 +94,7 @@ ${DocumentURL}`;
     },
   };
 };
+
 const rule = {
   linter: report,
   fixer: report,

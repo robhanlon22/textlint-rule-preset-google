@@ -8,8 +8,8 @@ import {
 export const defaultMessage =
   "Put conditional clauses before instructions, not after.\n" +
   "URL: https://developers.google.com/style/clause-order";
-const report = (context) => {
-  const dictionaries = [
+const report: GoogleRuleReporter = (context) => {
+  const dictionaries: MatchReplaceDictionary[] = [
     {
       pattern: /See (.*) for more (information|details|detail)./,
       replace: ({ captures }) => {
@@ -20,7 +20,7 @@ const report = (context) => {
     {
       pattern: /Click ([\w-]+) if you want to (.+)./,
       test: ({ all, captures }) => {
-        return /^VB/.test(getPos(all, captures[0]));
+        return getPos(all, captures[0]).startsWith("VB");
       },
       replace: ({ captures }) => {
         return `To ${captures[1]}, click ${captures[0]}.`;

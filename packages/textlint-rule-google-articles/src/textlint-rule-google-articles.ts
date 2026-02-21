@@ -6,17 +6,29 @@ import {
 import { classifyArticle } from "english-article-classifier";
 
 const DocumentURL = "https://developers.google.com/style/articles";
-const isCapital = (text) => {
+interface ArticleOptions {
+  a?: unknown;
+  an?: unknown;
+}
+
+const toStringArray = (value: unknown): string[] => {
+  return Array.isArray(value)
+    ? value.filter((item): item is string => typeof item === "string")
+    : [];
+};
+
+const isCapital = (text: string) => {
   return /^[A-Z]/.test(text);
 };
-const report = (context, options = {}) => {
-  const forceA = Array.isArray(options.a) ? options.a : [];
-  const forceAn = Array.isArray(options.an) ? options.an : [];
+const report: GoogleRuleReporter = (context, options = {}) => {
+  const articleOptions = options as ArticleOptions;
+  const forceA = toStringArray(articleOptions.a);
+  const forceAn = toStringArray(articleOptions.an);
   const classifyOptions = {
     forceA,
     forceAn,
   };
-  const dictionaries = [
+  const dictionaries: MatchReplaceDictionary[] = [
     {
       pattern: /\b(a) ([\w.-]+)\b/i,
       test: ({ captures }) => {
@@ -66,7 +78,7 @@ const report = (context, options = {}) => {
       if (shouldIgnoreNodeOfStrNode(node, context)) {
         return;
       }
-      return strReporter({
+      strReporter({
         node,
         dictionaries,
         report,

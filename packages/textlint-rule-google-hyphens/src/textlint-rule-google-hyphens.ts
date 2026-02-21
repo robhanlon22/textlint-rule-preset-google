@@ -5,9 +5,8 @@ import {
   PosType,
 } from "@textlint-rule/textlint-report-helper-for-google-preset";
 
-const DocumentURL = "https://developers.google.com/style/hyphens";
-const report = (context) => {
-  const dictionaries = [
+const report: GoogleRuleReporter = (context) => {
+  const dictionaries: MatchReplaceDictionary[] = [
     // Adverbs ending in "ly"
     {
       pattern: /(\w+ly)-(\w+)/g,
@@ -27,10 +26,10 @@ const report = (context) => {
     {
       pattern: /(from|between) (\d+-\d+)/g,
       replace: ({ captures }) => {
-        return `${captures[1]}`;
+        return captures[1];
       },
       message: () =>
-        `Use a hyphen to indicate a range of numbers. Don't add words such as "from" or "between".`,
+        'Use a hyphen to indicate a range of numbers. Don\'t add words such as "from" or "between".',
     },
     // Spaces around hyphens => textlint-rule-google-dashes
   ];
@@ -38,7 +37,7 @@ const report = (context) => {
   const { Syntax, RuleError, getSource, fixer, report } = context;
   return {
     [Syntax.Paragraph](node) {
-      return paragraphReporter({
+      paragraphReporter({
         Syntax,
         node,
         dictionaries,

@@ -1,8 +1,8 @@
 // MIT © 2017 azu
 import TextLintTester from "textlint-tester";
 const tester = new TextLintTester();
-import rule from "../src/textlint-rule-google-quotation-marks";
-tester.run("textlint-rule-google-quotation-marks", rule, {
+import rule from "../src/textlint-rule-google-quotation-marks.js";
+tester.run("textlint-rule-google-quotation-marks", rule as GoogleRuleModule, {
   valid: [
     'See the section titled "Care and feeding of the emu."',
     'If you enter "foo", the program crashes.',

@@ -1,12 +1,8 @@
 // MIT © 2017 azu
-import {
-  paragraphReporter,
-  getPosFromSingleWord,
-  PosType,
-} from "@textlint-rule/textlint-report-helper-for-google-preset";
+import { paragraphReporter } from "@textlint-rule/textlint-report-helper-for-google-preset";
+import type { TxtParentNode } from "@textlint/ast-node-types";
 import { checkBoldTextPrecedingColon } from "./checkBoldTextPrecedingColon.js";
 
-const DocumentURL = "https://developers.google.com/style/colons";
 //  Helping Verbs
 // https://www.englishgrammar101.com/module-3/verbs/lesson-2/helping-verbs
 // http://grammar.yourdictionary.com/parts-of-speech/verbs/Helping-Verbs.html
@@ -37,8 +33,8 @@ const helpingVerbs = [
   "must",
 ];
 
-const report = (context) => {
-  const dictionaries = [
+const report: GoogleRuleReporter = (context) => {
+  const dictionaries: MatchReplaceDictionary[] = [
     // Introductory phrase preceding colon
     {
       pattern: /(\w+):/g,
@@ -69,15 +65,13 @@ https://developers.google.com/style/colons#colons-within-sentences
   return {
     [Syntax.Paragraph](node) {
       checkBoldTextPrecedingColon({
-        node,
-        Syntax,
-        dictionaries,
+        node: node as TxtParentNode,
         report,
         getSource,
         RuleError,
         fixer,
       });
-      return paragraphReporter({
+      paragraphReporter({
         node,
         Syntax,
         dictionaries,
@@ -89,6 +83,7 @@ https://developers.google.com/style/colons#colons-within-sentences
     },
   };
 };
+
 const rule = {
   linter: report,
   fixer: report,

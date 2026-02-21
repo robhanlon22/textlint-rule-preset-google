@@ -1,13 +1,13 @@
 // MIT © 2017 azu
 import { paragraphReporter } from "@textlint-rule/textlint-report-helper-for-google-preset";
 
-const REPLACE_ABBR_DICT = {
+const REPLACE_ABBR_DICT: Record<string, string> = {
   "c/o": "care of",
   "w/": "with",
   "w/o": "without",
 };
-const report = (context) => {
-  const dictionaries = [
+const report: GoogleRuleReporter = (context) => {
+  const dictionaries: MatchReplaceDictionary[] = [
     // Slashes with dates => other rule
     {
       pattern: /\b([a-zA-Z-]+)\/([a-zA-Z-]+)\b/g,
@@ -55,7 +55,7 @@ https://developers.google.com/style/slashes#slashes-with-abbreviations
   const { Syntax, RuleError, getSource, fixer, report } = context;
   return {
     [Syntax.Paragraph](node) {
-      return paragraphReporter({
+      paragraphReporter({
         Syntax,
         node,
         dictionaries,

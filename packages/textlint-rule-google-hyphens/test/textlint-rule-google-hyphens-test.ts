@@ -1,8 +1,8 @@
 // MIT © 2017 azu
 import TextLintTester from "textlint-tester";
 const tester = new TextLintTester();
-import rule from "../src/textlint-rule-google-hyphens";
-tester.run("textlint-rule-google-hyphens", rule, {
+import rule from "../src/textlint-rule-google-hyphens.js";
+tester.run("textlint-rule-google-hyphens", rule as GoogleRuleModule, {
   valid: [
     "The app uses Android-specific techniques.",
     "The app uses techniques that are Android specific.",

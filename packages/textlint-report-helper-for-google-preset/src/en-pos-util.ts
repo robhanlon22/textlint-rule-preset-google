@@ -1,10 +1,48 @@
 // MIT © 2017 azu
 import { Tag } from "en-pos";
 import { EnglishParser, PosType as PosTypeLiteral } from "nlcst-parse-english";
-import toString from "nlcst-to-string";
-import findUnistNode from "unist-util-find";
 import lexicon from "en-lexicon";
-const parser = new EnglishParser();
+
+interface UnistNode {
+  type: string;
+  [key: string]: unknown;
+}
+
+const parser = new EnglishParser() as unknown as {
+  parse(text: string): UnistNode;
+};
+
+interface WordNode extends UnistNode {
+  type: "WordNode";
+  value?: string;
+  data?: {
+    pos?: string;
+  };
+}
+
+const findWordNode = (
+  rootNode: UnistNode,
+  word: string,
+): WordNode | undefined => {
+  const queue: UnistNode[] = [rootNode];
+  while (queue.length > 0) {
+    const currentNode = queue.shift();
+    if (!currentNode) {
+      continue;
+    }
+    if (currentNode.type === "WordNode") {
+      const wordNode = currentNode as WordNode;
+      if (wordNode.value === word) {
+        return wordNode;
+      }
+    }
+    const children = (currentNode as { children?: UnistNode[] }).children;
+    if (children && children.length > 0) {
+      queue.push(...children);
+    }
+  }
+  return undefined;
+};
 
 // Additional lexicon
 lexicon.extend({
@@ -69,16 +107,10 @@ export const getPosFromSingleWord = (word: string): PosTypeLiteral => {
 };
 
 export const getPos = (text: string, word: string): string => {
-  const CST = parser.parse(text);
-  const node = findUnistNode(CST, (node: any) => {
-    if (node.type === "WordNode") {
-      return toString(node) === word;
-    }
-    return false;
-  });
-  if (!node) {
-    return "";
-  } else if (node.data && node.data.pos) {
+  const cstNode = parser.parse(text);
+  const node = findWordNode(cstNode, word);
+
+  if (node?.data?.pos) {
     return node.data.pos;
   }
   return "";

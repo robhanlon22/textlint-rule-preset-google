@@ -1,6 +1,22 @@
 // MIT © 2017 azu
 import noExclamationQuestionMark from "textlint-rule-no-exclamation-question-mark";
-const defaultOptions = {
+
+interface ExclamationOptions {
+  allowHalfWidthExclamation?: boolean;
+  allowFullWidthExclamation?: boolean;
+  allowHalfWidthQuestion?: boolean;
+  allowFullWidthQuestion?: boolean;
+}
+
+type ExclamationReporter = (
+  context: GoogleRuleContext,
+  options?: ExclamationOptions,
+) => ReturnType<GoogleRuleReporter>;
+
+const noExclamationQuestionMarkReporter =
+  noExclamationQuestionMark as unknown as ExclamationReporter;
+
+const defaultOptions: ExclamationOptions = {
   // allow to use !
   allowHalfWidthExclamation: false,
   // allow to use ！
@@ -10,19 +26,26 @@ const defaultOptions = {
   // allow to use ？
   allowFullWidthQuestion: false,
 };
-const linter = (context, options = defaultOptions) => {
-  const { report } = context;
-  const overlayContext = Object.create(context);
+
+const linter: GoogleRuleReporter = (context, options = defaultOptions) => {
+  const { report: baseReport } = context;
+  const overlayContext = Object.create(context) as GoogleRuleContext;
   Object.defineProperty(overlayContext, "report", {
-    value: (node, error) => {
-      error.message +=
+    value(
+      node: Parameters<GoogleRuleContext["report"]>[0],
+      error: Parameters<GoogleRuleContext["report"]>[1],
+    ) {
+      const errorWithMessage = error as { message: string };
+      errorWithMessage.message +=
         "\nhttps://developers.google.com/style/exclamation-points";
-      report(node, error);
+      baseReport(node, error);
     },
     enumerable: true,
     configurable: true,
     writable: true,
   });
-  return noExclamationQuestionMark(overlayContext, options);
+
+  return noExclamationQuestionMarkReporter(overlayContext, options);
 };
+
 export default linter;

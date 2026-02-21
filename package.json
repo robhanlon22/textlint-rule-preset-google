@@ -37,6 +37,7 @@
   "homepage": "https://github.com/textlint-rule/textlint-rule-preset-google-developer",
   "devDependencies": {
     "@eslint/js": "^9.36.0",
+    "@textlint/types": "^12.6.1",
     "@types/node": "^25.3.0",
     "eslint": "^9.36.0",
     "husky": "^9.1.7",

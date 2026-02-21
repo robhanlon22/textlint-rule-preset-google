@@ -2,8 +2,8 @@
 import { paragraphReporter } from "@textlint-rule/textlint-report-helper-for-google-preset";
 
 const URL = "https://developers.google.com/style/units-of-measure";
-const report = (context) => {
-  const dictionaries = [
+const report: GoogleRuleReporter = (context) => {
+  const dictionaries: MatchReplaceDictionary[] = [
     // Need space
     {
       pattern: / ([\d.]+)(GB|TB|KB)\b/g,
@@ -42,7 +42,7 @@ ${URL}
   const { Syntax, RuleError, getSource, fixer, report } = context;
   return {
     [Syntax.Paragraph](node) {
-      return paragraphReporter({
+      paragraphReporter({
         Syntax,
         node,
         dictionaries,

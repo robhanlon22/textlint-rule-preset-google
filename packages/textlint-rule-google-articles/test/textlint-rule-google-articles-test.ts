@@ -1,8 +1,8 @@
 // MIT © 2017 azu
 import TextLintTester from "textlint-tester";
-import rule from "../src/textlint-rule-google-articles";
+import rule from "../src/textlint-rule-google-articles.js";
 const tester = new TextLintTester();
-tester.run("textlint-rule-google-", rule, {
+tester.run("textlint-rule-google-", rule as GoogleRuleModule, {
   valid: [
     "An hour.",
     "An HTML file.",

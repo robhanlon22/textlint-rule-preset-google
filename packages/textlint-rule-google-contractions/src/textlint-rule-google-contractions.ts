@@ -12,16 +12,16 @@ export const nounVerbMessage =
 export const noDoubleContractions =
   "Don't use double contractions: Double contractions contain not just one but two contracted words.\n" +
   "URL: https://developers.google.com/style/contractions";
-const report = (context) => {
-  const dictionaries = [
+const report: GoogleRuleReporter = (context) => {
+  const dictionaries: MatchReplaceDictionary[] = [
     {
       pattern: /(\w+)'s (\w+)/,
       test: ({ all, captures }) => {
         // name
         return (
-          /^NN/.test(getPosFromSingleWord(captures[0])) &&
+          getPosFromSingleWord(captures[0]).startsWith("NN") &&
           // Adverb
-          /^RB/.test(getPos(all, captures[1]))
+          getPos(all, captures[1]).startsWith("RB")
         );
       },
       replace: ({ captures }) => {
@@ -35,9 +35,9 @@ const report = (context) => {
       test: ({ all, captures }) => {
         // name
         return (
-          /^NN/.test(getPosFromSingleWord(captures[0])) &&
+          getPosFromSingleWord(captures[0]).startsWith("NN") &&
           // Adverb or Adjective
-          /^RB|JJ/.test(getPos(all, captures[1]))
+          /^(RB|JJ)/.test(getPos(all, captures[1]))
         );
       },
       replace: ({ captures }) => {
@@ -51,11 +51,11 @@ const report = (context) => {
       test: ({ all, captures }) => {
         // name
         return (
-          /^NN/.test(getPosFromSingleWord(captures[0])) &&
+          getPosFromSingleWord(captures[0]).startsWith("NN") &&
           // Determiner
-          /DT/.test(getPos(all, captures[1])) &&
+          getPos(all, captures[1]).includes("DT") &&
           // Adverb or Adjective
-          /^RB|JJ/.test(getPos(all, captures[2]))
+          /^(RB|JJ)/.test(getPos(all, captures[2]))
         );
       },
       replace: ({ captures }) => {

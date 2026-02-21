@@ -1,8 +1,8 @@
 // MIT © 2017 azu
 import TextLintTester from "textlint-tester";
-import rule from "../src/textlint-rule-google-colons";
+import rule from "../src/textlint-rule-google-colons.js";
 const tester = new TextLintTester();
-tester.run("textlint-rule-google-colons", rule, {
+tester.run("textlint-rule-google-colons", rule as GoogleRuleModule, {
   valid: [
     // Introductory phrase preceding colon
     `The fields are defined as follows:

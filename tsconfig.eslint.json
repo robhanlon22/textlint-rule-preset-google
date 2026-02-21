@@ -2,8 +2,13 @@
   "extends": "./tsconfig.base.json",
   "compilerOptions": {
     "strictNullChecks": true,
+    "noCheck": false,
     "noEmit": true,
-    "rootDir": "."
+    "rootDir": ".",
+    "baseUrl": ".",
+    "paths": {
+      "textlint-tester": ["packages/types/textlint-tester-shim.d.ts"]
+    }
   },
   "include": ["packages/**/*.ts", "tools/**/*.ts", "vitest.config.ts"],
   "exclude": ["node_modules", "dist-tools", "packages/**/lib"]

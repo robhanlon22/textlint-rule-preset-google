@@ -1,48 +1,55 @@
 // MIT © 2017 azu
+import type { TxtNode, TxtParentNode } from "@textlint/ast-node-types";
+
+interface CheckBoldTextPrecedingColonArgs {
+  node: TxtParentNode;
+  RuleError: GoogleRuleContext["RuleError"];
+  getSource: GoogleRuleContext["getSource"];
+  fixer: GoogleRuleContext["fixer"];
+  report: GoogleRuleContext["report"];
+}
+
 export const checkBoldTextPrecedingColon = ({
   node,
-  Syntax,
   RuleError,
   getSource,
   fixer,
   report,
-}) => {
-  const children = node.children;
-  if (!children) {
-    return;
-  }
-  const BoldNodeList = children.filter((childNode) => {
-    return childNode.type === Syntax.Strong;
-  });
+}: CheckBoldTextPrecedingColonArgs): void => {
+  const getChild = (
+    items: TxtParentNode["children"],
+    index: number,
+  ): TxtNode | undefined => {
+    return index >= 0 && index < items.length
+      ? (items[index] as TxtNode)
+      : undefined;
+  };
+  const { children } = node;
+  const boldNodeList = children.filter(
+    (childNode): childNode is TxtParentNode => childNode.type === "Strong",
+  );
 
-  BoldNodeList.forEach((boldNode) => {
+  boldNodeList.forEach((boldNode) => {
     const currentIndex = children.indexOf(boldNode);
-    const nextNodeOfBold = children[currentIndex + 1];
-    if (!nextNodeOfBold) {
+    const nextNodeOfBold = getChild(children, currentIndex + 1);
+    if (nextNodeOfBold?.type !== "Str") {
       return;
     }
-    if (nextNodeOfBold.type !== Syntax.Str) {
-      return;
-    }
+
     const nextNodeValue = getSource(nextNodeOfBold);
-    if (!nextNodeValue) {
+    if (!nextNodeValue.startsWith(":")) {
       return;
     }
-    const nextCharacter = nextNodeValue.charAt(0);
-    if (nextCharacter !== ":") {
-      return;
-    }
+
     // add `:` to current node
     const message = `When the text preceding a colon is bold, make the colon bold too.
 https://developers.google.com/style/colons#bold-text-preceding-colon
 `;
-    if (!Array.isArray(boldNode.children)) {
+    const strNodeOfBoldNode = getChild(boldNode.children, 0);
+    if (strNodeOfBoldNode?.type !== "Str") {
       return;
     }
-    const strNodeOfBoldNode = boldNode.children[0];
-    if (!strNodeOfBoldNode || strNodeOfBoldNode.type !== Syntax.Str) {
-      return;
-    }
+
     report(
       strNodeOfBoldNode,
       new RuleError(message, {
@@ -53,6 +60,7 @@ https://developers.google.com/style/colons#bold-text-preceding-colon
         ),
       }),
     );
+
     // remove `:` from next node
     report(
       nextNodeOfBold,

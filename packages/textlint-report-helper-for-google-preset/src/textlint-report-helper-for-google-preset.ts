@@ -1,15 +1,37 @@
 // MIT © 2017 azu
 import {
   matchTestReplace,
-  TestMatchReplaceReturnDict,
+  type TestMatchReplaceReturnDict,
 } from "match-test-replace";
-import { ASTNodeTypes } from "@textlint/ast-node-types";
+import type { ASTNodeTypes, TxtNode } from "@textlint/ast-node-types";
 import textlintRuleHelper from "textlint-rule-helper";
 import StringSourceModule from "textlint-util-to-string";
 
-const { RuleHelper, IgnoreNodeManager } = textlintRuleHelper as any;
-const StringSource =
-  (StringSourceModule as any).StringSource || StringSourceModule;
+const { RuleHelper, IgnoreNodeManager } = textlintRuleHelper;
+
+interface StringSourceLike {
+  toString(): string;
+  originalIndexFromIndex(index: number): number;
+}
+type StringSourceConstructor = new (node: TxtNode) => StringSourceLike;
+const StringSourceValue = StringSourceModule as unknown as
+  | { StringSource?: StringSourceConstructor }
+  | StringSourceConstructor;
+const TypedStringSource: StringSourceConstructor =
+  typeof StringSourceValue === "function"
+    ? StringSourceValue
+    : (() => {
+        const stringSource = StringSourceValue.StringSource;
+        if (!stringSource) {
+          throw new TypeError("StringSource constructor is missing");
+        }
+        return stringSource;
+      })();
+
+type RuleErrorCtor = GoogleRuleContext["RuleError"];
+type RuleFixer = GoogleRuleContext["fixer"];
+type ReportFunction = GoogleRuleContext["report"];
+type GetSourceFunction = GoogleRuleContext["getSource"];
 
 export {
   getPos,
@@ -17,10 +39,13 @@ export {
   PosType,
   isSameGroupPosType,
 } from "./en-pos-util.js";
-// str
-export const shouldIgnoreNodeOfStrNode = (node: any, context: any) => {
+
+export const shouldIgnoreNodeOfStrNode = (
+  node: TxtNode,
+  context: GoogleRuleContext,
+): boolean => {
   const helper = new RuleHelper(context);
-  const Syntax = context.Syntax;
+  const { Syntax } = context;
   return helper.isChildNode(node, [
     Syntax.Link,
     Syntax.Image,
@@ -30,12 +55,12 @@ export const shouldIgnoreNodeOfStrNode = (node: any, context: any) => {
 };
 
 export interface StrReporterArgs {
-  node: any;
+  node: TxtNode;
   dictionaries: TestMatchReplaceReturnDict[];
-  report: (node: any, message: any) => void;
-  RuleError: any;
-  fixer: any;
-  getSource: (node: any, beforeCount?: number, afterCount?: number) => string;
+  report: ReportFunction;
+  RuleError: RuleErrorCtor;
+  fixer: RuleFixer;
+  getSource: GetSourceFunction;
 }
 
 export const strReporter = ({
@@ -45,29 +70,30 @@ export const strReporter = ({
   RuleError,
   fixer,
   getSource,
-}: StrReporterArgs) => {
+}: StrReporterArgs): void => {
   const text = getSource(node);
   dictionaries.forEach((dict) => {
     const matchTestReplaceReturn = matchTestReplace(text, dict);
-    if (matchTestReplaceReturn.ok === false) {
+    if (!matchTestReplaceReturn.ok) {
       return;
     }
     matchTestReplaceReturn.results.forEach((result) => {
       const index = result.index;
+      const message = result.message ?? "";
       if (!result.replace) {
         report(
           node,
-          new RuleError(result.message, {
+          new RuleError(message, {
             index,
           }),
         );
         return;
       }
       const endIndex = result.index + result.match.length;
-      const range = [index, endIndex];
+      const range: [number, number] = [index, endIndex];
       report(
         node,
-        new RuleError(result.message, {
+        new RuleError(message, {
           index,
           fix: fixer.replaceTextRange(range, result.replace),
         }),
@@ -78,12 +104,12 @@ export const strReporter = ({
 
 export interface ParagraphReporterArgs {
   Syntax: typeof ASTNodeTypes;
-  node: any;
+  node: TxtNode;
   dictionaries: TestMatchReplaceReturnDict[];
-  report: (node: any, message: any) => void;
-  RuleError: any;
-  fixer: any;
-  getSource: (node: any, beforeCount?: number, afterCount?: number) => string;
+  report: ReportFunction;
+  RuleError: RuleErrorCtor;
+  fixer: RuleFixer;
+  getSource: GetSourceFunction;
 }
 
 export const paragraphReporter = ({
@@ -94,9 +120,9 @@ export const paragraphReporter = ({
   report,
   RuleError,
   fixer,
-}: ParagraphReporterArgs) => {
+}: ParagraphReporterArgs): void => {
   const originalText = getSource(node);
-  const source = new StringSource(node);
+  const source = new TypedStringSource(node);
   const text = source.toString();
   const ignoreNodeManager = new IgnoreNodeManager();
   // Ignore following pattern
@@ -109,7 +135,7 @@ export const paragraphReporter = ({
   ]);
   dictionaries.forEach((dict) => {
     const matchTestReplaceReturn = matchTestReplace(text, dict);
-    if (matchTestReplaceReturn.ok === false) {
+    if (!matchTestReplaceReturn.ok) {
       return;
     }
     matchTestReplaceReturn.results.forEach((result) => {
@@ -118,20 +144,21 @@ export const paragraphReporter = ({
       const endIndexFromNode = source.originalIndexFromIndex(
         result.index + result.match.length,
       );
-      const rangeFromNode = [indexFromNode, endIndexFromNode];
+      const rangeFromNode: [number, number] = [indexFromNode, endIndexFromNode];
       // absolute index
-      const absoluteRange = [
+      const absoluteRange: [number, number] = [
         node.range[0] + rangeFromNode[0],
         node.range[1] + rangeFromNode[1],
       ];
       // if the error is ignored, don't report
-      if (ignoreNodeManager.isIgnoredRange(absoluteRange)) {
+      if (ignoreNodeManager.isIgnoredIndex(absoluteRange[0])) {
         return;
       }
+      const message = result.message ?? "";
       if (!result.replace) {
         report(
           node,
-          new RuleError(result.message, {
+          new RuleError(message, {
             index: indexFromNode,
           }),
         );
@@ -141,7 +168,7 @@ export const paragraphReporter = ({
       if (beforeText !== result.match) {
         report(
           node,
-          new RuleError(result.message, {
+          new RuleError(message, {
             index: indexFromNode,
           }),
         );
@@ -149,7 +176,7 @@ export const paragraphReporter = ({
       }
       report(
         node,
-        new RuleError(result.message, {
+        new RuleError(message, {
           index: indexFromNode,
           fix: fixer.replaceTextRange(rangeFromNode, result.replace),
         }),

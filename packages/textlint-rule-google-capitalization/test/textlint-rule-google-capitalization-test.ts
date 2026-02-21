@@ -1,6 +1,6 @@
 // MIT © 2017 azu
 import TextLintTester from "textlint-tester";
-import rule from "../src/textlint-rule-google-capitalization";
+import rule from "../src/textlint-rule-google-capitalization.js";
 const tester = new TextLintTester();
 tester.run("textlint-rule-google-capitalization", rule, {
   valid: [

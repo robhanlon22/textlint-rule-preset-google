@@ -2,9 +2,11 @@
 import TextLintTester from "textlint-tester";
 const tester = new TextLintTester();
 // rule
-import rule, { defaultMessage } from "../src/textlint-rule-google-possessives";
+import rule, {
+  defaultMessage,
+} from "../src/textlint-rule-google-possessives.js";
 // ruleName, rule, { valid, invalid }
-tester.run("textlint-rule-google-possessives", rule, {
+tester.run("textlint-rule-google-possessives", rule as GoogleRuleModule, {
   valid: [
     "Each component has its own set of traits.",
     "This is business's book.",

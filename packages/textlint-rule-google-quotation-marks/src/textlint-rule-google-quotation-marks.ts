@@ -1,14 +1,7 @@
 // MIT © 2017 azu
-import {
-  paragraphReporter,
-  getPosFromSingleWord,
-  PosType,
-} from "@textlint-rule/textlint-report-helper-for-google-preset";
-
-const DocumentURL =
-  "https://developers.google.com/style/quotation-marks#single-quotation-marks";
-const report = (context) => {
-  const dictionaries = [
+import { paragraphReporter } from "@textlint-rule/textlint-report-helper-for-google-preset";
+const report: GoogleRuleReporter = (context) => {
+  const dictionaries: MatchReplaceDictionary[] = [
     // Commas and periods with quotation marks
     // We can not handle this rule
     // Because "Exception: When you put a keyword or other literal string in quotation marks"
@@ -47,7 +40,7 @@ In the latter case, put the primary speaker's quote in double quotation marks an
   const { Syntax, RuleError, getSource, fixer, report } = context;
   return {
     [Syntax.Paragraph](node) {
-      return paragraphReporter({
+      paragraphReporter({
         Syntax,
         node,
         dictionaries,

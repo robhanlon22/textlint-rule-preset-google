@@ -1,8 +1,8 @@
 // MIT © 2017 azu
 import TextLintTester from "textlint-tester";
-import rule from "../src/textlint-rule-google-sentence-spacing";
+import rule from "../src/textlint-rule-google-sentence-spacing.js";
 const tester = new TextLintTester();
-tester.run("textlint-rule-google-sentence-spacing", rule, {
+tester.run("textlint-rule-google-sentence-spacing", rule as GoogleRuleModule, {
   valid: [
     "sentence is 1. sentence 2. sentence 3.",
     "sentence is 1.\nsentence 2.\nsentence 3.",

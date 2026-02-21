@@ -1,9 +1,9 @@
 import TextLintTester from "textlint-tester";
 const tester = new TextLintTester();
 // rule
-import rule from "../src/textlint-rule-google-word-list";
+import rule from "../src/textlint-rule-google-word-list.js";
 // ruleName, rule, { valid, invalid }
-tester.run("textlint-rule-google-word-list", rule, {
+tester.run("textlint-rule-google-word-list", rule as GoogleRuleModule, {
   // OK list
   valid: [
     "+1's, +1'ing, +1'ed",

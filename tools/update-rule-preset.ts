@@ -4,28 +4,55 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { getPackages } from "./lib/package-list.js";
 
+interface PackageJSON extends Record<string, unknown> {
+  name?: string;
+  version?: string;
+  dependencies?: Record<string, string>;
+}
+
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const blacklistModules = [
   "textlint-report-helper-for-google-preset",
   "textlint-rule-preset-google",
 ];
-const updatePackageDepencencies = (pkg, dependencies) => {
-  const updatedDependencies = Object.assign({}, pkg.dependencies, dependencies);
+
+const readPackageJson = (packageJsonPath: string): PackageJSON => {
+  return JSON.parse(fs.readFileSync(packageJsonPath, "utf-8")) as PackageJSON;
+};
+
+const updatePackageDependencies = (
+  pkg: PackageJSON,
+  dependencies: Record<string, string>,
+): PackageJSON => {
+  const updatedDependencies = Object.assign(
+    {},
+    pkg.dependencies ?? {},
+    dependencies,
+  );
   return Object.assign({}, pkg, {
     dependencies: updatedDependencies,
   });
 };
-const updatePackage = (pkg, updatablePkg) => {
+
+const updatePackage = (
+  pkg: PackageJSON,
+  updatablePkg: Partial<PackageJSON>,
+): PackageJSON => {
   return Object.assign({}, pkg, updatablePkg);
 };
+
 /**
  * Update textlint-rule-preset-google
  */
-const packageNames = getPackages(blacklistModules).map((packageDirectory) => {
-  const packageJSONPath = path.join(packageDirectory, "package.json");
-  const pkg = JSON.parse(fs.readFileSync(packageJSONPath, "utf-8"));
-  return pkg.name;
-});
+const packageNames = getPackages(blacklistModules)
+  .map((packageDirectory) => {
+    const packageJSONPath = path.join(packageDirectory, "package.json");
+    const pkg = readPackageJson(packageJSONPath);
+    return typeof pkg.name === "string" ? pkg.name : undefined;
+  })
+  .filter(
+    (packageName): packageName is string => typeof packageName === "string",
+  );
 
 /**
  * create "dependencies"
@@ -33,24 +60,31 @@ const packageNames = getPackages(blacklistModules).map((packageDirectory) => {
  * @param version
  * @returns {{}}
  */
-const createRuleDependencies = (packageNames, version) => {
-  const dependencies = {};
-  packageNames.forEach((packageName) => {
+const createRuleDependencies = (
+  packageNamesToLink: string[],
+  version: string,
+): Record<string, string> => {
+  const dependencies: Record<string, string> = {};
+  packageNamesToLink.forEach((packageName) => {
     dependencies[packageName] = `^${version}`;
   });
   return dependencies;
 };
+
 /**
  * create "rules" and "rulesConfig" module source text
  * @param packageNames
  */
-const createRuleAndConfig = (packageNames) => {
-  const imports = [];
-  const ruleEntries = [];
-  const rulesConfigEntries = [];
-  const toIdentifier = (value: string) =>
-    value.replace(/-([a-z])/g, (_, char) => char.toUpperCase());
-  packageNames.forEach((packageName) => {
+const createRuleAndConfig = (packageNamesToRender: string[]): string => {
+  const imports: string[] = [];
+  const ruleEntries: string[] = [];
+  const rulesConfigEntries: string[] = [];
+  const toIdentifier = (value: string): string =>
+    value.replace(/-([a-z])/g, (_match: string, char: string) => {
+      return char.toUpperCase();
+    });
+
+  packageNamesToRender.forEach((packageName) => {
     const shortName = packageName.replace(
       "@textlint-rule/textlint-rule-google-",
       "",
@@ -60,6 +94,7 @@ const createRuleAndConfig = (packageNames) => {
     ruleEntries.push(`        "${shortName}": ${identifier}`);
     rulesConfigEntries.push(`        "${shortName}": true`);
   });
+
   return `${imports.join("\n")}
 
 // prettier-ignore
@@ -76,18 +111,21 @@ export default rule;
 `;
 };
 
-const monorepoVersion = JSON.parse(
-  fs.readFileSync(path.join(__dirname, "../package.json"), "utf-8"),
-).version as string;
+const rootPackageJsonPath = path.join(__dirname, "../package.json");
+const rootPackageJson = readPackageJson(rootPackageJsonPath);
+if (typeof rootPackageJson.version !== "string") {
+  throw new Error("Expected version field in root package.json");
+}
+
+const monorepoVersion = rootPackageJson.version;
 const packagesDirectory = path.join(__dirname, "../packages");
-// each package version fixed
 
 /**
  * Version = package.json version
  */
 getPackages().forEach((packageDirectory) => {
   const packageJSONPath = path.join(packageDirectory, "package.json");
-  const pkg = JSON.parse(fs.readFileSync(packageJSONPath, "utf-8"));
+  const pkg = readPackageJson(packageJSONPath);
   const newPkg = updatePackage(pkg, {
     version: monorepoVersion,
   });
@@ -100,9 +138,9 @@ const rulePresetPkgPath = path.join(
   packagesDirectory,
   "textlint-rule-preset-google/package.json",
 );
-const rulePresetPkg = JSON.parse(fs.readFileSync(rulePresetPkgPath, "utf-8"));
+const rulePresetPkg = readPackageJson(rulePresetPkgPath);
 const ruleDependencies = createRuleDependencies(packageNames, monorepoVersion);
-const newRulePresetPkg = updatePackageDepencencies(
+const newRulePresetPkg = updatePackageDependencies(
   rulePresetPkg,
   ruleDependencies,
 );
@@ -112,6 +150,7 @@ fs.writeFileSync(
   "utf-8",
 );
 console.info("Updated package.json");
+
 // src
 console.info("Start to src/textlint-rule-preset-google.ts");
 const srcPath = path.join(

@@ -4,10 +4,17 @@ import {
   getPosFromSingleWord,
 } from "@textlint-rule/textlint-report-helper-for-google-preset";
 
-const report = (context) => {
+interface PreDictionary {
+  word: string | RegExp;
+  test?: MatchReplaceDictionary["test"];
+  replace?: MatchReplaceDictionary["replace"];
+  message: string;
+}
+
+const report: GoogleRuleReporter = (context) => {
   // Politeness and use of "please"
   // https://developers.google.com/style/tone#politeness-and-use-of-please
-  const dictionaries = [
+  const preDictionaries: PreDictionary[] = [
     {
       word: "abort",
       message: "Don't use. Instead, use words like stop, exit, cancel, or end.",
@@ -15,7 +22,7 @@ const report = (context) => {
     {
       word: "access",
       test: ({ all }) => {
-        return /^VB/.test(getPosFromSingleWord(all)); // Verb
+        return getPosFromSingleWord(all).startsWith("VB"); // Verb
       },
       message:
         "Access(verb) – Avoid when you can, in favor of friendlier words like see, edit, find,\nuse, or view.",
@@ -249,7 +256,7 @@ const report = (context) => {
     {
       word: /touch (.*?)/,
       test: ({ all }) => {
-        if (/touch & hold/.test(all)) {
+        if (all.includes("touch & hold")) {
           return false;
         }
         return true;
@@ -288,17 +295,21 @@ const report = (context) => {
       message:
         "Don't use to refer to expander arrows,\nunless you're specifically referring to the Zippy\nwidget in Closure.",
     },
-  ].map((preDict) => {
-    return {
-      pattern:
-        typeof preDict.word === "string"
-          ? new RegExp("\\b" + preDict.word + "\\b")
-          : preDict.word,
-      test: preDict.test ? preDict.test : undefined,
-      replace: preDict.replace ? preDict.replace : undefined,
-      message: () => preDict.message,
-    };
-  });
+  ];
+
+  const dictionaries: MatchReplaceDictionary[] = preDictionaries.map(
+    (preDict) => {
+      return {
+        pattern:
+          typeof preDict.word === "string"
+            ? new RegExp("\\b" + preDict.word + "\\b")
+            : preDict.word,
+        test: preDict.test ?? undefined,
+        replace: preDict.replace ?? undefined,
+        message: () => preDict.message,
+      };
+    },
+  );
 
   const { Syntax, RuleError, getSource, fixer, report } = context;
   return {

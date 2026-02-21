@@ -1,8 +1,8 @@
 // MIT © 2017 azu
 import TextLintTester from "textlint-tester";
-import rule from "../src/textlint-rule-google-commas";
+import rule from "../src/textlint-rule-google-commas.js";
 const tester = new TextLintTester();
-tester.run("textlint-rule-google-commas", rule, {
+tester.run("textlint-rule-google-commas", rule as GoogleRuleModule, {
   valid: [
     // Serial commas
     "I dedicate this book to my parents, Ayn Rand, and God.",

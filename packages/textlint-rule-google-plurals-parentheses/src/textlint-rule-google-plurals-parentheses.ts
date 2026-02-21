@@ -6,8 +6,8 @@ import {
 } from "@textlint-rule/textlint-report-helper-for-google-preset";
 
 const DocumentURL = "https://developers.google.com/style/hyphens";
-const report = (context) => {
-  const dictionaries = [
+const report: GoogleRuleReporter = (context) => {
+  const dictionaries: MatchReplaceDictionary[] = [
     // word(s)
     // if "words" is plural, report as error
     {
@@ -26,7 +26,7 @@ ${DocumentURL}
   const { Syntax, RuleError, getSource, fixer, report } = context;
   return {
     [Syntax.Paragraph](node) {
-      return paragraphReporter({
+      paragraphReporter({
         node,
         Syntax,
         dictionaries,

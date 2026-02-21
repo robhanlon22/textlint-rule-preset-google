@@ -1,8 +1,8 @@
 // MIT © 2017 azu
 import TextLintTester from "textlint-tester";
-import rule from "../src/textlint-rule-google-slashes";
+import rule from "../src/textlint-rule-google-slashes.js";
 const tester = new TextLintTester();
-tester.run("textlint-rule-google-slashes", rule, {
+tester.run("textlint-rule-google-slashes", rule as GoogleRuleModule, {
   valid: [
     "For example, a disaster relief map is not subject to the usage limits even if it has been developed and is hosted by a commercial entity.",
     "For example, a disaster relief map is not subject to the usage limits even if it has been developed or is hosted by a commercial entity.",

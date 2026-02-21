@@ -2,8 +2,8 @@
 import TextLintTester from "textlint-tester";
 const tester = new TextLintTester();
 // rule
-import rule from "../src/textlint-rule-google-ellipses";
-tester.run("textlint-rule-google-ellipses", rule, {
+import rule from "../src/textlint-rule-google-ellipses.js";
+tester.run("textlint-rule-google-ellipses", rule as GoogleRuleModule, {
   valid: [
     'My high school English teacher made me learn that Shakespeare quote: "All the world\'s a stage, ... And one man in his time plays many parts."',
     "To get the user's phone number, call `user.phoneNumber.get()`.",

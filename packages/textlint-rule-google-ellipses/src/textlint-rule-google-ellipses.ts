@@ -1,13 +1,10 @@
 // MIT © 2017 azu
-import {
-  paragraphReporter,
-  getPosFromSingleWord,
-} from "@textlint-rule/textlint-report-helper-for-google-preset";
+import { paragraphReporter } from "@textlint-rule/textlint-report-helper-for-google-preset";
 
 const DocumentURL = "https://developers.google.com/style/ellipses";
-const report = (context) => {
+const report: GoogleRuleReporter = (context) => {
   const { Syntax, RuleError, getSource, fixer, report } = context;
-  const dictionaries = [
+  const dictionaries: MatchReplaceDictionary[] = [
     // NG: Suspension points
     {
       pattern: / \.\.\. (.*?) \.\.\. /g,
@@ -48,7 +45,7 @@ const report = (context) => {
 
   return {
     [Syntax.Paragraph](node) {
-      return paragraphReporter({
+      paragraphReporter({
         Syntax,
         node,
         dictionaries,

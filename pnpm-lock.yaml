@@ -10,6 +10,9 @@ importers:
       "@eslint/js":
         specifier: ^9.36.0
         version: 9.39.3
+      "@textlint/types":
+        specifier: ^12.6.1
+        version: 12.6.1
       "@types/node":
         specifier: ^25.3.0
         version: 25.3.0

@@ -2,9 +2,24 @@
 import fs from "node:fs";
 import path from "node:path";
 import { getPackages } from "./lib/package-list.js";
-const updatePackage = (pkg, updatablePkg) => {
+
+interface PackageJSON extends Record<string, unknown> {
+  publishConfig?: {
+    access?: string;
+  };
+}
+
+const readPackageJson = (packageJsonPath: string): PackageJSON => {
+  return JSON.parse(fs.readFileSync(packageJsonPath, "utf-8")) as PackageJSON;
+};
+
+const updatePackage = <TPackage extends PackageJSON>(
+  pkg: TPackage,
+  updatablePkg: Partial<TPackage>,
+): TPackage => {
   return Object.assign({}, pkg, updatablePkg);
 };
+
 /**
  * Add
  *
@@ -18,7 +33,7 @@ const updatePackage = (pkg, updatablePkg) => {
  */
 getPackages().forEach((packageDirectory) => {
   const packageJSONPath = path.join(packageDirectory, "package.json");
-  const pkg = JSON.parse(fs.readFileSync(packageJSONPath, "utf-8"));
+  const pkg = readPackageJson(packageJSONPath);
   const newPkg = updatePackage(pkg, {
     publishConfig: {
       access: "public",

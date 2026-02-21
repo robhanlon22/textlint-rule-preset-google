@@ -5,16 +5,16 @@ import {
 } from "@textlint-rule/textlint-report-helper-for-google-preset";
 
 const DocumentURL = "https://developers.google.com/style/possessives";
-const report = (context) => {
+const report: GoogleRuleReporter = (context) => {
   const { Syntax, RuleError, getSource, fixer, report } = context;
-  const dictionaries = [
+  const dictionaries: MatchReplaceDictionary[] = [
     // NG: plural word + 's
     {
       pattern: /(\w+)'s/,
       test: ({ captures }) => {
         const word = captures[0];
         // if plural word is ended in "s", ignore it.
-        const isEndedS = word[word.length - 1] === "s";
+        const isEndedS = word.endsWith("s");
         const wordPos = getPosFromSingleWord(word);
         // Plural word
         return wordPos === "NNS" && isEndedS;
@@ -31,10 +31,12 @@ const report = (context) => {
         // ... word's
         // or ... the word's
         const words = captures[0].split(" ");
-        const determinerWord = words[words.length - 2];
+        const determinerIndex = words.length - 2;
+        const determinerWord =
+          determinerIndex >= 0 ? words[determinerIndex] : undefined;
         const targetWord = words[words.length - 1];
         // if "the word's", ignore this
-        if (determinerWord !== undefined) {
+        if (determinerWord) {
           const determinerType = getPosFromSingleWord(determinerWord);
           // skip: the a
           if (determinerType === "DT") {
@@ -54,7 +56,7 @@ const report = (context) => {
 
   return {
     [Syntax.Paragraph](node) {
-      return paragraphReporter({
+      paragraphReporter({
         Syntax,
         node,
         dictionaries,

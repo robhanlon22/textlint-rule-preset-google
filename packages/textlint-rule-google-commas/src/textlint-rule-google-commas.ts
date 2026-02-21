@@ -2,13 +2,11 @@
 import {
   paragraphReporter,
   getPosFromSingleWord,
-  PosType,
   isSameGroupPosType,
 } from "@textlint-rule/textlint-report-helper-for-google-preset";
 
-const DocumentURL = "https://developers.google.com/style/hyphens";
-const report = (context) => {
-  const dictionaries = [
+const report: GoogleRuleReporter = (context) => {
+  const dictionaries: MatchReplaceDictionary[] = [
     // Serial commas
     {
       pattern: /([\w-]+), (.*?([\w-]+)) (and|or) ([\w-]+)/g,
@@ -72,7 +70,7 @@ https://developers.google.com/style/commas#setting-off-other-kinds-of-clauses
   const { Syntax, RuleError, getSource, fixer, report } = context;
   return {
     [Syntax.Paragraph](node) {
-      return paragraphReporter({
+      paragraphReporter({
         node,
         Syntax,
         dictionaries,

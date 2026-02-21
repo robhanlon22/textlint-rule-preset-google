@@ -4,16 +4,16 @@ import {
   getPos,
 } from "@textlint-rule/textlint-report-helper-for-google-preset";
 
-const report = (context) => {
+const report: GoogleRuleReporter = (context) => {
   // Politeness and use of "please"
   // https://developers.google.com/style/tone#politeness-and-use-of-please
-  const dictionaries = [
+  const dictionaries: MatchReplaceDictionary[] = [
     {
       pattern: /To (\w+) (.*), please (\w+)/,
       test: ({ all, captures }) => {
         return (
-          /^VB/.test(getPos(all, captures[0])) &&
-          /^VB|NN/.test(getPos(all, captures[2]))
+          getPos(all, captures[0]).startsWith("VB") &&
+          /^(VB|NN)/.test(getPos(all, captures[2]))
         );
       },
       replace: ({ captures }) => {
@@ -26,7 +26,7 @@ const report = (context) => {
     {
       pattern: /(For more \w+), please (\w+)/,
       test: ({ all, captures }) => {
-        return /^VB/.test(getPos(all, captures[1]));
+        return getPos(all, captures[1]).startsWith("VB");
       },
       replace: ({ captures }) => {
         return `${captures[0]}, ${captures[1]}`;
