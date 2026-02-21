@@ -39,7 +39,11 @@ https://developers.google.com/style/slashes#slashes-with-fractions
                 if (!match) {
                     return;
                 }
-                return REPLACE_ABBR_DICT[match] + " ";
+                const replacement = REPLACE_ABBR_DICT[match];
+                if (!replacement) {
+                    return;
+                }
+                return `${replacement} `;
             },
             message: () => `Don't use abbreviations that rely on slashes. Instead, spell the words out.
 https://developers.google.com/style/slashes#slashes-with-abbreviations

@@ -75,6 +75,28 @@ https://developers.google.com/style/slashes#slashes-with-abbreviations
 `
                 }
             ]
+        },
+        {
+            text: "Use L/R when discussing stereo panning.",
+            output: "Use L/R when discussing stereo panning.",
+            errors: [
+                {
+                    message: `Don't use abbreviations that rely on slashes. Instead, spell the words out.
+https://developers.google.com/style/slashes#slashes-with-abbreviations
+`
+                }
+            ]
+        },
+        {
+            text: "Use M/S in your mastering chain.",
+            output: "Use M/S in your mastering chain.",
+            errors: [
+                {
+                    message: `Don't use abbreviations that rely on slashes. Instead, spell the words out.
+https://developers.google.com/style/slashes#slashes-with-abbreviations
+`
+                }
+            ]
         }
     ]
 });
