@@ -14,9 +14,9 @@ Via `.textlintrc`(Recommended)
 
 ```json
 {
-    "rules": {
-        "@textlint-rule/google-capitalization": true
-    }
+  "rules": {
+    "@textlint-rule/google-capitalization": true
+  }
 }
 ```
 
@@ -32,12 +32,12 @@ You can set whitelist words.
 
 ```json5
 {
-    rules: {
-        "@textlint-rule/google-capitalization": {
-            // allow lower-case words in anywhere
-            allowWords: [],
-        },
+  rules: {
+    "@textlint-rule/google-capitalization": {
+      // allow lower-case words in anywhere
+      allowWords: [],
     },
+  },
 }
 ```
 

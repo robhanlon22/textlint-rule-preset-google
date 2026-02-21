@@ -20,9 +20,9 @@ Via `.textlintrc`(Recommended)
 
 ```json
 {
-    "rules": {
-        "@textlint-rule/google-possessives": true
-    }
+  "rules": {
+    "@textlint-rule/google-possessives": true
+  }
 }
 ```
 

@@ -24,9 +24,9 @@ Via `.textlintrc`(Recommended)
 
 ```json
 {
-    "rules": {
-        "@textlint-rule/google-commas": true
-    }
+  "rules": {
+    "@textlint-rule/google-commas": true
+  }
 }
 ```
 

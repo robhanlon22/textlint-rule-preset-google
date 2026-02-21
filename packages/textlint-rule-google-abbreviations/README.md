@@ -16,9 +16,9 @@ Via `.textlintrc`(Recommended)
 
 ```json
 {
-    "rules": {
-        "@textlint-rule/google-abbreviations": true
-    }
+  "rules": {
+    "@textlint-rule/google-abbreviations": true
+  }
 }
 ```
 

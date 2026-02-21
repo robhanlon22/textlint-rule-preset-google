@@ -3,9 +3,9 @@ import assert from "node:assert";
 import preset from "../src/textlint-rule-preset-google";
 const { rules, rulesConfig } = preset;
 describe("textlint-rule-preset-google", function () {
-    it("should not have missing key", function () {
-        const ruleKeys = Object.keys(rules).sort();
-        const ruleConfigKeys = Object.keys(rulesConfig).sort();
-        assert.deepEqual(ruleKeys, ruleConfigKeys);
-    });
+  it("should not have missing key", function () {
+    const ruleKeys = Object.keys(rules).sort();
+    const ruleConfigKeys = Object.keys(rulesConfig).sort();
+    assert.deepEqual(ruleKeys, ruleConfigKeys);
+  });
 });

@@ -14,9 +14,9 @@ Via `.textlintrc`(Recommended)
 
 ```json
 {
-    "rules": {
-        "@textlint-rule/google-articles": true
-    }
+  "rules": {
+    "@textlint-rule/google-articles": true
+  }
 }
 ```
 
@@ -32,12 +32,12 @@ Specify article by `a` and `an`.
 
 ```json
 {
-    "rules": {
-        "@textlint-rule/google-articles": {
-            "a": ["forceAWord"],
-            "an": ["forceAnWord"]
-        }
+  "rules": {
+    "@textlint-rule/google-articles": {
+      "a": ["forceAWord"],
+      "an": ["forceAnWord"]
     }
+  }
 }
 ```
 

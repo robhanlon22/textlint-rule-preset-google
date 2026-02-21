@@ -14,9 +14,9 @@ Via `.textlintrc`(Recommended)
 
 ```json
 {
-    "rules": {
-        "google-units-of-measure": true
-    }
+  "rules": {
+    "google-units-of-measure": true
+  }
 }
 ```
 

@@ -34,12 +34,7 @@
     "homepage": "https://github.com/textlint-rule/textlint-rule-preset-google/tree/master/packages/textlint-report-helper-for-google-preset/",
     "devDependencies": {
         "husky": "^9.1.7",
-        "lint-staged": "^16.2.7",
-        "prettier": "^3.8.1"
-    },
-    "prettier": {
-        "printWidth": 120,
-        "tabWidth": 4
+        "lint-staged": "^16.2.7"
     },
     "types": "lib/textlint-report-helper-for-google-preset.d.ts",
     "dependencies": {

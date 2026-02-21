@@ -32,14 +32,6 @@
         "url": "https://github.com/textlint-rule/textlint-rule-preset-google/issues"
     },
     "homepage": "https://github.com/textlint-rule/textlint-rule-preset-google/tree/master/packages/textlint-rule-google-abbreviations/",
-    "devDependencies": {
-        "prettier": "^3.8.1",
-        "textlint-tester": "^12.2.0"
-    },
-    "prettier": {
-        "printWidth": 120,
-        "tabWidth": 4
-    },
     "dependencies": {
         "@textlint-rule/textlint-report-helper-for-google-preset": "^0.1.2"
     },

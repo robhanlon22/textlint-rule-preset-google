@@ -14,9 +14,9 @@ Via `.textlintrc`(Recommended)
 
 ```json
 {
-    "rules": {
-        "@textlint-rule/preset-google": true
-    }
+  "rules": {
+    "@textlint-rule/preset-google": true
+  }
 }
 ```
 

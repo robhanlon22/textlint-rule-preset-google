@@ -14,9 +14,9 @@ Via `.textlintrc`(Recommended)
 
 ```json
 {
-    "rules": {
-        "@textlint-rule/google-slashes": true
-    }
+  "rules": {
+    "@textlint-rule/google-slashes": true
+  }
 }
 ```
 

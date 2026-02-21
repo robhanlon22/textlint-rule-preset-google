@@ -18,9 +18,9 @@ Via `.textlintrc`(Recommended)
 
 ```json
 {
-    "rules": {
-        "@textlint-rule/google-exclamation-points": true
-    }
+  "rules": {
+    "@textlint-rule/google-exclamation-points": true
+  }
 }
 ```
 
@@ -34,14 +34,14 @@ textlint --rule @textlint-rule/google-exclamation-points README.md
 
 ```json
 {
-    // allow to use !
-    "allowHalfWidthExclamation": false,
-    // allow to use ！
-    "allowFullWidthExclamation": false,
-    // allow to use ?
-    "allowHalfWidthQuestion": false,
-    // allow to use ？
-    "allowFullWidthQuestion": false
+  // allow to use !
+  "allowHalfWidthExclamation": false,
+  // allow to use ！
+  "allowFullWidthExclamation": false,
+  // allow to use ?
+  "allowHalfWidthQuestion": false,
+  // allow to use ？
+  "allowFullWidthQuestion": false
 }
 ```
 

@@ -52,14 +52,6 @@
         "@textlint-rule/textlint-rule-google-tone": "^0.1.2",
         "@textlint-rule/textlint-rule-google-word-list": "^0.1.2"
     },
-    "devDependencies": {
-        "prettier": "^3.8.1",
-        "textlint-tester": "^12.2.0"
-    },
-    "prettier": {
-        "printWidth": 120,
-        "tabWidth": 4
-    },
     "publishConfig": {
         "access": "public"
     },

@@ -14,9 +14,9 @@ Via `.textlintrc`(Recommended)
 
 ```json
 {
-    "rules": {
-        "@textlint-rule/preset-google": true
-    }
+  "rules": {
+    "@textlint-rule/preset-google": true
+  }
 }
 ```
 
@@ -35,138 +35,138 @@ textlint --rule preset-google README.md
 - [Style-guide highlights](https://developers.google.com/style/highlights)
 - General principles
 - [Style and tone](https://developers.google.com/style/tone)
-    - [ ] Some things to avoid where possible
-        - [ ] Placeholder phrases like "please note" and "at this time."
-        - [ ] Starting all sentences with the same phrase (such as "You can" or "Todo").
-        - [ ] Phrasing in terms of "let's" do something.
-        - [ ] Using phrases like "simply" or "It's that simple" or "It's easy" in a
-        - [ ] procedure, unless it's an extraordinarily simple/easy procedure.
-    - [x] [Politeness and use of "please"](https://developers.google.com/style/tone#politeness-and-use-of-please 'Politeness and use of "please"')
-        - :heavy_check_mark: `textlint-rule-google-tone`
+  - [ ] Some things to avoid where possible
+    - [ ] Placeholder phrases like "please note" and "at this time."
+    - [ ] Starting all sentences with the same phrase (such as "You can" or "Todo").
+    - [ ] Phrasing in terms of "let's" do something.
+    - [ ] Using phrases like "simply" or "It's that simple" or "It's easy" in a
+    - [ ] procedure, unless it's an extraordinarily simple/easy procedure.
+  - [x] [Politeness and use of "please"](https://developers.google.com/style/tone#politeness-and-use-of-please 'Politeness and use of "please"')
+    - :heavy_check_mark: `textlint-rule-google-tone`
 - [Documenting future features](https://developers.google.com/style/future)
 - [Accessible content](https://developers.google.com/style/accessibility)
 - [Writing for a global audience](https://developers.google.com/style/translation)
-    - :heavy_check_mark: `textlint-rule-google-contractions`
-    - [x] Avoid misplaced modifiers.
+  - :heavy_check_mark: `textlint-rule-google-contractions`
+  - [x] Avoid misplaced modifiers.
 - Language and grammar
 - [Abbreviations](https://developers.google.com/style/abbreviations)
-    - :heavy_check_mark: `textlint-rule-google-abbreviations`
-    - [x] Prefer English terms over Latin abbreviations. Don't use "i.e." or "e.g.";
-        - instead, use "that is" or "for example," respectively.
-    - [x] Periods with abbreviations
+  - :heavy_check_mark: `textlint-rule-google-abbreviations`
+  - [x] Prefer English terms over Latin abbreviations. Don't use "i.e." or "e.g.";
+    - instead, use "that is" or "for example," respectively.
+  - [x] Periods with abbreviations
 - [Active voice](https://developers.google.com/style/voice)
-    - [ ] use active voice instead of passive voice
+  - [ ] use active voice instead of passive voice
 - [Anthropomorphism](https://developers.google.com/style/anthropomorphism)
 - [Articles (a, an, the)](https://developers.google.com/style/articles)
-    - :heavy_check_mark: `textlint-rule-google-articles`
-    - [x] a/an = indefinite article
-    - [ ] the = definite article
+  - :heavy_check_mark: `textlint-rule-google-articles`
+  - [x] a/an = indefinite article
+  - [ ] the = definite article
 - [Capitalization](https://developers.google.com/style/capitalization)
-    - :heavy_check_mark: `textlint-rule-google-capitalization`
-    - [x] Capitalization in titles and headings
-    - [ ] Capitalization and colons
-    - [x] Capitalization and figures
-    - [x] Capitalization and hyphenated words
-    - [x] Capitalization in lists
-    - [ ] Capitalization for tables in text
+  - :heavy_check_mark: `textlint-rule-google-capitalization`
+  - [x] Capitalization in titles and headings
+  - [ ] Capitalization and colons
+  - [x] Capitalization and figures
+  - [x] Capitalization and hyphenated words
+  - [x] Capitalization in lists
+  - [ ] Capitalization for tables in text
 - [Clause order](https://developers.google.com/style/clause-order)
-    - :heavy_check_mark: `textlint-rule-google-clause-order`
-    - [x] For more details
-    - [x] To ~, instruction
+  - :heavy_check_mark: `textlint-rule-google-clause-order`
+  - [x] For more details
+  - [x] To ~, instruction
 - [Contractions](https://developers.google.com/style/contractions)
-    - :heavy_check_mark: `textlint-rule-google-contractions`
-    - [x] Noun+verb contractions
-    - [x] Don't use double contractions
+  - :heavy_check_mark: `textlint-rule-google-contractions`
+  - [x] Noun+verb contractions
+  - [x] Don't use double contractions
 - [Cross-references](https://developers.google.com/style/cross-references)
 - [Plurals in parentheses](https://developers.google.com/style/plurals-parentheses)
-    - :heavy_check_mark: `textlint-rule-google-plurals-parentheses`
-    - [x] Don't put optional plurals in parentheses.
+  - :heavy_check_mark: `textlint-rule-google-plurals-parentheses`
+  - [x] Don't put optional plurals in parentheses.
 - [Prepositions](https://developers.google.com/style/prepositions)
 - [Present tense](https://developers.google.com/style/tense)
-    - [ ] will
-    - [ ] would
+  - [ ] will
+  - [ ] would
 - [Pronouns](https://developers.google.com/style/pronouns)
-    - [ ] Gender-neutral pronouns
-    - [ ] Personal pronouns/Second Person
+  - [ ] Gender-neutral pronouns
+  - [ ] Personal pronouns/Second Person
 - [Second person](https://developers.google.com/style/person)
-    - Use "you" rather than "we."
+  - Use "you" rather than "we."
 - [Spelling](https://developers.google.com/style/spelling)
 - [Verb forms in reference documentation](https://developers.google.com/style/reference-verbs)
-    - [ ] Use "does" rather than "do" in a specification
+  - [ ] Use "does" rather than "do" in a specification
 - [Word list](https://developers.google.com/style/word-list)
-    - :heavy_check_mark: `textlint-rule-google-word-list`
-    - [x] Word list
+  - :heavy_check_mark: `textlint-rule-google-word-list`
+  - [x] Word list
 - Punctuation
 - [Apostrophes (possessives)](https://developers.google.com/style/possessives)
-    - :heavy_check_mark: `textlint-rule-google-possessives`
-    - [x] incorrect possessives
+  - :heavy_check_mark: `textlint-rule-google-possessives`
+  - [x] incorrect possessives
 - [Colons](https://developers.google.com/style/colons)
-    - :heavy_check_mark: `textlint-rule-google-colons`
-    - [x] Introductory phrase preceding colon
-    - [x] Bold text preceding colon
-    - [x] In general, the first word in the text that follows a colon should be in lowercase.
+  - :heavy_check_mark: `textlint-rule-google-colons`
+  - [x] Introductory phrase preceding colon
+  - [x] Bold text preceding colon
+  - [x] In general, the first word in the text that follows a colon should be in lowercase.
 - [Commas](https://developers.google.com/style/commas)
-    - [x] Serial commas
-    - [ ] Commas after introductory words and phrases
-    - [ ] Commas separating two independent clauses
-    - [ ] Commas separating independent from dependent clauses
-    - [x] Setting off other kinds of clauses
+  - [x] Serial commas
+  - [ ] Commas after introductory words and phrases
+  - [ ] Commas separating two independent clauses
+  - [ ] Commas separating independent from dependent clauses
+  - [x] Setting off other kinds of clauses
 - [Dashes](https://developers.google.com/style/dashes)
-    - :heavy_check_mark: `textlint-rule-google-dashes`
-    - [x] use `—` insteadof `-`
-    - [x] Colons instead of dashes in lists
+  - :heavy_check_mark: `textlint-rule-google-dashes`
+  - [x] use `—` insteadof `-`
+  - [x] Colons instead of dashes in lists
 - [Ellipses](https://developers.google.com/style/ellipses)
-    - :heavy_check_mark: `textlint-rule-google-ellipses`
-    - [x] Use quoted text
-    - [x] Punctuation and spacing
+  - :heavy_check_mark: `textlint-rule-google-ellipses`
+  - [x] Use quoted text
+  - [x] Punctuation and spacing
 - [Exclamation points](https://developers.google.com/style/exclamation-points)
-    - :heavy_check_mark: `textlint-rule-google-possessives`
-    - [x] Don't use `!` and `?`
+  - :heavy_check_mark: `textlint-rule-google-possessives`
+  - [x] Don't use `!` and `?`
 - [Hyphens](https://developers.google.com/style/hyphens)
-    - :heavy_check_mark: `textlint-rule-google-hyphens`
-    - [x] Don't hyphenate adverbs ending in "ly"
-    - [x] Don't add words such as -from- or -between-.
+  - :heavy_check_mark: `textlint-rule-google-hyphens`
+  - [x] Don't hyphenate adverbs ending in "ly"
+  - [x] Don't add words such as -from- or -between-.
 - [Parentheses](https://developers.google.com/style/parentheses)
 - [Periods](https://developers.google.com/style/periods)
-    - [ ] Periods with lists
-    - [ ] Periods with URLs
-        - Avoid put a space URLs and period
-    - [ ] Periods with quotation marks
-    - [ ] Periods with parentheses
-    - [ ] Periods with headings
-    - [ ] Periods with numbers
-    - [ ] Periods with captions
-    - [ ] Periods with abbreviations
+  - [ ] Periods with lists
+  - [ ] Periods with URLs
+    - Avoid put a space URLs and period
+  - [ ] Periods with quotation marks
+  - [ ] Periods with parentheses
+  - [ ] Periods with headings
+  - [ ] Periods with numbers
+  - [ ] Periods with captions
+  - [ ] Periods with abbreviations
 - [Pluralizing a single letter](https://developers.google.com/style/plural-single-letter)
 - [Quotation marks](https://developers.google.com/style/quotation-marks)
-    - :heavy_check_mark: `textlint-rule-google-quotation-marks`
-    - [ ] American Style
-    - [x] Single quotation marks
+  - :heavy_check_mark: `textlint-rule-google-quotation-marks`
+  - [ ] American Style
+  - [x] Single quotation marks
 - [Semicolons](https://developers.google.com/style/semicolons)
 - [Slashes](https://developers.google.com/style/slashes)
-    - :heavy_check_mark: `textlint-rule-google-slashes`
-    - [ ] Slashes with dates
-    - [ ] Slashes with file paths and URLs
-    - [x] Slashes with alternatives
-    - [x] Slashes with fractions
-    - [x] Slashes with abbreviations
+  - :heavy_check_mark: `textlint-rule-google-slashes`
+  - [ ] Slashes with dates
+  - [ ] Slashes with file paths and URLs
+  - [x] Slashes with alternatives
+  - [x] Slashes with fractions
+  - [x] Slashes with abbreviations
 - Formatting and organization
 - [Dates and times](https://developers.google.com/style/dates-times)
 - [Figures and other images](https://developers.google.com/style/images)
 - [Headings and titles](https://developers.google.com/style/headings)
-    - [ ] Capitalization
+  - [ ] Capitalization
 - [Lists](https://developers.google.com/style/lists)
 - [Notes and other notices](https://developers.google.com/style/notices)
 - [Numbers](https://developers.google.com/style/numbers)
 - [Phone numbers](https://developers.google.com/style/phone-numbers)
 - [Procedures](https://developers.google.com/style/procedures)
 - [Spaces between sentences](https://developers.google.com/style/sentence-spacing)
-    - :heavy_check_mark: `textlint-rule-google-sentence-spacing`
-    - [x] Leave only one space between sentences
+  - :heavy_check_mark: `textlint-rule-google-sentence-spacing`
+  - [x] Leave only one space between sentences
 - [Tables](https://developers.google.com/style/tables)
 - [Units of measurement](https://developers.google.com/style/units-of-measure)
-    - :heavy_check_mark: `textlint-rule-google-units-of-measure`
-    - [x] Formatting units of measurement
+  - :heavy_check_mark: `textlint-rule-google-units-of-measure`
+  - [x] Formatting units of measurement
 - Computer interfaces
 - [API reference code comments](https://developers.google.com/style/api-reference-comments)
 - [Code in text](https://developers.google.com/style/code-in-text)
@@ -223,8 +223,8 @@ Pull requests and stars are always welcome.
 ### Adding new rule
 
 1. Create `pacakges/textlint-rule-<rule-name>`
-    - Rule name is based on style guide URL
-    - For example, https://developers.google.com/style/clause-order's rule name is `clause-order`
+   - Rule name is based on style guide URL
+   - For example, https://developers.google.com/style/clause-order's rule name is `clause-order`
 2. Setup package using TypeScript (`tsconfig.json`, `src/*.ts`, `test/*.ts`).
 3. Write rule
 4. Test rule

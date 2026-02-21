@@ -14,9 +14,9 @@ Via `.textlintrc`(Recommended)
 
 ```json
 {
-    "rules": {
-        "@textlint-rule/google-hyphens": true
-    }
+  "rules": {
+    "@textlint-rule/google-hyphens": true
+  }
 }
 ```
 

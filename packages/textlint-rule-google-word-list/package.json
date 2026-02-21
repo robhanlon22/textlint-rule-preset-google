@@ -19,9 +19,7 @@
     },
     "devDependencies": {
         "cheerio": "^1.2.0",
-        "cheerio-httpcli": "^0.8.3",
-        "prettier": "^3.8.1",
-        "textlint-tester": "^12.2.0"
+        "cheerio-httpcli": "^0.8.3"
     },
     "scripts": {
         "test": "vitest run --config ../../vitest.config.ts --dir .",
@@ -41,10 +39,6 @@
         "url": "https://github.com/textlint-rule/textlint-rule-preset-google/issues"
     },
     "homepage": "https://github.com/textlint-rule/textlint-rule-preset-google/tree/master/packages/textlint-rule-google-word-list/",
-    "prettier": {
-        "printWidth": 120,
-        "tabWidth": 4
-    },
     "publishConfig": {
         "access": "public"
     },

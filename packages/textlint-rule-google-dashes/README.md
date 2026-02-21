@@ -19,9 +19,9 @@ Via `.textlintrc`(Recommended)
 
 ```json
 {
-    "rules": {
-        "@textlint-rule/google-dashes": true
-    }
+  "rules": {
+    "@textlint-rule/google-dashes": true
+  }
 }
 ```
 
@@ -34,7 +34,7 @@ textlint --rule @textlint-rule/google-dashes README.md
 ## TODO
 
 - [ ] use colon instead of dash or hyphen
-    - Currently, support partially
+  - Currently, support partially
 
 ## Changelog
 

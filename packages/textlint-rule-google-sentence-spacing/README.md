@@ -41,9 +41,9 @@ Via `.textlintrc`(Recommended)
 
 ```json
 {
-    "rules": {
-        "@textlint-rule/google-sentence-spacing": true
-    }
+  "rules": {
+    "@textlint-rule/google-sentence-spacing": true
+  }
 }
 ```
 
