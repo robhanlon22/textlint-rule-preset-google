@@ -33,7 +33,8 @@
     },
     "homepage": "https://github.com/textlint-rule/textlint-rule-preset-google/tree/master/packages/textlint-rule-google-colons/",
     "devDependencies": {
-        "prettier": "^3.8.1"
+        "prettier": "^3.8.1",
+        "textlint-tester": "^12.2.0"
     },
     "prettier": {
         "printWidth": 120,

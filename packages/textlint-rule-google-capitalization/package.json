@@ -18,7 +18,8 @@
         "textlint-rule-en-capitalization": "^2.0.3"
     },
     "devDependencies": {
-        "prettier": "^3.8.1"
+        "prettier": "^3.8.1",
+        "textlint-tester": "^12.2.0"
     },
     "scripts": {
         "test": "vitest run --config ../../vitest.config.ts --dir .",
