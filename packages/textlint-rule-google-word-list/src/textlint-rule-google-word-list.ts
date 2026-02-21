@@ -1,5 +1,6 @@
 // MIT © 2017 azu
 import {
+  bindRuleContext,
   paragraphReporter,
   getPosFromSingleWord,
 } from "@textlint-rule/textlint-report-helper-for-google-preset";
@@ -311,14 +312,20 @@ const report: GoogleRuleReporter = (context) => {
     },
   );
 
-  const { Syntax, RuleError, getSource, fixer, report } = context;
+  const {
+    Syntax,
+    RuleError,
+    fixer,
+    getSource,
+    report: reportError,
+  } = bindRuleContext(context);
   return {
     [Syntax.Paragraph](node) {
       paragraphReporter({
         Syntax,
         node,
         dictionaries,
-        report,
+        report: reportError,
         getSource,
         RuleError,
         fixer,

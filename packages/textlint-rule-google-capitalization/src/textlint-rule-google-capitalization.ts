@@ -28,7 +28,9 @@ const defaultOptions: CapitalizationOptions = {
 const createReporter =
   (capitalizationReport: CapitalizationReporter): CapitalizationReporter =>
   (context, options = defaultOptions) => {
-    const { report: baseReport } = context;
+    const baseReport: GoogleRuleContext["report"] = (node, error) => {
+      context.report(node, error);
+    };
     const overlayContext = Object.create(context) as GoogleRuleContext;
     Object.defineProperty(overlayContext, "report", {
       value(

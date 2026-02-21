@@ -1,10 +1,18 @@
 // MIT © 2017 azu
 import {
+  bindRuleContext,
   paragraphReporter,
   getPos,
 } from "@textlint-rule/textlint-report-helper-for-google-preset";
 
 const report: GoogleRuleReporter = (context) => {
+  const {
+    Syntax,
+    RuleError,
+    fixer,
+    getSource,
+    report: reportError,
+  } = bindRuleContext(context);
   // Politeness and use of "please"
   // https://developers.google.com/style/tone#politeness-and-use-of-please
   const dictionaries: MatchReplaceDictionary[] = [
@@ -37,14 +45,13 @@ const report: GoogleRuleReporter = (context) => {
     },
   ];
 
-  const { Syntax, RuleError, getSource, fixer, report } = context;
   return {
     [Syntax.Paragraph](node) {
       paragraphReporter({
         Syntax,
         node,
         dictionaries,
-        report,
+        report: reportError,
         getSource,
         RuleError,
         fixer,

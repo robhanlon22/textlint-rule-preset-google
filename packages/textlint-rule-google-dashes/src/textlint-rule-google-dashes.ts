@@ -1,5 +1,6 @@
 // MIT © 2017 azu
 import {
+  bindRuleContext,
   strReporter,
   getPos,
   PosType,
@@ -11,17 +12,13 @@ const { RuleHelper } = textlintRuleHelper;
 const DocumentURL = "https://developers.google.com/style/dashes";
 
 const report: GoogleRuleReporter = (context) => {
-  const Syntax = context.Syntax;
-  const RuleError = context.RuleError;
-  const fixer = context.fixer;
-  const getSource: GoogleRuleContext["getSource"] = (
-    node,
-    beforeCount,
-    afterCount,
-  ) => context.getSource(node, beforeCount, afterCount);
-  const reportError: GoogleRuleContext["report"] = (node, error) => {
-    context.report(node, error);
-  };
+  const {
+    Syntax,
+    RuleError,
+    fixer,
+    getSource,
+    report: reportError,
+  } = bindRuleContext(context);
   // Notes: the order is important when Apply fixes
   const dictionaries: MatchReplaceDictionary[] = [
     {

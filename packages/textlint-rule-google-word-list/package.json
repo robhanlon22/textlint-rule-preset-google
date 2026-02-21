@@ -15,7 +15,7 @@
   "description": "See https://developers.google.com/style/word-list",
   "main": "./lib/textlint-rule-google-word-list.js",
   "dependencies": {
-    "@textlint-rule/textlint-report-helper-for-google-preset": "^0.1.2"
+    "@textlint-rule/textlint-report-helper-for-google-preset": "workspace:*"
   },
   "devDependencies": {
     "cheerio": "^1.2.0",

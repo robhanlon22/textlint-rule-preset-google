@@ -1,5 +1,8 @@
 // MIT © 2017 azu
-import { paragraphReporter } from "@textlint-rule/textlint-report-helper-for-google-preset";
+import {
+  bindRuleContext,
+  paragraphReporter,
+} from "@textlint-rule/textlint-report-helper-for-google-preset";
 
 const REPLACE_ABBR_DICT: Record<string, string> = {
   "c/o": "care of",
@@ -51,17 +54,13 @@ const isFilePathOrUrlContext = (
 };
 
 const report: GoogleRuleReporter = (context) => {
-  const Syntax = context.Syntax;
-  const RuleError = context.RuleError;
-  const fixer = context.fixer;
-  const getSource: GoogleRuleContext["getSource"] = (
-    node,
-    beforeCount,
-    afterCount,
-  ) => context.getSource(node, beforeCount, afterCount);
-  const reportError: GoogleRuleContext["report"] = (node, error) => {
-    context.report(node, error);
-  };
+  const {
+    Syntax,
+    RuleError,
+    fixer,
+    getSource,
+    report: reportError,
+  } = bindRuleContext(context);
   const dictionaries: MatchReplaceDictionary[] = [
     // Slashes with dates => other rule
     {

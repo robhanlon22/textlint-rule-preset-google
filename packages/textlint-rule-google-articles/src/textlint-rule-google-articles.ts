@@ -1,5 +1,6 @@
 // MIT © 2017 azu
 import {
+  bindRuleContext,
   shouldIgnoreNodeOfStrNode,
   strReporter,
 } from "@textlint-rule/textlint-report-helper-for-google-preset";
@@ -21,6 +22,13 @@ const isCapital = (text: string) => {
   return /^[A-Z]/.test(text);
 };
 const report: GoogleRuleReporter = (context, options = {}) => {
+  const {
+    Syntax,
+    RuleError,
+    fixer,
+    getSource,
+    report: reportError,
+  } = bindRuleContext(context);
   const articleOptions = options as ArticleOptions;
   const forceA = toStringArray(articleOptions.a);
   const forceAn = toStringArray(articleOptions.an);
@@ -72,7 +80,6 @@ const report: GoogleRuleReporter = (context, options = {}) => {
       },
     },
   ];
-  const { Syntax, RuleError, getSource, fixer, report } = context;
   return {
     [Syntax.Str](node) {
       if (shouldIgnoreNodeOfStrNode(node, context)) {
@@ -81,7 +88,7 @@ const report: GoogleRuleReporter = (context, options = {}) => {
       strReporter({
         node,
         dictionaries,
-        report,
+        report: reportError,
         getSource,
         RuleError,
         fixer,

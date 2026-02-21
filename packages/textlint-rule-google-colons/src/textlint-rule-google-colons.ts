@@ -1,5 +1,8 @@
 // MIT © 2017 azu
-import { paragraphReporter } from "@textlint-rule/textlint-report-helper-for-google-preset";
+import {
+  bindRuleContext,
+  paragraphReporter,
+} from "@textlint-rule/textlint-report-helper-for-google-preset";
 import type { TxtParentNode } from "@textlint/ast-node-types";
 import { checkBoldTextPrecedingColon } from "./checkBoldTextPrecedingColon.js";
 
@@ -34,6 +37,13 @@ const helpingVerbs = [
 ];
 
 const report: GoogleRuleReporter = (context) => {
+  const {
+    Syntax,
+    RuleError,
+    fixer,
+    getSource,
+    report: reportError,
+  } = bindRuleContext(context);
   const dictionaries: MatchReplaceDictionary[] = [
     // Introductory phrase preceding colon
     {
@@ -61,12 +71,11 @@ https://developers.google.com/style/colons#colons-within-sentences
     },
   ];
 
-  const { Syntax, RuleError, getSource, fixer, report } = context;
   return {
     [Syntax.Paragraph](node) {
       checkBoldTextPrecedingColon({
         node: node as TxtParentNode,
-        report,
+        report: reportError,
         getSource,
         RuleError,
         fixer,
@@ -75,7 +84,7 @@ https://developers.google.com/style/colons#colons-within-sentences
         node,
         Syntax,
         dictionaries,
-        report,
+        report: reportError,
         getSource,
         RuleError,
         fixer,

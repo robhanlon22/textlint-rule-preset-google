@@ -1,8 +1,18 @@
 // MIT © 2017 azu
-import { paragraphReporter } from "@textlint-rule/textlint-report-helper-for-google-preset";
+import {
+  bindRuleContext,
+  paragraphReporter,
+} from "@textlint-rule/textlint-report-helper-for-google-preset";
 
 const URL = "https://developers.google.com/style/units-of-measure";
 const report: GoogleRuleReporter = (context) => {
+  const {
+    Syntax,
+    RuleError,
+    fixer,
+    getSource,
+    report: reportError,
+  } = bindRuleContext(context);
   const dictionaries: MatchReplaceDictionary[] = [
     // Need space
     {
@@ -39,14 +49,13 @@ ${URL}
     },
   ];
 
-  const { Syntax, RuleError, getSource, fixer, report } = context;
   return {
     [Syntax.Paragraph](node) {
       paragraphReporter({
         Syntax,
         node,
         dictionaries,
-        report,
+        report: reportError,
         getSource,
         RuleError,
         fixer,

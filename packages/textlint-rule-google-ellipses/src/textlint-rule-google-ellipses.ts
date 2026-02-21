@@ -1,9 +1,18 @@
 // MIT © 2017 azu
-import { paragraphReporter } from "@textlint-rule/textlint-report-helper-for-google-preset";
+import {
+  bindRuleContext,
+  paragraphReporter,
+} from "@textlint-rule/textlint-report-helper-for-google-preset";
 
 const DocumentURL = "https://developers.google.com/style/ellipses";
 const report: GoogleRuleReporter = (context) => {
-  const { Syntax, RuleError, getSource, fixer, report } = context;
+  const {
+    Syntax,
+    RuleError,
+    fixer,
+    getSource,
+    report: reportError,
+  } = bindRuleContext(context);
   const dictionaries: MatchReplaceDictionary[] = [
     // NG: Suspension points
     {
@@ -49,7 +58,7 @@ const report: GoogleRuleReporter = (context) => {
         Syntax,
         node,
         dictionaries,
-        report,
+        report: reportError,
         getSource,
         RuleError,
         fixer,

@@ -26,7 +26,7 @@
   },
   "homepage": "https://github.com/textlint-rule/textlint-rule-preset-google/tree/master/packages/textlint-rule-google-units-of-measure/",
   "dependencies": {
-    "@textlint-rule/textlint-report-helper-for-google-preset": "^0.1.2"
+    "@textlint-rule/textlint-report-helper-for-google-preset": "workspace:*"
   },
   "publishConfig": {
     "access": "public"

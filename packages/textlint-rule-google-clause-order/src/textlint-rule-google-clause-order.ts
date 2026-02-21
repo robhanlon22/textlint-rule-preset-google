@@ -1,5 +1,8 @@
 // MIT © 2017 azu
-import { getPos } from "@textlint-rule/textlint-report-helper-for-google-preset";
+import {
+  bindRuleContext,
+  getPos,
+} from "@textlint-rule/textlint-report-helper-for-google-preset";
 
 // https://developers.google.com/style/clause-order
 export const defaultMessage =
@@ -10,17 +13,13 @@ const linkReferencePattern =
 const clickPattern = /Click ([\w-]+) if you want to (.+?)\./g;
 
 const report: GoogleRuleReporter = (context) => {
-  const Syntax = context.Syntax;
-  const RuleError = context.RuleError;
-  const fixer = context.fixer;
-  const getSource: GoogleRuleContext["getSource"] = (
-    node,
-    beforeCount,
-    afterCount,
-  ) => context.getSource(node, beforeCount, afterCount);
-  const reportError: GoogleRuleContext["report"] = (node, error) => {
-    context.report(node, error);
-  };
+  const {
+    Syntax,
+    RuleError,
+    fixer,
+    getSource,
+    report: reportError,
+  } = bindRuleContext(context);
   return {
     [Syntax.Paragraph](node) {
       const text = getSource(node);

@@ -1,6 +1,16 @@
 // MIT © 2017 azu
-import { paragraphReporter } from "@textlint-rule/textlint-report-helper-for-google-preset";
+import {
+  bindRuleContext,
+  paragraphReporter,
+} from "@textlint-rule/textlint-report-helper-for-google-preset";
 const report: GoogleRuleReporter = (context) => {
+  const {
+    Syntax,
+    RuleError,
+    fixer,
+    getSource,
+    report: reportError,
+  } = bindRuleContext(context);
   const dictionaries: MatchReplaceDictionary[] = [
     // Commas and periods with quotation marks
     // We can not handle this rule
@@ -37,14 +47,13 @@ In the latter case, put the primary speaker's quote in double quotation marks an
     },
   ];
 
-  const { Syntax, RuleError, getSource, fixer, report } = context;
   return {
     [Syntax.Paragraph](node) {
       paragraphReporter({
         Syntax,
         node,
         dictionaries,
-        report,
+        report: reportError,
         getSource,
         RuleError,
         fixer,

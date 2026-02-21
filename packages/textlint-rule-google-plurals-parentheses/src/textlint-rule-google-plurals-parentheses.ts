@@ -1,5 +1,6 @@
 // MIT © 2017 azu
 import {
+  bindRuleContext,
   paragraphReporter,
   getPosFromSingleWord,
   PosType,
@@ -7,6 +8,13 @@ import {
 
 const DocumentURL = "https://developers.google.com/style/hyphens";
 const report: GoogleRuleReporter = (context) => {
+  const {
+    Syntax,
+    RuleError,
+    fixer,
+    getSource,
+    report: reportError,
+  } = bindRuleContext(context);
   const dictionaries: MatchReplaceDictionary[] = [
     // word(s)
     // if "words" is plural, report as error
@@ -23,14 +31,13 @@ ${DocumentURL}
     },
   ];
 
-  const { Syntax, RuleError, getSource, fixer, report } = context;
   return {
     [Syntax.Paragraph](node) {
       paragraphReporter({
         node,
         Syntax,
         dictionaries,
-        report,
+        report: reportError,
         getSource,
         RuleError,
         fixer,

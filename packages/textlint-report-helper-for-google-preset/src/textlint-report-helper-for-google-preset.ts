@@ -33,6 +33,14 @@ type RuleFixer = GoogleRuleContext["fixer"];
 type ReportFunction = GoogleRuleContext["report"];
 type GetSourceFunction = GoogleRuleContext["getSource"];
 
+export interface BoundRuleContext {
+  Syntax: GoogleRuleContext["Syntax"];
+  RuleError: RuleErrorCtor;
+  fixer: RuleFixer;
+  report: ReportFunction;
+  getSource: GetSourceFunction;
+}
+
 export {
   getPos,
   getPosFromSingleWord,
@@ -52,6 +60,23 @@ export const shouldIgnoreNodeOfStrNode = (
     node as unknown as Parameters<typeof helper.isChildNode>[0],
     [Syntax.Link, Syntax.Image, Syntax.BlockQuote, Syntax.Emphasis],
   );
+};
+
+export const bindRuleContext = (
+  context: GoogleRuleContext,
+): BoundRuleContext => {
+  const getSource: GetSourceFunction = (node, beforeCount, afterCount) =>
+    context.getSource(node, beforeCount, afterCount);
+  const report: ReportFunction = (node, error) => {
+    context.report(node, error);
+  };
+  return {
+    Syntax: context.Syntax,
+    RuleError: context.RuleError,
+    fixer: context.fixer,
+    report,
+    getSource,
+  };
 };
 
 export interface StrReporterArgs {

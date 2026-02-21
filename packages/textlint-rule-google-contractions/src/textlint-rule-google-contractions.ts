@@ -1,5 +1,6 @@
 // MIT © 2017 azu
 import {
+  bindRuleContext,
   paragraphReporter,
   getPos,
   getPosFromSingleWord,
@@ -13,6 +14,13 @@ export const noDoubleContractions =
   "Don't use double contractions: Double contractions contain not just one but two contracted words.\n" +
   "URL: https://developers.google.com/style/contractions";
 const report: GoogleRuleReporter = (context) => {
+  const {
+    Syntax,
+    RuleError,
+    fixer,
+    getSource,
+    report: reportError,
+  } = bindRuleContext(context);
   const dictionaries: MatchReplaceDictionary[] = [
     {
       pattern: /(\w+)'s (\w+)/,
@@ -86,7 +94,6 @@ const report: GoogleRuleReporter = (context) => {
     },
   ];
 
-  const { Syntax, RuleError, getSource, fixer, report } = context;
   return {
     [Syntax.Paragraph](node) {
       paragraphReporter({
@@ -94,7 +101,7 @@ const report: GoogleRuleReporter = (context) => {
         node,
         dictionaries,
         getSource,
-        report,
+        report: reportError,
         RuleError,
         fixer,
       });
