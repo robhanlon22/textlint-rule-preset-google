@@ -1,47 +1,16 @@
 // MIT © 2017 azu
 import { Tag } from "en-pos";
-import { EnglishParser, PosType as PosTypeLiteral } from "nlcst-parse-english";
+import type { PosType as PosTypeLiteral } from "nlcst-parse-english";
 import lexicon from "en-lexicon";
 
-interface UnistNode {
-  type: string;
-  [key: string]: unknown;
-}
+const wordTokenPattern = /[A-Za-z]+(?:'[A-Za-z]+)?/g;
 
-const parser = new EnglishParser() as unknown as {
-  parse(text: string): UnistNode;
+const normalizeWord = (word: string): string => {
+  return word.toLowerCase().replace(/^[^a-z]+|[^a-z]+$/g, "");
 };
 
-interface WordNode extends UnistNode {
-  type: "WordNode";
-  value?: string;
-  data?: {
-    pos?: string;
-  };
-}
-
-const findWordNode = (
-  rootNode: UnistNode,
-  word: string,
-): WordNode | undefined => {
-  const queue: UnistNode[] = [rootNode];
-  while (queue.length > 0) {
-    const currentNode = queue.shift();
-    if (!currentNode) {
-      continue;
-    }
-    if (currentNode.type === "WordNode") {
-      const wordNode = currentNode as WordNode;
-      if (wordNode.value === word) {
-        return wordNode;
-      }
-    }
-    const children = (currentNode as { children?: UnistNode[] }).children;
-    if (children && children.length > 0) {
-      queue.push(...children);
-    }
-  }
-  return undefined;
+const extractWords = (text: string): string[] => {
+  return text.match(wordTokenPattern) ?? [];
 };
 
 // Additional lexicon
@@ -107,13 +76,21 @@ export const getPosFromSingleWord = (word: string): PosTypeLiteral => {
 };
 
 export const getPos = (text: string, word: string): string => {
-  const cstNode = parser.parse(text);
-  const node = findWordNode(cstNode, word);
-
-  if (node?.data?.pos) {
-    return node.data.pos;
+  const words = extractWords(text);
+  if (words.length === 0) {
+    return "";
   }
-  return "";
+  const normalizedWord = normalizeWord(word);
+  if (!normalizedWord) {
+    return "";
+  }
+  const tags = new Tag(words)
+    .initial() // initial dictionary and pattern based tagging
+    .smooth().tags; // further context based smoothing
+  const index = words.findIndex((candidate) => {
+    return normalizeWord(candidate) === normalizedWord;
+  });
+  return index >= 0 ? tags[index] : "";
 };
 
 /**
