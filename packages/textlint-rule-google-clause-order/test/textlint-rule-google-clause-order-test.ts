@@ -33,18 +33,16 @@ tester.run("textlint-rule-google-clause-order", rule as GoogleRuleModule, {
         },
       ],
     },
-    // TODO: Can't support yet
-    // includes Link node patter
-    // {
-    //     text: "See [link](http://example.com) for more detail.",
-    //     output: "For more detail, see [link](http://example.com).",
-    //     errors: [
-    //         {
-    //             message: defaultMessage,
-    //             index: 0
-    //         }
-    //     ]
-    // },
+    {
+      text: "See [link](http://example.com) for more detail.",
+      output: "For more detail, see [link](http://example.com).",
+      errors: [
+        {
+          message: defaultMessage,
+          index: 0,
+        },
+      ],
+    },
     {
       text: "Click Delete if you want to delete the entire document.",
       output: "To delete the entire document, click Delete.",

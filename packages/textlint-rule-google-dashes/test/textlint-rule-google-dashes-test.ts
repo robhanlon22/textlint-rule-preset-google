@@ -49,13 +49,10 @@ tester.run("textlint-rule-google-dashes", rule as GoogleRuleModule, {
         },
       ],
     },
-    // Not yet support
-    // {
-    //     text: "Appendix A - My First Appendix.",
-    //     output: "Appendix A: My First Appendix.",
-    //     errors: [
-    //         {}
-    //     ]
-    // }
+    {
+      text: "Appendix A - My First Appendix.",
+      output: "Appendix A: My First Appendix.",
+      errors: [{}],
+    },
   ],
 });

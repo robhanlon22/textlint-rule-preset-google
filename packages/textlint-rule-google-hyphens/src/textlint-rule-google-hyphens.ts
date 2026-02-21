@@ -6,6 +6,17 @@ import {
 } from "@textlint-rule/textlint-report-helper-for-google-preset";
 
 const report: GoogleRuleReporter = (context) => {
+  const Syntax = context.Syntax;
+  const RuleError = context.RuleError;
+  const fixer = context.fixer;
+  const getSource: GoogleRuleContext["getSource"] = (
+    node,
+    beforeCount,
+    afterCount,
+  ) => context.getSource(node, beforeCount, afterCount);
+  const reportError: GoogleRuleContext["report"] = (node, error) => {
+    context.report(node, error);
+  };
   const dictionaries: MatchReplaceDictionary[] = [
     // Adverbs ending in "ly"
     {
@@ -20,8 +31,30 @@ const report: GoogleRuleReporter = (context) => {
       message: () =>
         `Don't hyphenate adverbs ending in "ly" except where needed for clarity.`,
     },
-    // TODO: When to hyphenate
-    // TODO: Compound words
+    // When to hyphenate
+    // Hyphenate compound modifiers before a noun.
+    {
+      pattern:
+        /\b([A-Za-z][\w-]*) (specific|based|related|level) ([A-Za-z][\w-]*)\b/g,
+      test: ({ captures }) => {
+        const modifiedWordPos = getPosFromSingleWord(captures[2]);
+        return modifiedWordPos.startsWith("NN");
+      },
+      replace: ({ captures }) => `${captures[0]}-${captures[1]} ${captures[2]}`,
+      message: () => "Hyphenate compound modifiers that appear before a noun.",
+    },
+    // Compound words
+    {
+      pattern:
+        /\b(real|open|command|long|short|high|low) (time|source|line|term|level) ([A-Za-z][\w-]*)\b/g,
+      test: ({ captures }) => {
+        const modifiedWordPos = getPosFromSingleWord(captures[2]);
+        return modifiedWordPos.startsWith("NN");
+      },
+      replace: ({ captures }) => `${captures[0]}-${captures[1]} ${captures[2]}`,
+      message: () =>
+        "Use a hyphen for common two-word compound modifiers before a noun.",
+    },
     // Range of numbers
     {
       pattern: /(from|between) (\d+-\d+)/g,
@@ -34,14 +67,13 @@ const report: GoogleRuleReporter = (context) => {
     // Spaces around hyphens => textlint-rule-google-dashes
   ];
 
-  const { Syntax, RuleError, getSource, fixer, report } = context;
   return {
     [Syntax.Paragraph](node) {
       paragraphReporter({
         Syntax,
         node,
         dictionaries,
-        report,
+        report: reportError,
         getSource,
         RuleError,
         fixer,

@@ -8,6 +8,18 @@ tester.run("textlint-rule-google-hyphens", rule as GoogleRuleModule, {
     "The app uses techniques that are Android specific.",
   ],
   invalid: [
+    // When to hyphenate
+    {
+      text: "The app uses Android specific techniques.",
+      output: "The app uses Android-specific techniques.",
+      errors: [{}],
+    },
+    // Compound words
+    {
+      text: "Provide a command line interface.",
+      output: "Provide a command-line interface.",
+      errors: [{}],
+    },
     // Adverbs ending in "ly"
     {
       text: "Free, simple, and publicly-available implementations",

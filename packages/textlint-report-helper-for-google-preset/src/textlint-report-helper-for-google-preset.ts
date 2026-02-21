@@ -109,6 +109,8 @@ export interface ParagraphReporterArgs {
   Syntax: GoogleRuleContext["Syntax"];
   node: GoogleRuleNode;
   dictionaries: MatchReplaceDictionary[];
+  ignoreNodeTypes?: string[];
+  requireExactMatch?: boolean;
   report: ReportFunction;
   RuleError: RuleErrorCtor;
   fixer: RuleFixer;
@@ -119,6 +121,8 @@ export const paragraphReporter = ({
   Syntax,
   node,
   dictionaries,
+  ignoreNodeTypes,
+  requireExactMatch = true,
   getSource,
   report,
   RuleError,
@@ -130,12 +134,16 @@ export const paragraphReporter = ({
   const ignoreNodeManager = new IgnoreNodeManager();
   // Ignore following pattern
   // Paragraph > Link Code Html ...
-  const ignoredNodeTypes = [
+  const defaultIgnoredNodeTypes = [
     Syntax.Code,
     Syntax.Link,
     Syntax.BlockQuote,
     Syntax.Html,
-  ] as Parameters<typeof ignoreNodeManager.ignoreChildrenByTypes>[1];
+  ];
+  const ignoredNodeTypes = (ignoreNodeTypes ??
+    defaultIgnoredNodeTypes) as Parameters<
+    typeof ignoreNodeManager.ignoreChildrenByTypes
+  >[1];
   ignoreNodeManager.ignoreChildrenByTypes(
     node as unknown as Parameters<
       typeof ignoreNodeManager.ignoreChildrenByTypes
@@ -177,7 +185,7 @@ export const paragraphReporter = ({
         return;
       }
       const beforeText = originalText.slice(indexFromNode, endIndexFromNode);
-      if (beforeText !== result.match) {
+      if (requireExactMatch && beforeText !== result.match) {
         report(
           node,
           new RuleError(message, {

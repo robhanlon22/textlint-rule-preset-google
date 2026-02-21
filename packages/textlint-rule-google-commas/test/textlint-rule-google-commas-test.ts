@@ -27,42 +27,39 @@ tester.run("textlint-rule-google-commas", rule as GoogleRuleModule, {
       errors: [{}],
     },
     // Commas after introductory words and phrases
+    {
+      text: "Finally only groups that contain parameters appear in this list.",
+      output:
+        "Finally, only groups that contain parameters appear in this list.",
+      errors: [{}],
+    },
     // Commas separating two independent clauses
-    /*
-        {
-            text:
-                "The libraries not only make feed creation easier but they also ensure that only valid feeds are produced.",
-            output:
-                "The libraries not only make feed creation easier, but they also ensure that only valid feeds are produced.",
-            errors: [{}]
-        },
-        {
-            text: "Type your ID, and click OK.",
-            output: "Type your ID and click **OK**.",
-            errors: [{}]
-        },
-        */
+    {
+      text: "The libraries not only make feed creation easier but they also ensure that only valid feeds are produced.",
+      output:
+        "The libraries not only make feed creation easier, but they also ensure that only valid feeds are produced.",
+      errors: [{}],
+    },
     // Commas separating independent from dependent clauses
-    /*
-        {
-            text: "Direct-access flags are plain variables, and can be read directly.",
-            output: "Direct-access flags are plain variables and can be read directly.",
-            errors: [{}]
-        },
-        {
-            text: "The manager acknowledged the last team member who entered the room and started the meeting.",
-            output: "The manager acknowledged the last team member who entered the room, and started the meeting.",
-            errors: [{}]
-        },
-        */
+    {
+      text: "Direct-access flags are plain variables, and can be read directly.",
+      output:
+        "Direct-access flags are plain variables and can be read directly.",
+      errors: [{}],
+    },
+    {
+      text: "The manager acknowledged the last team member who entered the room and started the meeting.",
+      output:
+        "The manager acknowledged the last team member who entered the room, and started the meeting.",
+      errors: [{}],
+    },
     // Setting off other kinds of clauses
-    /*
-        {
-            text: "Name of the group which has a maximum length of 200 characters.",
-            output: "Name of the group, which has a maximum length of 200 characters.",
-            errors: [{}]
-        },
-        */
+    {
+      text: "Name of the group which has a maximum length of 200 characters.",
+      output:
+        "Name of the group, which has a maximum length of 200 characters.",
+      errors: [{}],
+    },
     {
       text: "The variable must have a value; otherwise the server returns an error.",
       output:

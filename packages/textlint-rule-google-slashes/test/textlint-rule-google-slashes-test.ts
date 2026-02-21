@@ -17,6 +17,8 @@ tester.run("textlint-rule-google-slashes", rule as GoogleRuleModule, {
     "- https://github.com/almin/almin/tree/master/examples/todomvc\n",
     '- [almin/examples/counter/test at master · almin/almin](https://github.com/almin/almin/tree/master/examples/counter/test "almin/examples/counter/test at master · almin/almin")',
     '[almin/examples/counter/test at master · almin/almin](https://github.com/almin/almin/tree/master/examples/counter/test "almin/examples/counter/test at master · almin/almin")',
+    "Use the path src/docs for this example.",
+    "Install the tool from /usr/local/bin.",
   ],
   invalid: [
     // Slashes with alternatives

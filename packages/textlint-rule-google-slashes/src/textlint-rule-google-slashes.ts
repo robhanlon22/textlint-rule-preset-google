@@ -6,12 +6,71 @@ const REPLACE_ABBR_DICT: Record<string, string> = {
   "w/": "with",
   "w/o": "without",
 };
+
+const FILE_PATH_SEGMENTS = new Set([
+  "src",
+  "lib",
+  "bin",
+  "test",
+  "tests",
+  "docs",
+  "dist",
+  "build",
+  "packages",
+  "node_modules",
+  "usr",
+  "var",
+  "tmp",
+]);
+
+const isFilePathOrUrlContext = (
+  args: MatchReplaceDictionaryArgs,
+  leftSegment: string,
+  rightSegment: string,
+): boolean => {
+  const { all, index, match } = args;
+  const before = all[index - 1];
+  const after = all[index + match.length];
+  if (before === "/" || before === "\\" || after === "/" || after === "\\") {
+    return true;
+  }
+  const protocolPrefix = all
+    .slice(Math.max(0, index - 12), index)
+    .toLowerCase();
+  if (
+    protocolPrefix.endsWith("http://") ||
+    protocolPrefix.endsWith("https://") ||
+    protocolPrefix.endsWith("ftp://")
+  ) {
+    return true;
+  }
+  return (
+    FILE_PATH_SEGMENTS.has(leftSegment.toLowerCase()) ||
+    FILE_PATH_SEGMENTS.has(rightSegment.toLowerCase())
+  );
+};
+
 const report: GoogleRuleReporter = (context) => {
+  const Syntax = context.Syntax;
+  const RuleError = context.RuleError;
+  const fixer = context.fixer;
+  const getSource: GoogleRuleContext["getSource"] = (
+    node,
+    beforeCount,
+    afterCount,
+  ) => context.getSource(node, beforeCount, afterCount);
+  const reportError: GoogleRuleContext["report"] = (node, error) => {
+    context.report(node, error);
+  };
   const dictionaries: MatchReplaceDictionary[] = [
     // Slashes with dates => other rule
     {
       pattern: /\b([a-zA-Z-]+)\/([a-zA-Z-]+)\b/g,
-      test: ({ captures }) => {
+      test: (args) => {
+        const { captures } = args;
+        if (isFilePathOrUrlContext(args, captures[0], captures[1])) {
+          return false;
+        }
         // ignore abbreviations like "c/w"
         return captures[0].length >= 2 && captures[1].length >= 2;
       },
@@ -19,7 +78,6 @@ const report: GoogleRuleReporter = (context) => {
 https://developers.google.com/style/slashes#slashes-with-alternatives
 `,
     },
-    // TODO: Slashes with file paths and URLs
 
     // Slashes with fractions
     // https://developers.google.com/style/slashes#slashes-with-alternatives
@@ -34,6 +92,10 @@ https://developers.google.com/style/slashes#slashes-with-fractions
     // https://developers.google.com/style/slashes#slashes-with-abbreviations
     {
       pattern: /\b(([a-zA-Z])\/([a-zA-Z]?))\s/g,
+      test: (args) => {
+        const { captures } = args;
+        return !isFilePathOrUrlContext(args, captures[1], captures[2]);
+      },
       replace: ({ captures }) => {
         const match = captures[0];
         if (!match) {
@@ -52,14 +114,13 @@ https://developers.google.com/style/slashes#slashes-with-abbreviations
     },
   ];
 
-  const { Syntax, RuleError, getSource, fixer, report } = context;
   return {
     [Syntax.Paragraph](node) {
       paragraphReporter({
         Syntax,
         node,
         dictionaries,
-        report,
+        report: reportError,
         getSource,
         RuleError,
         fixer,

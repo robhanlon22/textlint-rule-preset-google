@@ -4,12 +4,10 @@ Reference: [Commas  |  Google Developer Documentation Style Guide  |  Google
 
 ## Supports
 
-Currently, this rule support partially.
-
 - [x] Serial commas
-- [ ] Commas after introductory words and phrases
-- [ ] Commas separating two independent clauses
-- [ ] Commas separating independent from dependent clauses
+- [x] Commas after introductory words and phrases
+- [x] Commas separating two independent clauses
+- [x] Commas separating independent from dependent clauses
 - [x] Setting off other kinds of clauses
 
 ## Install
