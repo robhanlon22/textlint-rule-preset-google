@@ -1,1 +1,1 @@
---require textlint-scripts/register
+--require ts-node/register/transpile-only

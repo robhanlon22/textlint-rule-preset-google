@@ -16,8 +16,8 @@
   "main": "lib/textlint-report-helper-for-google-preset.js",
   "scripts": {
     "prettier": "prettier --write '**/*.{js,jsx,ts,tsx,css}'",
-    "build": "cross-env NODE_ENV=production tsc -p .",
-    "watch": "tsc -p . --watch",
+    "build": "tsc -p tsconfig.json",
+    "watch": "tsc -p tsconfig.json --watch",
     "prepublish": "npm run --if-present build"
   },
   "keywords": [
@@ -33,15 +33,10 @@
   },
   "homepage": "https://github.com/textlint-rule/textlint-rule-preset-google/tree/master/packages/textlint-report-helper-for-google-preset/",
   "devDependencies": {
-    "@types/mocha": "^5.2.5",
-    "@types/node": "^10.5.7",
-    "cross-env": "^5.0.5",
     "husky": "^0.14.3",
     "lint-staged": "^7.2.0",
     "mocha": "^5.2.0",
-    "prettier": "^1.7.4",
-    "ts-node": "^3.3.0",
-    "typescript": "^2.5.3"
+    "prettier": "^1.7.4"
   },
   "prettier": {
     "printWidth": 120,

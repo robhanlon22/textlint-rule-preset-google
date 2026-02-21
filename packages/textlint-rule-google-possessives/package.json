@@ -15,11 +15,11 @@
   "description": "Reference https://developers.google.com/style/possessives",
   "main": "lib/textlint-rule-google-possessives.js",
   "scripts": {
-    "test": "textlint-scripts test",
+    "test": "mocha --require ts-node/register/transpile-only \"test/**/*.ts\"",
     "prettier": "prettier --write '**/*.{js,jsx,ts,tsx,css}'",
     "prepublish": "npm run --if-present build",
-    "build": "textlint-scripts build",
-    "watch": "textlint-scripts build --watch"
+    "build": "tsc -p tsconfig.json",
+    "watch": "tsc -p tsconfig.json --watch"
   },
   "keywords": [
     "textlintrule"
@@ -36,8 +36,7 @@
     "@textlint-rule/textlint-report-helper-for-google-preset": "^0.1.2"
   },
   "devDependencies": {
-    "prettier": "^1.7.4",
-    "textlint-scripts": "^2.0.0"
+    "prettier": "^1.7.4"
   },
   "prettier": {
     "printWidth": 120,

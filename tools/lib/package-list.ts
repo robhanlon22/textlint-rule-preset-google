@@ -10,3 +10,4 @@ module.exports.getPackages = (blacklistModules = []) => {
         .sort()
         .map(pkgName => path.resolve(packagesDirectory, pkgName));
 };
+export {};

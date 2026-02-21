@@ -11,13 +11,14 @@
     ]
   },
   "scripts": {
-    "bootstrap": "lerna bootstrap && yarn run build",
-    "publish": "lerna publish",
-    "test": "lerna run test",
-    "build": "lerna run build",
-    "prettier": "prettier --write '**/*.{js,jsx,ts,tsx,css}'",
-    "precommit": "lint-staged",
-    "postcommit": "git reset"
+    "bootstrap": "pnpm install && pnpm run build",
+    "clean": "rimraf dist-tools packages/*/lib",
+    "build": "pnpm run build:tools && pnpm -r --filter \"./packages/*\" --if-present run build",
+    "build:tools": "tsc -p tsconfig.tools.json",
+    "test": "pnpm -r --filter \"./packages/*\" --if-present run test",
+    "publish": "pnpm -r --filter \"./packages/*\" publish",
+    "prettier": "prettier --write '**/*.{js,jsx,ts,tsx,css,md,json,yml,yaml}'",
+    "precommit": "lint-staged"
   },
   "keywords": [
     "textlintrule"
@@ -31,13 +32,15 @@
   },
   "homepage": "https://github.com/textlint-rule/textlint-rule-preset-google-developer",
   "devDependencies": {
-    "babel-preset-env": "^1.6.1",
     "husky": "^0.14.3",
-    "lerna": "^2.5.1",
     "lint-staged": "^7.2.0",
     "mocha": "^5.2.0",
     "prettier": "^1.8.1",
-    "textlint-scripts": "^2.0.0"
+    "@types/mocha": "^10.0.10",
+    "@types/node": "^22.13.10",
+    "rimraf": "^6.0.1",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.8.2"
   },
   "prettier": {
     "printWidth": 120,
@@ -48,5 +51,6 @@
       "prettier --write",
       "git add"
     ]
-  }
+  },
+  "packageManager": "pnpm@10.30.1"
 }

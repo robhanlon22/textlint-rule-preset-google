@@ -59,12 +59,12 @@ module.exports = ${JSON.stringify(
 `.replace(/"require\(\\"(.*)\\"\)"/g, `require("$1")`);
 };
 
-const monorepoVersion = require("../lerna.json").version;
+const monorepoVersion = require("../package.json").version;
 const packagesDirectory = path.join(__dirname, "../packages");
 // each package version fixed
 
 /**
- * Version = lerna.version
+ * Version = package.json version
  */
 getPackages().forEach(packageDirectory => {
     const packageJSONPath = path.join(packageDirectory, "package.json");
@@ -84,8 +84,9 @@ const newRulePresetPkg = updatePackageDepencencies(rulePresetPkg, ruleDependenci
 fs.writeFileSync(rulePresetPkgPath, JSON.stringify(newRulePresetPkg, null, 2), "utf-8");
 console.info("Updated package.json");
 // src
-console.info("Start to src/textlint-rule-preset-google.js");
-const srcPath = path.join(packagesDirectory, "textlint-rule-preset-google/src/textlint-rule-preset-google.js");
+console.info("Start to src/textlint-rule-preset-google.ts");
+const srcPath = path.join(packagesDirectory, "textlint-rule-preset-google/src/textlint-rule-preset-google.ts");
 const srcContent = createRuleAndConfig(packageNames);
 fs.writeFileSync(srcPath, srcContent, "utf-8");
 console.info("Updated package.json");
+export {};

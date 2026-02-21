@@ -198,14 +198,14 @@ See [Releases page](https://github.com/textlint-rule/textlint-rule-preset-google
 
 ## Running tests
 
-This monorepo use [Yarn](https://yarnpkg.com/). 
+This monorepo uses [pnpm](https://pnpm.io/).
 
-Install dependencies and Run `npm test`:
+Install dependencies and run tests:
 
 ```
-yarn install
-yarn bootstrap
-yarn test
+pnpm install
+pnpm run build
+pnpm run test
 ```
 
 ## Contributing
@@ -225,7 +225,7 @@ Pull requests and stars are always welcome.
 1. Create `pacakges/textlint-rule-<rule-name>`
     - Rule name is based on style guide URL
     - For example, https://developers.google.com/style/clause-order's rule name is `clause-order`
-2. Setup package using [textlint-scripts](https://github.com/textlint/textlint-scripts "textlint-scripts").
+2. Setup package using TypeScript (`tsconfig.json`, `src/*.ts`, `test/*.ts`).
 3. Write rule
 4. Test rule
 5. Submit Pull Request!

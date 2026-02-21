@@ -15,7 +15,7 @@ const updatePackage = (pkg, updatablePkg) => {
  * }
  * ```
  *
- * https://github.com/lerna/lerna/issues/914#issuecomment-318497928
+ * Keep package publishing metadata explicit.
  */
 getPackages().forEach(packageDirectory => {
     const packageJSONPath = path.join(packageDirectory, "package.json");
@@ -27,3 +27,4 @@ getPackages().forEach(packageDirectory => {
     });
     fs.writeFileSync(packageJSONPath, JSON.stringify(newPkg, null, 2), "utf-8");
 });
+export {};

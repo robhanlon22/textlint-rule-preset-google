@@ -47,7 +47,21 @@ const report = context => {
             // Notes: Allow to use hyphen for Ranges of numbers
             // https://developers.google.com/style/numbers#ranges-of-numbers
             pattern: /([a-zA-Z]+) - ([a-zA-Z]+)/g,
-            replace: ({ captures }) => {
+            replace: ({ all, captures }) => {
+                const beforeWord = captures[0];
+                const afterWord = captures[1];
+                const dashCount = (all.match(/ - /g) || []).length;
+                const beforeWordPos = getPos(all, beforeWord);
+                const afterWordPos = getPos(all, afterWord);
+                const isListStyle =
+                    dashCount === 1 &&
+                    beforeWordPos === PosType.Noun &&
+                    (afterWordPos === PosType.WhDeterminer ||
+                        afterWordPos === PosType.WhPronoun ||
+                        afterWordPos === PosType.Determiner);
+                if (isListStyle) {
+                    return;
+                }
                 return `${captures[0]}—${captures[1]}`;
             },
             message: () => 'Use "—"(em dash) instead of " - "(hyphen)' + "\n" + DocumentURL
