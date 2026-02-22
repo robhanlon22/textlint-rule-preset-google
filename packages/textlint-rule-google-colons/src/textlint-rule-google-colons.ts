@@ -3,7 +3,6 @@ import {
   bindRuleContext,
   paragraphReporter,
 } from "@textlint-rule/textlint-report-helper-for-google-preset";
-import type { TxtParentNode } from "@textlint/ast-node-types";
 import { checkBoldTextPrecedingColon } from "./checkBoldTextPrecedingColon.js";
 
 //  Helping Verbs
@@ -74,7 +73,7 @@ https://developers.google.com/style/colons#colons-within-sentences
   return {
     [Syntax.Paragraph](node) {
       checkBoldTextPrecedingColon({
-        node: node as TxtParentNode,
+        node,
         report: reportError,
         getSource,
         RuleError,

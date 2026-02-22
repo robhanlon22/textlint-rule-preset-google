@@ -10,9 +10,89 @@
       "textlint-tester": ["packages/types/textlint-tester-shim.d.ts"],
       "@textlint-rule/textlint-report-helper-for-google-preset": [
         "packages/textlint-report-helper-for-google-preset/src/textlint-report-helper-for-google-preset.ts"
+      ],
+      "@textlint-rule/textlint-rule-google-abbreviations": [
+        "packages/textlint-rule-google-abbreviations/src/textlint-rule-google-abbreviations.ts"
+      ],
+      "@textlint-rule/textlint-rule-google-active-voice": [
+        "packages/textlint-rule-google-active-voice/src/textlint-rule-google-active-voice.ts"
+      ],
+      "@textlint-rule/textlint-rule-google-articles": [
+        "packages/textlint-rule-google-articles/src/textlint-rule-google-articles.ts"
+      ],
+      "@textlint-rule/textlint-rule-google-capitalization": [
+        "packages/textlint-rule-google-capitalization/src/textlint-rule-google-capitalization.ts"
+      ],
+      "@textlint-rule/textlint-rule-google-clause-order": [
+        "packages/textlint-rule-google-clause-order/src/textlint-rule-google-clause-order.ts"
+      ],
+      "@textlint-rule/textlint-rule-google-colons": [
+        "packages/textlint-rule-google-colons/src/textlint-rule-google-colons.ts"
+      ],
+      "@textlint-rule/textlint-rule-google-commas": [
+        "packages/textlint-rule-google-commas/src/textlint-rule-google-commas.ts"
+      ],
+      "@textlint-rule/textlint-rule-google-contractions": [
+        "packages/textlint-rule-google-contractions/src/textlint-rule-google-contractions.ts"
+      ],
+      "@textlint-rule/textlint-rule-google-dashes": [
+        "packages/textlint-rule-google-dashes/src/textlint-rule-google-dashes.ts"
+      ],
+      "@textlint-rule/textlint-rule-google-ellipses": [
+        "packages/textlint-rule-google-ellipses/src/textlint-rule-google-ellipses.ts"
+      ],
+      "@textlint-rule/textlint-rule-google-exclamation-points": [
+        "packages/textlint-rule-google-exclamation-points/src/textlint-rule-google-exclamation-points.ts"
+      ],
+      "@textlint-rule/textlint-rule-google-hyphens": [
+        "packages/textlint-rule-google-hyphens/src/textlint-rule-google-hyphens.ts"
+      ],
+      "@textlint-rule/textlint-rule-google-periods": [
+        "packages/textlint-rule-google-periods/src/textlint-rule-google-periods.ts"
+      ],
+      "@textlint-rule/textlint-rule-google-plurals-parentheses": [
+        "packages/textlint-rule-google-plurals-parentheses/src/textlint-rule-google-plurals-parentheses.ts"
+      ],
+      "@textlint-rule/textlint-rule-google-possessives": [
+        "packages/textlint-rule-google-possessives/src/textlint-rule-google-possessives.ts"
+      ],
+      "@textlint-rule/textlint-rule-google-pronouns": [
+        "packages/textlint-rule-google-pronouns/src/textlint-rule-google-pronouns.ts"
+      ],
+      "@textlint-rule/textlint-rule-google-quotation-marks": [
+        "packages/textlint-rule-google-quotation-marks/src/textlint-rule-google-quotation-marks.ts"
+      ],
+      "@textlint-rule/textlint-rule-google-sentence-spacing": [
+        "packages/textlint-rule-google-sentence-spacing/src/textlint-rule-google-sentence-spacing.ts"
+      ],
+      "@textlint-rule/textlint-rule-google-slashes": [
+        "packages/textlint-rule-google-slashes/src/textlint-rule-google-slashes.ts"
+      ],
+      "@textlint-rule/textlint-rule-google-tables": [
+        "packages/textlint-rule-google-tables/src/textlint-rule-google-tables.ts"
+      ],
+      "@textlint-rule/textlint-rule-google-tense": [
+        "packages/textlint-rule-google-tense/src/textlint-rule-google-tense.ts"
+      ],
+      "@textlint-rule/textlint-rule-google-tone": [
+        "packages/textlint-rule-google-tone/src/textlint-rule-google-tone.ts"
+      ],
+      "@textlint-rule/textlint-rule-google-units-of-measure": [
+        "packages/textlint-rule-google-units-of-measure/src/textlint-rule-google-units-of-measure.ts"
+      ],
+      "@textlint-rule/textlint-rule-google-word-list": [
+        "packages/textlint-rule-google-word-list/src/textlint-rule-google-word-list.ts"
+      ],
+      "@textlint-rule/textlint-rule-preset-google": [
+        "packages/textlint-rule-preset-google/src/textlint-rule-preset-google.ts"
       ]
     }
   },
-  "include": ["packages/**/*.ts", "tools/**/*.ts", "vitest.config.ts"],
+  "include": [
+    "packages/**/*.ts",
+    "packages/**/*.d.ts",
+    "tools/**/*.ts",
+    "vitest.config.ts"
+  ],
   "exclude": ["node_modules", "dist-tools", "packages/**/lib"]
 }

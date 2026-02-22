@@ -1,13 +1,16 @@
 // MIT © 2017 azu
-import type { TxtNode, TxtParentNode } from "@textlint/ast-node-types";
 
 interface CheckBoldTextPrecedingColonArgs {
-  node: TxtParentNode;
+  node: GoogleRuleNode;
   RuleError: GoogleRuleContext["RuleError"];
   getSource: GoogleRuleContext["getSource"];
   fixer: GoogleRuleContext["fixer"];
   report: GoogleRuleContext["report"];
 }
+
+type ReplaceTextTarget = Parameters<
+  GoogleRuleContext["fixer"]["replaceText"]
+>[0];
 
 export const checkBoldTextPrecedingColon = ({
   node,
@@ -16,28 +19,51 @@ export const checkBoldTextPrecedingColon = ({
   fixer,
   report,
 }: CheckBoldTextPrecedingColonArgs): void => {
-  const getChild = (
-    items: TxtParentNode["children"],
-    index: number,
-  ): TxtNode | undefined => {
-    return index >= 0 && index < items.length
-      ? (items[index] as TxtNode)
-      : undefined;
+  const isGoogleRuleNode = (value: unknown): value is GoogleRuleNode => {
+    return typeof value === "object" && value !== null && "range" in value;
   };
-  const { children } = node;
-  const boldNodeList = children.filter(
-    (childNode): childNode is TxtParentNode => childNode.type === "Strong",
-  );
+
+  const getChild = (
+    items: readonly unknown[],
+    index: number,
+  ): GoogleRuleNode | undefined => {
+    if (index < 0 || index >= items.length) {
+      return undefined;
+    }
+    const item = items[index];
+    return isGoogleRuleNode(item) ? item : undefined;
+  };
+
+  const getChildren = (value: unknown): GoogleRuleNode[] => {
+    if (!isGoogleRuleNode(value) || !Array.isArray(value.children)) {
+      return [];
+    }
+    return value.children.filter(isGoogleRuleNode);
+  };
+
+  const isStrongNode = (
+    childNode: GoogleRuleNode | undefined,
+  ): childNode is GoogleRuleNode => {
+    return childNode?.type === "Strong";
+  };
+
+  const isStrNode = (
+    childNode: GoogleRuleNode | undefined,
+  ): childNode is GoogleRuleNode & { type: "Str"; value: string } => {
+    return childNode?.type === "Str" && typeof childNode.value === "string";
+  };
+
+  const children = getChildren(node);
+  const boldNodeList = children.filter(isStrongNode);
 
   boldNodeList.forEach((boldNode) => {
     const currentIndex = children.indexOf(boldNode);
     const nextNodeOfBold = getChild(children, currentIndex + 1);
-    if (nextNodeOfBold?.type !== "Str") {
+    if (!isStrNode(nextNodeOfBold)) {
       return;
     }
 
-    const nextNodeValue = getSource(nextNodeOfBold);
-    if (!nextNodeValue.startsWith(":")) {
+    if (!nextNodeOfBold.value.startsWith(":")) {
       return;
     }
 
@@ -45,19 +71,18 @@ export const checkBoldTextPrecedingColon = ({
     const message = `When the text preceding a colon is bold, make the colon bold too.
 https://developers.google.com/style/colons#bold-text-preceding-colon
 `;
-    const strNodeOfBoldNode = getChild(boldNode.children, 0);
-    if (strNodeOfBoldNode?.type !== "Str") {
+    const strNodeOfBoldNode = getChild(getChildren(boldNode), 0);
+    if (!isStrNode(strNodeOfBoldNode)) {
       return;
     }
 
+    const replaceTarget = strNodeOfBoldNode as unknown as ReplaceTextTarget;
     report(
       strNodeOfBoldNode,
       new RuleError(message, {
         index: strNodeOfBoldNode.range[0] - node.range[0],
         fix: fixer.replaceText(
-          strNodeOfBoldNode as Parameters<
-            GoogleRuleContext["fixer"]["replaceText"]
-          >[0],
+          replaceTarget,
           `${getSource(strNodeOfBoldNode)}:`,
         ),
       }),

@@ -38,8 +38,10 @@
     "match-test-replace": "^1.4.0",
     "nlcst-parse-english": "^1.4.0",
     "nlcst-to-string": "^4.0.0",
+    "nlcst-types": "^1.4.0",
     "textlint-rule-helper": "^2.5.0",
     "textlint-util-to-string": "^3.3.4",
+    "unist-types": "^1.4.0",
     "unist-util-find": "^3.0.0"
   },
   "publishConfig": {
