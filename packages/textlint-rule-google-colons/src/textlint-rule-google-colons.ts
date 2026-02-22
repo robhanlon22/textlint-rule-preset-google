@@ -1,9 +1,9 @@
 // MIT © 2017 azu
 import {
   bindRuleContext,
+  getPosFromSingleWord,
   paragraphReporter,
 } from "@textlint-rule/textlint-report-helper-for-google-preset";
-import { checkBoldTextPrecedingColon } from "./checkBoldTextPrecedingColon.js";
 
 //  Helping Verbs
 // https://www.englishgrammar101.com/module-3/verbs/lesson-2/helping-verbs
@@ -35,6 +35,21 @@ const helpingVerbs = [
   "must",
 ];
 
+const PROPER_NOUN_POS = new Set(["NNP", "NNPS"]);
+const normalizeWord = (word: string): string =>
+  word.replace(/^[^A-Za-z]+|[^A-Za-z]+$/g, "");
+const shouldLowercaseWordAfterColon = (word: string): boolean => {
+  const normalizedWord = normalizeWord(word);
+  if (!normalizedWord || !/^[A-Z]/.test(normalizedWord)) {
+    return false;
+  }
+  // Keep acronyms and initialisms (for example, API) in uppercase.
+  if (/^[A-Z0-9]{2,}$/.test(normalizedWord)) {
+    return false;
+  }
+  return !PROPER_NOUN_POS.has(getPosFromSingleWord(normalizedWord));
+};
+
 const report: GoogleRuleReporter = (context) => {
   const {
     Syntax,
@@ -59,9 +74,22 @@ https://developers.google.com/style/colons#introductory-phrase-preceding-colon
     // Colons within sentences
     {
       pattern: /\w+:\s(\w+)/g,
-      test: ({ captures }) => {
+      test: ({ all, captures, index, match }) => {
         const nextWord = captures[0];
-        return /^[A-Z]/.test(nextWord);
+        if (!shouldLowercaseWordAfterColon(nextWord)) {
+          return false;
+        }
+        const followingWord = normalizeWord(
+          all
+            .slice(index + match.length)
+            .trimStart()
+            .split(/\s+/)[0] ?? "",
+        );
+        // Treat two consecutive capitalized words as a likely proper name.
+        if (followingWord && /^[A-Z]/.test(followingWord)) {
+          return false;
+        }
+        return true;
       },
       message:
         () => `In general, the first word in the text that follows a colon should be in lowercase.
@@ -72,13 +100,6 @@ https://developers.google.com/style/colons#colons-within-sentences
 
   return {
     [Syntax.Paragraph](node) {
-      checkBoldTextPrecedingColon({
-        node,
-        report: reportError,
-        getSource,
-        RuleError,
-        fixer,
-      });
       paragraphReporter({
         node,
         Syntax,

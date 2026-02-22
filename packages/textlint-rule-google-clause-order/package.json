@@ -12,7 +12,7 @@
   ],
   "name": "@textlint-rule/textlint-rule-google-clause-order",
   "version": "0.1.2",
-  "description": "https://developers.google.com/style/clause-order",
+  "description": "https://developers.google.com/style/sentence-structure",
   "main": "./lib/textlint-rule-google-clause-order.js",
   "keywords": [
     "textlintrule"

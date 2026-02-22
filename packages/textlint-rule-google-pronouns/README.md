@@ -31,7 +31,7 @@ textlint --rule @textlint-rule/google-pronouns README.md
 
 ## Notes
 
-This rule reports gendered pronouns and first-person pronouns in prose. It does not provide autofixes.
+This rule reports gendered pronouns and first-person singular pronouns in prose. It does not provide autofixes.
 
 ## License
 

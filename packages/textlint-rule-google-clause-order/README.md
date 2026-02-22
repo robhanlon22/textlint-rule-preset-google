@@ -1,6 +1,6 @@
 # @textlint-rule/textlint-rule-google-clause-order
 
-For more information, see [Clause order  |  Google Developer Documentation Style Guide  |  Google Developers](https://developers.google.com/style/clause-order "Clause order  |  Google Developer Documentation Style Guide  |  Google Developers").
+For more information, see [Sentence structure | Google Developer Documentation Style Guide | Google Developers](https://developers.google.com/style/sentence-structure "Sentence structure  |  Google Developer Documentation Style Guide  |  Google Developers").
 
 ## Install
 

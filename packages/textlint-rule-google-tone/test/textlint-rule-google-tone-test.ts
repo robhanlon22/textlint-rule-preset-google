@@ -89,6 +89,15 @@ tester.run("textlint-rule-google-tone", rule as GoogleRuleModule, {
       ],
     },
     {
+      text: "It turns out that this setting is required.",
+      output: "It turns out that this setting is required.",
+      errors: [
+        {
+          message: someThingsMessage,
+        },
+      ],
+    },
+    {
       text: "You can open the app. You can select Settings.",
       output: "You can open the app. You can select Settings.",
       errors: [

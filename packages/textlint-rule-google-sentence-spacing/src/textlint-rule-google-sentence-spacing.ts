@@ -5,7 +5,8 @@ import StringSourceModule from "textlint-util-to-string";
 import type { TextlintRuleContext } from "@textlint/types";
 
 const { RuleHelper, IgnoreNodeManager } = textlintRuleHelper;
-const DocumentURL = "https://developers.google.com/style/sentence-spacing";
+const DocumentURL =
+  "https://developers.google.com/style/periods#spaces-between-sentences";
 
 interface StringSourceLike {
   toString(): string;

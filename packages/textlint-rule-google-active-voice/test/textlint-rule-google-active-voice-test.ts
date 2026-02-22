@@ -1,5 +1,6 @@
 import TextLintTester from "textlint-tester";
 import rule, {
+  avoidThereIsMessage,
   defaultMessage,
 } from "../src/textlint-rule-google-active-voice.js";
 
@@ -37,6 +38,15 @@ tester.run("textlint-rule-google-active-voice", rule as GoogleRuleModule, {
       errors: [
         {
           message: defaultMessage,
+        },
+      ],
+    },
+    {
+      text: "There are two settings in the API.",
+      output: "There are two settings in the API.",
+      errors: [
+        {
+          message: avoidThereIsMessage,
         },
       ],
     },

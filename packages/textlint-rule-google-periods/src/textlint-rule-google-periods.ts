@@ -6,8 +6,42 @@ const message = (reason: string): string => `${reason}\n${STYLE_URL}`;
 const TERMINAL_PUNCTUATION = /[.!?]$/;
 const SENTENCE_HINT_VERB =
   /\b(?:is|are|was|were|be|been|being|has|have|had|do|does|did|can|could|should|would|will|must|may|might)\b/i;
+const literalLeadInPattern =
+  /\b(enter|type|click|tap|select|choose|press|call|set|run|use|pass|specify|document(?:ed)?(?: it)? as)\s*(?:(?:the|a|an|this|that)\s+)?(?:(?:keyword|literal|string|command|method|function|property|field|parameter|option|argument|flag|value|token|name|path)\s+)?$/i;
 
 const replaceWithSpaces = (match: string): string => " ".repeat(match.length);
+const looksLikeLiteralQuotedValue = (value: string): boolean => {
+  const normalized = value.trim();
+  if (normalized.length === 0) {
+    return false;
+  }
+  if (
+    /^(click|tap|select|press|type|enter|run|call|set|choose|open)\b/i.test(
+      normalized,
+    )
+  ) {
+    return true;
+  }
+  if (/[_./#:()[\]-]/.test(normalized)) {
+    return true;
+  }
+  return /^[A-Za-z0-9]+$/.test(normalized);
+};
+const isLiteralStringQuoteContext = (
+  source: string,
+  index: number,
+  quotedValue: string,
+): boolean => {
+  const before = source.slice(Math.max(0, index - 120), index);
+  const recentBefore = before.slice(-100);
+  if (literalLeadInPattern.test(recentBefore)) {
+    return true;
+  }
+  return (
+    looksLikeLiteralQuotedValue(quotedValue) &&
+    /document(?:ed)?\s+it\s+as\s*$/i.test(recentBefore)
+  );
+};
 
 const stripMarkdown = (text: string): string =>
   text
@@ -215,16 +249,21 @@ const checkQuotationPeriodPlacement = (
   reportError: GoogleRuleContext["report"],
 ): void => {
   const sanitized = maskInlineCode(source);
-  const quotePattern = /"[^"\n]+"\.(?=\s|$)/g;
+  const quotePattern = /"([^"\n]+)"\.(?=\s|$)/g;
 
   for (const match of sanitized.matchAll(quotePattern)) {
+    const matchIndex = match.index;
+    const quotedValue = match[1];
+    if (isLiteralStringQuoteContext(sanitized, matchIndex, quotedValue)) {
+      continue;
+    }
     reportError(
       node,
       new RuleError(
         message(
           "Heuristic check: review period placement with quotation marks. In American style, periods are usually placed inside double quotes unless quoting literal strings.",
         ),
-        { index: match.index },
+        { index: matchIndex },
       ),
     );
   }

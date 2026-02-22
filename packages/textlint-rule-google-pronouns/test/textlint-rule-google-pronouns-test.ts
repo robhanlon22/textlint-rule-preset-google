@@ -10,6 +10,7 @@ tester.run("textlint-rule-google-pronouns", rule as GoogleRuleModule, {
   valid: [
     "You can run the command.",
     "Use they as a singular pronoun when needed.",
+    "We deprecated this endpoint in 2026.",
     "Use I/O operations for streaming data.",
     "US English is supported.",
     "[we](https://example.com)",
@@ -34,8 +35,8 @@ tester.run("textlint-rule-google-pronouns", rule as GoogleRuleModule, {
       ],
     },
     {
-      text: "We recommend enabling this setting.",
-      output: "We recommend enabling this setting.",
+      text: "I can click the button.",
+      output: "I can click the button.",
       errors: [
         {
           message: secondPersonMessage,
@@ -43,8 +44,8 @@ tester.run("textlint-rule-google-pronouns", rule as GoogleRuleModule, {
       ],
     },
     {
-      text: "I can click the button.",
-      output: "I can click the button.",
+      text: "My account is configured for this example.",
+      output: "My account is configured for this example.",
       errors: [
         {
           message: secondPersonMessage,

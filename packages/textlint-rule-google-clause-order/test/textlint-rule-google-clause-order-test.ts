@@ -53,5 +53,15 @@ tester.run("textlint-rule-google-clause-order", rule as GoogleRuleModule, {
         },
       ],
     },
+    {
+      text: "Click Delete all snapshots if you want to delete every snapshot.",
+      output: "To delete every snapshot, click Delete all snapshots.",
+      errors: [
+        {
+          message: defaultMessage,
+          index: 0,
+        },
+      ],
+    },
   ],
 });

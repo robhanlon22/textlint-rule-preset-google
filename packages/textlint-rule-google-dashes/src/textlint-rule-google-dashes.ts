@@ -58,7 +58,7 @@ const report: GoogleRuleReporter = (context) => {
       // Notes: Allow to use hyphen for Ranges of numbers
       // https://developers.google.com/style/numbers#ranges-of-numbers
       // Section-style headings like "Appendix A - ..." should use a colon.
-      pattern: /^([A-Z][A-Za-z0-9]+ [A-Z0-9]+) [—-] ([A-Z].*)$/,
+      pattern: /^([A-Z][A-Za-z0-9]+ [A-Z0-9]+)\s*[—-]\s*([A-Z].*)$/,
       replace: ({ captures }) => `${captures[0]}: ${captures[1]}`,
       message: () =>
         "Use colons(:) instead of dashes(-) in lists" + "\n" + DocumentURL,

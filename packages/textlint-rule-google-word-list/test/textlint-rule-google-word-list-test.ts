@@ -199,12 +199,12 @@ tester.run("textlint-rule-google-word-list", rule as GoogleRuleModule, {
   invalid: [
     {
       text: "This is an application.",
-      output: "This is an app.",
+      output: "This is an application.",
       errors: [{}],
     },
     {
       text: "This app apply autoupdate.",
-      output: "This app apply automatically update.",
+      output: "This app apply autoupdate.",
       errors: [{}],
     },
     {
@@ -218,17 +218,22 @@ tester.run("textlint-rule-google-word-list", rule as GoogleRuleModule, {
     },
     {
       text: "touch the display",
-      output: "tap the display",
+      output: "touch the display",
       errors: [{}],
     },
     {
       text: "Touch the display",
-      output: "Tap the display",
+      output: "Touch the display",
       errors: [{}],
     },
     {
       text: "administrator",
-      output: "admin",
+      output: "administrator",
+      errors: [{}],
+    },
+    {
+      text: "Compare A vs. B.",
+      output: "Compare A vs. B.",
       errors: [{}],
     },
   ],

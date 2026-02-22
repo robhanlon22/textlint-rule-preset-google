@@ -69,6 +69,11 @@ const report: GoogleRuleReporter = (context) => {
       message: () =>
         `${SOME_THINGS_TO_AVOID_PREFIX}\nURL: ${SOME_THINGS_TO_AVOID_URL}`,
     },
+    {
+      pattern: /\bit turns out that\b/gi,
+      message: () =>
+        `${SOME_THINGS_TO_AVOID_PREFIX}\nURL: ${SOME_THINGS_TO_AVOID_URL}`,
+    },
   ];
 
   return {

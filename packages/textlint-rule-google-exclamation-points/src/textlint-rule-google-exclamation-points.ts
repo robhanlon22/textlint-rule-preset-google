@@ -22,12 +22,23 @@ const defaultOptions: ExclamationOptions = {
   // allow to use ！
   allowFullWidthExclamation: false,
   // allow to use ?
-  allowHalfWidthQuestion: false,
+  allowHalfWidthQuestion: true,
   // allow to use ？
-  allowFullWidthQuestion: false,
+  allowFullWidthQuestion: true,
 };
 
-const linter: GoogleRuleReporter = (context, options = defaultOptions) => {
+const isExclamationOptions = (value: unknown): value is ExclamationOptions => {
+  return typeof value === "object" && value !== null;
+};
+
+const linter: GoogleRuleReporter = (context, options) => {
+  const optionOverrides: ExclamationOptions = isExclamationOptions(options)
+    ? options
+    : {};
+  const mergedOptions: ExclamationOptions = {
+    ...defaultOptions,
+    ...optionOverrides,
+  };
   const baseReport: GoogleRuleContext["report"] = (node, error) => {
     context.report(node, error);
   };
@@ -49,7 +60,7 @@ const linter: GoogleRuleReporter = (context, options = defaultOptions) => {
 
   return noExclamationQuestionMarkReporter(
     overlayContext,
-    options as ExclamationOptions | undefined,
+    mergedOptions as ExclamationOptions | undefined,
   );
 };
 

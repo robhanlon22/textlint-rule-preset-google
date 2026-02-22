@@ -16,13 +16,25 @@ tester.run("textlint-rule-google-abbreviations", rule as GoogleRuleModule, {
       errors: [{ index: 0 }],
     },
     {
+      text: "E.g., combustion of landfill gas to generate electricity",
+      errors: [{ index: 0 }],
+    },
+    {
       text: "i.e., combustion of landfill gas to generate electricity",
+      errors: [{ index: 0 }],
+    },
+    {
+      text: "i.e combustion of landfill gas to generate electricity",
       errors: [{ index: 0 }],
     },
     {
       text: "DC. is District of Columbia",
       output: "DC is District of Columbia",
       errors: [{ index: 0 }],
+    },
+    {
+      text: "The U.S. Department published a report.",
+      errors: [{}],
     },
   ],
 });

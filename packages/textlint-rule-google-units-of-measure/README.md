@@ -1,6 +1,6 @@
 # textlint-rule-google-units-of-measure
 
-Reference [Recommended: On this plan, you are limited to 55k download operations and 20k upload operations per day.](https://developers.google.com/style/units-of-measure "Recommended: On this plan, you are limited to 55k download operations and 20k upload operations per day.")
+Reference: [Units of measure | Google Developer Documentation Style Guide](https://developers.google.com/style/units-of-measure)
 
 ## Install
 

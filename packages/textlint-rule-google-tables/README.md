@@ -31,6 +31,7 @@ textlint --rule @textlint-rule/google-tables README.md
 - sentence-case table headers in Markdown pipe tables and HTML `<th>` cells
 - sentence-case table captions (`Table N ...` and HTML `<caption>`)
 - no terminal punctuation at the end of table header cells
+- no terminal period at the end of table captions
 
 Sentence-case checks are heuristic and report-only (no auto-fix).
 

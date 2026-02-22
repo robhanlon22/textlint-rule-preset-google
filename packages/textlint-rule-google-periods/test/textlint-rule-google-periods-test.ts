@@ -12,6 +12,7 @@ tester.run("textlint-rule-google-periods", rule as GoogleRuleModule, {
     "- user name\n- email address",
     "- This setting is recommended for production.\n- This option is required for backups.",
     'Use "Move quickly." as the slogan.',
+    'Document it as "Save".',
     "Visit https://example.com for details.",
     "Use this option (for example) when needed.",
     "Set the threshold to 1.5 for this test.",

@@ -1,82 +1,41 @@
 // MIT © 2017 azu
 import {
   bindRuleContext,
-  getPosFromSingleWord,
   paragraphReporter,
 } from "@textlint-rule/textlint-report-helper-for-google-preset";
 
 const TenseURL = "https://developers.google.com/style/tense";
-const ReferenceVerbURL = "https://developers.google.com/style/reference-verbs";
-
-type SubjectNumber = "singular" | "plural" | "unknown";
-
-const singularDeterminers = new Set([
-  "a",
-  "an",
-  "this",
-  "that",
-  "each",
-  "every",
-]);
-const pluralDeterminers = new Set(["these", "those"]);
-const singularEndingSExceptions = new Set([
-  "analysis",
-  "axis",
-  "basis",
-  "business",
-  "class",
-  "status",
-  "thesis",
-]);
 
 export const presentTenseMessage =
-  'Prefer present tense over "will" or "would" in reference and instructional text.\n' +
+  'Prefer present tense over "will" in reference and instructional text unless describing a specific future event, and avoid "would" for hypothetical instructions.\n' +
   `URL: ${TenseURL}`;
-export const useDoesMessage =
-  'Use "does" rather than "do" with third-person singular subjects in specification-style statements.\n' +
-  `URL: ${ReferenceVerbURL}`;
-export const useDoMessage =
-  'Use "do" rather than "does" with plural subjects in specification-style statements.\n' +
-  `URL: ${ReferenceVerbURL}`;
 
-const normalizeWord = (word: string): string => {
-  return word.toLowerCase().replace(/^[^a-z]+|[^a-z]+$/g, "");
+const futureContextPattern =
+  /\b(next|later|future|upcoming|tomorrow|tonight|eventually)\b|\bin\s+\d+\s+(seconds?|minutes?|hours?|days?|weeks?|months?|years?)\b|\bby\s+\d{4}\b/i;
+
+const extractSentenceAtIndex = (text: string, index: number): string => {
+  let sentenceStart = index;
+  while (sentenceStart > 0 && !/[.!?]/.test(text[sentenceStart - 1])) {
+    sentenceStart--;
+  }
+  let sentenceEnd = index;
+  while (sentenceEnd < text.length && !/[.!?]/.test(text[sentenceEnd])) {
+    sentenceEnd++;
+  }
+  return text.slice(sentenceStart, sentenceEnd);
 };
 
-const isLikelyPluralBySpelling = (word: string): boolean => {
-  const normalized = normalizeWord(word);
-  if (!normalized) {
-    return false;
+const shouldReportWillWould = ({
+  all,
+  index,
+  match,
+}: MatchReplaceDictionaryArgs): boolean => {
+  const normalized = match.toLowerCase();
+  if (normalized === "would") {
+    return true;
   }
-  return normalized.endsWith("s") && !singularEndingSExceptions.has(normalized);
-};
-
-const getSubjectNumber = (
-  determiner: string,
-  subject: string,
-): SubjectNumber => {
-  const normalizedDeterminer = determiner.toLowerCase();
-  if (singularDeterminers.has(normalizedDeterminer)) {
-    return "singular";
-  }
-  if (pluralDeterminers.has(normalizedDeterminer)) {
-    return "plural";
-  }
-  const pos = getPosFromSingleWord(subject);
-  if (pos === "NNS" || pos === "NNPS") {
-    return "plural";
-  }
-  if (pos === "NN" || pos === "NNP") {
-    return "singular";
-  }
-  if (isLikelyPluralBySpelling(subject)) {
-    return "plural";
-  }
-  const normalizedSubject = normalizeWord(subject);
-  if (!normalizedSubject) {
-    return "unknown";
-  }
-  return "singular";
+  const sentence = extractSentenceAtIndex(all, index);
+  return !futureContextPattern.test(sentence);
 };
 
 const report: GoogleRuleReporter = (context) => {
@@ -90,29 +49,8 @@ const report: GoogleRuleReporter = (context) => {
   const dictionaries: MatchReplaceDictionary[] = [
     {
       pattern: /\b(will|would)\b/gi,
+      test: shouldReportWillWould,
       message: () => presentTenseMessage,
-    },
-    {
-      // Spec-like subject + do/does agreement check.
-      pattern:
-        /\b(the|a|an|this|that|these|those|each|every)\s+(?:[A-Za-z][\w-]*\s+)?([A-Za-z][\w-]*)\s+(do|does)\b/gi,
-      test: ({ captures }) => {
-        const determiner = captures[0];
-        const subject = captures[1];
-        const verb = captures[2].toLowerCase();
-        const subjectNumber = getSubjectNumber(determiner, subject);
-        if (subjectNumber === "unknown") {
-          return false;
-        }
-        if (verb === "do") {
-          return subjectNumber === "singular";
-        }
-        return subjectNumber === "plural";
-      },
-      message: ({ captures }) => {
-        const verb = captures[2].toLowerCase();
-        return verb === "do" ? useDoesMessage : useDoMessage;
-      },
     },
   ];
   return {

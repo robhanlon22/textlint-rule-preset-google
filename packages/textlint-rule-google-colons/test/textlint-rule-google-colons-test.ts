@@ -10,9 +10,8 @@ tester.run("textlint-rule-google-colons", rule as GoogleRuleModule, {
 - one
 - two
 `,
-    // Bold text preceding colon
-    "**Tone:** concise, conversational, friendly, respectful.",
-    "**Tone** is bold: concise, conversational, friendly, respectful.",
+    "Supported products: Google Maps and Firebase.",
+    "API names: HTTP and TLS.",
     `When you add or update content to an existing project, remember to take these steps: review the style guide; use checklists; enlist a fellow writer or an editor to copyedit your work; and request a developmental edit if you feel that it's warranted.`,
   ],
   invalid: [
@@ -39,17 +38,6 @@ https://developers.google.com/style/colons#introductory-phrase-preceding-colon
 `,
         },
       ],
-    },
-    // Bold text preceding colon
-    {
-      text: "**Tone**: concise, conversational, friendly, respectful.",
-      output: "**Tone:** concise, conversational, friendly, respectful.",
-      errors: [{}, {}],
-    },
-    {
-      text: "This is **keyword**: it is ok",
-      output: "This is **keyword:** it is ok",
-      errors: [{}, {}],
     },
     // Colons within sentences
     {

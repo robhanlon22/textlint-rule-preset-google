@@ -12,7 +12,7 @@
   ],
   "name": "@textlint-rule/textlint-rule-google-sentence-spacing",
   "version": "0.1.2",
-  "description": "Reference: https://developers.google.com/style/sentence-spacing",
+  "description": "Reference: https://developers.google.com/style/periods#spaces-between-sentences",
   "main": "./lib/textlint-rule-google-sentence-spacing.js",
   "keywords": [
     "textlintrule"

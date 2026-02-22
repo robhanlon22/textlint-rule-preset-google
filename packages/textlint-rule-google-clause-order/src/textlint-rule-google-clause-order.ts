@@ -1,13 +1,14 @@
 // MIT © 2017 azu
 import { bindRuleContext } from "@textlint-rule/textlint-report-helper-for-google-preset";
 
-// https://developers.google.com/style/clause-order
+// https://developers.google.com/style/sentence-structure
+const DocumentURL = "https://developers.google.com/style/sentence-structure";
 export const defaultMessage =
   "Put conditional clauses before instructions, not after.\n" +
-  "URL: https://developers.google.com/style/clause-order";
+  `URL: ${DocumentURL}`;
 const linkReferencePattern =
   /See (.+?) for more (information|details|detail)\./g;
-const clickPattern = /Click ([\w-]+) if you want to (.+?)\./g;
+const clickPattern = /Click (.+?) if you want to (.+?)\./g;
 
 const report: GoogleRuleReporter = (context) => {
   const {

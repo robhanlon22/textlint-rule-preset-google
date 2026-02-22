@@ -7,8 +7,6 @@ tester.run("textlint-rule-google-ellipses", rule as GoogleRuleModule, {
   valid: [
     'My high school English teacher made me learn that Shakespeare quote: "All the world\'s a stage, ... And one man in his time plays many parts."',
     "To get the user's phone number, call `user.phoneNumber.get()`.",
-    "You don't need to understand all the other Python code in there ... we'll explain it all in class.",
-    "You don't need to understand all the other Python code in there ...",
   ],
   invalid: [
     // Suspension points
@@ -37,6 +35,14 @@ tester.run("textlint-rule-google-ellipses", rule as GoogleRuleModule, {
           index: 137,
         },
       ],
+    },
+    {
+      text: "You don't need to understand all the other Python code in there ... we'll explain it all in class.",
+      errors: [{}],
+    },
+    {
+      text: "You don't need to understand all the other Python code in there ...",
+      errors: [{}],
     },
     // space
     {

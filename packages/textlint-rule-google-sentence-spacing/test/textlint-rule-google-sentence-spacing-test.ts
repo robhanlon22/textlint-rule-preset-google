@@ -26,5 +26,10 @@ tester.run("textlint-rule-google-sentence-spacing", rule as GoogleRuleModule, {
       output: "sentence is 1. sentence 2. sentence 3.",
       errors: [{}, {}],
     },
+    {
+      text: "What now?  Keep going!  Yes.",
+      output: "What now? Keep going! Yes.",
+      errors: [{}, {}],
+    },
   ],
 });

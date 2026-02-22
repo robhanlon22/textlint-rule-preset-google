@@ -3,7 +3,6 @@
 See:
 
 - [Present tense | Google Developer Documentation Style Guide | Google Developers](https://developers.google.com/style/tense)
-- [Verb forms in reference documentation | Google Developer Documentation Style Guide | Google Developers](https://developers.google.com/style/reference-verbs)
 
 ## Install
 
@@ -31,7 +30,7 @@ textlint --rule @textlint-rule/google-tense README.md
 
 ## Notes
 
-This rule reports present-tense guidance (`will`, `would`) and `do`/`does` agreement issues in specification-like sentences.
+This rule reports present-tense guidance (`will`, `would`) in instructional and reference prose.
 
 ## License
 

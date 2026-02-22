@@ -39,9 +39,9 @@ textlint --rule @textlint-rule/google-exclamation-points README.md
   // allow to use ！
   "allowFullWidthExclamation": false,
   // allow to use ?
-  "allowHalfWidthQuestion": false,
+  "allowHalfWidthQuestion": true,
   // allow to use ？
-  "allowFullWidthQuestion": false
+  "allowFullWidthQuestion": true
 }
 ```
 

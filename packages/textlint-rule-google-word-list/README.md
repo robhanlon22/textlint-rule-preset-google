@@ -26,6 +26,10 @@ Via CLI
 textlint --rule @textlint-rule/google-word-list README.md
 ```
 
+## Notes
+
+This rule reports discouraged terms from the Google style guide word list. It does not provide autofixes.
+
 ## Changelog
 
 See [Releases page](https://github.com/textlint-rule/textlint-rule-preset-google/releases).

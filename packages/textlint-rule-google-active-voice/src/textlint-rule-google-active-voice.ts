@@ -8,6 +8,9 @@ const DocumentURL = "https://developers.google.com/style/voice";
 export const defaultMessage =
   "Use active voice where possible; passive voice can make instructions less direct.\n" +
   `URL: ${DocumentURL}`;
+export const avoidThereIsMessage =
+  'Avoid "there is/there are" constructions when a direct subject works.\n' +
+  `URL: ${DocumentURL}`;
 
 const report: GoogleRuleReporter = (context) => {
   const {
@@ -23,6 +26,10 @@ const report: GoogleRuleReporter = (context) => {
       pattern:
         /\b(?:(?:has|have|had)\s+been|is|are|was|were|be|been|being|get|gets|got|gotten)\s+(?:[a-z]+ly\s+)?(?:[a-z]{2,}ed|[a-z]{2,}en|known|shown|given|made|built|found|done|taken|written|read|set|put)\b(?:\s+by\b)?/gi,
       message: () => defaultMessage,
+    },
+    {
+      pattern: /\b[Tt]here (?:is|are|was|were)\b/g,
+      message: () => avoidThereIsMessage,
     },
   ];
   return {

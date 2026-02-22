@@ -8,13 +8,33 @@ import {
 interface PreDictionary {
   word: string | RegExp;
   test?: MatchReplaceDictionary["test"];
-  replace?: MatchReplaceDictionary["replace"];
   message: string;
 }
 
+const WORD_LIST_URL = "https://developers.google.com/style/word-list";
+const DEFAULT_WORD_LIST_MESSAGE = `Avoid this word or phrase where possible.\nURL: ${WORD_LIST_URL}`;
+
+const escapeRegExp = (text: string): string => {
+  return text.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+};
+
+const createWordPattern = (word: string): RegExp => {
+  const escapedWord = escapeRegExp(word);
+  const startsWithWordChar = /^\w/.test(word);
+  const endsWithWordChar = /\w$/.test(word);
+  const prefix = startsWithWordChar ? "\\b" : "";
+  const suffix = endsWithWordChar ? "\\b" : "";
+  return new RegExp(`${prefix}${escapedWord}${suffix}`);
+};
+
+const toRuleMessage = (message: string): string => {
+  if (!message.trim()) {
+    return DEFAULT_WORD_LIST_MESSAGE;
+  }
+  return `${message}\nURL: ${WORD_LIST_URL}`;
+};
+
 const report: GoogleRuleReporter = (context) => {
-  // Politeness and use of "please"
-  // https://developers.google.com/style/tone#politeness-and-use-of-please
   const preDictionaries: PreDictionary[] = [
     {
       word: "abort",
@@ -26,11 +46,10 @@ const report: GoogleRuleReporter = (context) => {
         return getPosFromSingleWord(all).startsWith("VB"); // Verb
       },
       message:
-        "Access(verb) – Avoid when you can, in favor of friendlier words like see, edit, find,\nuse, or view.",
+        "Avoid when you can, in favor of friendlier words like see, edit, find,\nuse, or view.",
     },
     {
       word: "account name",
-      replace: () => "username",
       message: "Don't use. Instead, use username.",
     },
     {
@@ -40,12 +59,10 @@ const report: GoogleRuleReporter = (context) => {
     },
     {
       word: "action bar",
-      replace: () => "app bar",
       message: "Don't use. Instead, use app bar.",
     },
     {
       word: "administrator",
-      replace: () => "admin",
       message: 'Don\'t use. Instead, use "admin."',
     },
     // {
@@ -59,7 +76,6 @@ const report: GoogleRuleReporter = (context) => {
     },
     {
       word: "application",
-      replace: () => "app",
       message: 'Don\'t use. Instead, use "app".',
     },
     {
@@ -72,7 +88,6 @@ const report: GoogleRuleReporter = (context) => {
     },
     {
       word: "autoupdate",
-      replace: () => "automatically update",
       message: 'Don\'t use. Instead, use "automatically update."',
     },
     {
@@ -82,12 +97,10 @@ const report: GoogleRuleReporter = (context) => {
     },
     {
       word: "cellular data",
-      replace: () => "mobile data",
       message: 'Don\'t use. Instead, use "mobile data."',
     },
     {
       word: "cellular network",
-      replace: () => "mobile network",
       message: 'Don\'t use. Instead, use "mobile network."',
     },
     {
@@ -105,7 +118,6 @@ const report: GoogleRuleReporter = (context) => {
     },
     {
       word: "content type",
-      replace: () => "media type",
       message:
         'Don\'t use when referring to types such as "application/json"; instead,\nuse "media type."',
     },
@@ -191,12 +203,10 @@ const report: GoogleRuleReporter = (context) => {
     // },
     {
       word: "omnibox",
-      replace: () => "address bar",
       message: 'Don\'t use. Instead, use "address bar."',
     },
     {
       word: "overview screen",
-      replace: () => "recents screen",
       message: 'Don\'t use. Instead, use "recents screen."',
     },
     // {
@@ -210,9 +220,7 @@ const report: GoogleRuleReporter = (context) => {
     },
     {
       word: "should",
-      message:
-        "Generally avoid." +
-        'When telling the reader what to do, "should" implies recommended but optional, which leaves the reader unsure of what to do. Better to use "must" or just leave out the word "should."',
+      message: "Generally avoid.",
     },
     {
       word: "sign-on",
@@ -239,13 +247,11 @@ const report: GoogleRuleReporter = (context) => {
     },
     {
       word: "tap & hold",
-      replace: () => "touch & hold",
       message:
         'Use "touch & hold" (not "touch and hold") instead. (Note the "&". It\'s OK\nto use in this case.)',
     },
     {
       word: "tap and hold",
-      replace: () => "touch & hold",
       message:
         'Use "touch & hold" (not "touch and hold") instead. (Note the "&". It\'s OK\nto use in this case.)',
     },
@@ -261,15 +267,11 @@ const report: GoogleRuleReporter = (context) => {
         }
         return true;
       },
-      replace: ({ match }) => {
-        return /^[A-Z]/.test(match) ? "Tap" : "tap";
-      },
       message:
         'Don\'t use. Instead, use "tap." However, "touch & hold" is OK to use.',
     },
     {
       word: "uncheck",
-      replace: () => "clear",
       message:
         'Don\'t use to refer to clearing a check mark from a checkbox. Instead, use\n"clear."',
     },
@@ -279,7 +281,6 @@ const report: GoogleRuleReporter = (context) => {
     },
     {
       word: "vs.",
-      replace: () => "versus.",
       message:
         'Don\'t use "vs." as an abbreviation for "versus"; instead, use the unabbreviated "versus."',
     },
@@ -289,7 +290,6 @@ const report: GoogleRuleReporter = (context) => {
     },
     {
       word: "World Wide Web",
-      replace: () => "web",
       message: 'Don\'t use. Instead, use "web."',
     },
     {
@@ -304,11 +304,10 @@ const report: GoogleRuleReporter = (context) => {
       return {
         pattern:
           typeof preDict.word === "string"
-            ? new RegExp("\\b" + preDict.word + "\\b")
+            ? createWordPattern(preDict.word)
             : preDict.word,
         test: preDict.test ?? undefined,
-        replace: preDict.replace ?? undefined,
-        message: () => preDict.message,
+        message: () => toRuleMessage(preDict.message),
       };
     },
   );

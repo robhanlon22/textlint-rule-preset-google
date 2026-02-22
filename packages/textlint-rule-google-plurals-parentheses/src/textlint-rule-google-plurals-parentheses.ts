@@ -6,7 +6,7 @@ import {
   PosType,
 } from "@textlint-rule/textlint-report-helper-for-google-preset";
 
-const DocumentURL = "https://developers.google.com/style/hyphens";
+const DocumentURL = "https://developers.google.com/style/plurals-parentheses";
 const report: GoogleRuleReporter = (context) => {
   const {
     Syntax,
@@ -25,9 +25,8 @@ const report: GoogleRuleReporter = (context) => {
         const pos = getPosFromSingleWord(pluralWord);
         return pos === PosType.PluralNoun || pos === PosType.PluralProperNoun;
       },
-      message: () => ` Don't put optional plurals in parentheses.
-${DocumentURL}
-`,
+      message: () =>
+        `Don't put optional plurals in parentheses.\nURL: ${DocumentURL}`,
     },
   ];
 

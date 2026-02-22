@@ -4,10 +4,11 @@ import { bindRuleContext } from "@textlint-rule/textlint-report-helper-for-googl
 
 const STYLE_URL = "https://developers.google.com/style/tables";
 const message = (reason: string): string => `${reason}\n${STYLE_URL}`;
-const HEADER_TERMINAL_PUNCTUATION = /[.!?:;]$/;
+const HEADER_TERMINAL_PUNCTUATION = /[.!?:;…]$/;
 const WORD_PATTERN = /[A-Za-z][A-Za-z0-9'-]*/g;
 const ACRONYM_PATTERN = /^[A-Z0-9]{2,}$/;
-const TABLE_CAPTION_PATTERN = /^\s*Table\s+\d+[.:]?\s+(.+?)\s*$/i;
+const TABLE_CAPTION_PATTERN = /^\s*Table(?:\s+\d+)?[.:]?\s+(.+?)\s*$/i;
+const TABLE_CAPTION_PREFIX_PATTERN = /^Table(?:\s+\d+)?[.:]?\s*/i;
 
 interface HtmlLocationRange {
   startOffset?: number;
@@ -279,17 +280,24 @@ const inspectHtmlTableNode = (tableNode: HtmlNode): TableFinding[] => {
     }
 
     if (node.tagName === "caption") {
-      const visible = normalizeText(getHtmlNodeText(node)).replace(
-        /^Table\s+\d+[.:]?\s*/i,
+      const normalizedCaption = normalizeText(getHtmlNodeText(node));
+      const caption = normalizedCaption.replace(
+        TABLE_CAPTION_PREFIX_PATTERN,
         "",
       );
-      if (!visible) {
+      if (!caption) {
         return;
       }
-      if (!isSentenceCase(visible)) {
+      if (!isSentenceCase(caption)) {
         findings.push({
           index: getHtmlNodeStartOffset(node),
           messageText: "Use sentence case for table captions.",
+        });
+      }
+      if (caption.endsWith(".")) {
+        findings.push({
+          index: getHtmlNodeStartOffset(node),
+          messageText: "Table captions should not end with a period.",
         });
       }
     }
@@ -329,15 +337,20 @@ const inspectMarkdownCaptionParagraph = (
     return [];
   }
   const caption = match[1];
-  if (isSentenceCase(caption)) {
-    return [];
-  }
-  return [
-    {
+  const findings: TableFinding[] = [];
+  if (!isSentenceCase(caption)) {
+    findings.push({
       index: 0,
       messageText: "Use sentence case for table captions.",
-    },
-  ];
+    });
+  }
+  if (caption.endsWith(".")) {
+    findings.push({
+      index: 0,
+      messageText: "Table captions should not end with a period.",
+    });
+  }
+  return findings;
 };
 
 const createReporter: GoogleRuleReporter = (context) => {

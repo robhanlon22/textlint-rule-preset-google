@@ -6,13 +6,29 @@ import {
   getPosFromSingleWord,
 } from "@textlint-rule/textlint-report-helper-for-google-preset";
 
-// https://developers.google.com/style/clause-order
+const DocumentURL = "https://developers.google.com/style/contractions";
+
+// https://developers.google.com/style/contractions
 export const nounVerbMessage =
   "Noun+verb contractions: In general, avoid contractions formed from nouns and verbs.\n" +
-  "URL: https://developers.google.com/style/contractions";
+  `URL: ${DocumentURL}`;
+export const lessCommonContractionsMessage =
+  "Use common contractions that are clear for a global audience.\n" +
+  `URL: ${DocumentURL}`;
 export const noDoubleContractions =
   "Don't use double contractions: Double contractions contain not just one but two contracted words.\n" +
-  "URL: https://developers.google.com/style/contractions";
+  `URL: ${DocumentURL}`;
+
+const withLeadingCase = (match: string, replacement: string): string => {
+  if (match.length === 0) {
+    return replacement;
+  }
+  if (!/^[A-Z]/.test(match)) {
+    return replacement;
+  }
+  return `${replacement[0].toUpperCase()}${replacement.slice(1)}`;
+};
+
 const report: GoogleRuleReporter = (context) => {
   const {
     Syntax,
@@ -23,7 +39,7 @@ const report: GoogleRuleReporter = (context) => {
   } = bindRuleContext(context);
   const dictionaries: MatchReplaceDictionary[] = [
     {
-      pattern: /(\w+)'s (\w+)/,
+      pattern: /\b(\w+)'s (\w+)\b/g,
       test: ({ all, captures }) => {
         // name
         return (
@@ -36,7 +52,7 @@ const report: GoogleRuleReporter = (context) => {
     },
     {
       // These machines’re slow.
-      pattern: /(\w+)'re (\w+)/,
+      pattern: /\b(\w+)'re (\w+)\b/g,
       test: ({ all, captures }) => {
         // name
         return (
@@ -49,7 +65,7 @@ const report: GoogleRuleReporter = (context) => {
     },
     {
       // The following guides're (a) good way to learn to use Universal Analytics.
-      pattern: /(\w+)'re (\w+) (\w+)/,
+      pattern: /\b(\w+)'re (\w+) (\w+)\b/g,
       test: ({ all, captures }) => {
         // name
         return (
@@ -62,25 +78,62 @@ const report: GoogleRuleReporter = (context) => {
       },
       message: () => nounVerbMessage,
     },
+    {
+      pattern: /\bhasn't\b/gi,
+      replace: ({ match }) => withLeadingCase(match, "has not"),
+      message: () => lessCommonContractionsMessage,
+    },
+    {
+      pattern: /\bneedn't\b/gi,
+      message: () => lessCommonContractionsMessage,
+    },
+    {
+      pattern: /\bit'll\b/gi,
+      replace: ({ match }) => withLeadingCase(match, "it will"),
+      message: () => lessCommonContractionsMessage,
+    },
+    {
+      pattern: /\bthat'll\b/gi,
+      replace: ({ match }) => withLeadingCase(match, "that will"),
+      message: () => lessCommonContractionsMessage,
+    },
+    {
+      pattern: /\bthey'd\b(?!'ve)/gi,
+      message: () => lessCommonContractionsMessage,
+    },
+    {
+      pattern: /\bit'd\b(?!'ve)/gi,
+      message: () => lessCommonContractionsMessage,
+    },
     // Don't use double contractions
     {
-      pattern: /mightn't've/,
-      replace: () => "might not have",
+      pattern: /\bmightn't've\b/gi,
+      replace: ({ match }) => withLeadingCase(match, "might not have"),
       message: () => noDoubleContractions,
     },
     {
-      pattern: /mustn't've/,
-      replace: () => "must not have",
+      pattern: /\bmustn't've\b/gi,
+      replace: ({ match }) => withLeadingCase(match, "must not have"),
       message: () => noDoubleContractions,
     },
     {
-      pattern: /wouldn't've/,
-      replace: () => "would not have",
+      pattern: /\bwouldn't've\b/gi,
+      replace: ({ match }) => withLeadingCase(match, "would not have"),
       message: () => noDoubleContractions,
     },
     {
-      pattern: /shouldn't've/,
-      replace: () => "should not have",
+      pattern: /\bshouldn't've\b/gi,
+      replace: ({ match }) => withLeadingCase(match, "should not have"),
+      message: () => noDoubleContractions,
+    },
+    {
+      pattern: /\bit'd've\b/gi,
+      replace: ({ match }) => withLeadingCase(match, "it would have"),
+      message: () => noDoubleContractions,
+    },
+    {
+      pattern: /\bthey'd've\b/gi,
+      replace: ({ match }) => withLeadingCase(match, "they would have"),
       message: () => noDoubleContractions,
     },
   ];

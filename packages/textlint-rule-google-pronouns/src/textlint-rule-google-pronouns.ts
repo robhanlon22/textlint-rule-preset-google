@@ -11,10 +11,10 @@ const PersonURL = "https://developers.google.com/style/person";
 export const genderNeutralMessage =
   "Use gender-neutral pronouns where possible.\n" + `URL: ${PronounURL}`;
 export const secondPersonMessage =
-  'Prefer second person ("you") over first person in documentation where practical.\n' +
+  'Prefer second person ("you") over first person singular in documentation where practical.\n' +
   `URL: ${PersonURL}`;
 
-const shouldIgnoreFirstPersonFalsePositive = ({
+const shouldIgnoreFirstPersonSingularFalsePositive = ({
   all,
   index,
   match,
@@ -27,10 +27,6 @@ const shouldIgnoreFirstPersonFalsePositive = ({
     if (previousChar === "/" || nextChar === "/") {
       return true;
     }
-  }
-  // Ignore the country abbreviation "US".
-  if (normalizedMatch === "us" && match === "US") {
-    return true;
   }
   return false;
 };
@@ -49,8 +45,8 @@ const report: GoogleRuleReporter = (context) => {
       message: () => genderNeutralMessage,
     },
     {
-      pattern: /\b(I|me|my|mine|myself|we|us|our|ours|ourselves)\b/gi,
-      test: (args) => !shouldIgnoreFirstPersonFalsePositive(args),
+      pattern: /\b(I|me|my|mine|myself)\b/gi,
+      test: (args) => !shouldIgnoreFirstPersonSingularFalsePositive(args),
       message: () => secondPersonMessage,
     },
   ];
