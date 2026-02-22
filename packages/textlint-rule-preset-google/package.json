@@ -27,6 +27,7 @@
   "homepage": "https://github.com/textlint-rule/textlint-rule-preset-google/tree/master/packages/textlint-rule-preset-google/",
   "dependencies": {
     "@textlint-rule/textlint-rule-google-abbreviations": "workspace:*",
+    "@textlint-rule/textlint-rule-google-active-voice": "workspace:*",
     "@textlint-rule/textlint-rule-google-articles": "workspace:*",
     "@textlint-rule/textlint-rule-google-capitalization": "workspace:*",
     "@textlint-rule/textlint-rule-google-clause-order": "workspace:*",
@@ -37,12 +38,17 @@
     "@textlint-rule/textlint-rule-google-ellipses": "workspace:*",
     "@textlint-rule/textlint-rule-google-exclamation-points": "workspace:*",
     "@textlint-rule/textlint-rule-google-hyphens": "workspace:*",
+    "@textlint-rule/textlint-rule-google-periods": "workspace:*",
     "@textlint-rule/textlint-rule-google-plurals-parentheses": "workspace:*",
     "@textlint-rule/textlint-rule-google-possessives": "workspace:*",
+    "@textlint-rule/textlint-rule-google-pronouns": "workspace:*",
     "@textlint-rule/textlint-rule-google-quotation-marks": "workspace:*",
     "@textlint-rule/textlint-rule-google-sentence-spacing": "workspace:*",
     "@textlint-rule/textlint-rule-google-slashes": "workspace:*",
+    "@textlint-rule/textlint-rule-google-tables": "workspace:*",
+    "@textlint-rule/textlint-rule-google-tense": "workspace:*",
     "@textlint-rule/textlint-rule-google-tone": "workspace:*",
+    "@textlint-rule/textlint-rule-google-units-of-measure": "workspace:*",
     "@textlint-rule/textlint-rule-google-word-list": "workspace:*"
   },
   "publishConfig": {

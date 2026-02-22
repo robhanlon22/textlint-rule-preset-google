@@ -19,8 +19,30 @@ tester.run("textlint-rule-google-slashes", rule as GoogleRuleModule, {
     '[almin/examples/counter/test at master · almin/almin](https://github.com/almin/almin/tree/master/examples/counter/test "almin/examples/counter/test at master · almin/almin")',
     "Use the path src/docs for this example.",
     "Install the tool from /usr/local/bin.",
+    "Use October 31, 2025 for this release date.",
   ],
   invalid: [
+    // Slashes with dates
+    {
+      text: "Schedule maintenance for 10/31/2025.",
+      errors: [
+        {
+          message: `Don't use slashes with dates.
+https://developers.google.com/style/slashes#slashes-with-dates
+`,
+        },
+      ],
+    },
+    {
+      text: "The build was cut on 2025/10/31.",
+      errors: [
+        {
+          message: `Don't use slashes with dates.
+https://developers.google.com/style/slashes#slashes-with-dates
+`,
+        },
+      ],
+    },
     // Slashes with alternatives
     {
       text: "For example, a disaster relief map is not subject to the usage limits even if it has been developed/hosted by a commercial entity.",

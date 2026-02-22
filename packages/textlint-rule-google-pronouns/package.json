@@ -1,0 +1,37 @@
+{
+  "directories": {
+    "lib": "lib",
+    "test": "test"
+  },
+  "author": "azu",
+  "license": "MIT",
+  "files": [
+    "bin/",
+    "lib/",
+    "src/"
+  ],
+  "name": "@textlint-rule/textlint-rule-google-pronouns",
+  "version": "0.1.2",
+  "description": "Reference: https://developers.google.com/style/pronouns",
+  "main": "./lib/textlint-rule-google-pronouns.js",
+  "keywords": [
+    "textlintrule"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/textlint-rule/textlint-rule-preset-google.git"
+  },
+  "bugs": {
+    "url": "https://github.com/textlint-rule/textlint-rule-preset-google/issues"
+  },
+  "homepage": "https://github.com/textlint-rule/textlint-rule-preset-google/tree/master/packages/textlint-rule-google-pronouns/",
+  "dependencies": {
+    "@textlint-rule/textlint-report-helper-for-google-preset": "workspace:*"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "type": "module",
+  "exports": "./lib/textlint-rule-google-pronouns.js",
+  "types": "./lib/textlint-rule-google-pronouns.d.ts"
+}

@@ -35,12 +35,12 @@ textlint --rule preset-google README.md
 - [Style-guide highlights](https://developers.google.com/style/highlights)
 - General principles
 - [Style and tone](https://developers.google.com/style/tone)
-  - [ ] Some things to avoid where possible
-    - [ ] Placeholder phrases like "please note" and "at this time."
-    - [ ] Starting all sentences with the same phrase (such as "You can" or "Todo").
-    - [ ] Phrasing in terms of "let's" do something.
-    - [ ] Using phrases like "simply" or "It's that simple" or "It's easy" in a
-    - [ ] procedure, unless it's an extraordinarily simple/easy procedure.
+  - [x] Some things to avoid where possible
+    - [x] Placeholder phrases like "please note" and "at this time."
+    - [x] Starting all sentences with the same phrase (such as "You can" or "Todo").
+    - [x] Phrasing in terms of "let's" do something.
+    - [x] Using phrases like "simply" or "It's that simple" or "It's easy" in a
+    - [x] procedure, unless it's an extraordinarily simple/easy procedure.
   - [x] [Politeness and use of "please"](https://developers.google.com/style/tone#politeness-and-use-of-please 'Politeness and use of "please"')
     - :heavy_check_mark: `textlint-rule-google-tone`
 - [Documenting future features](https://developers.google.com/style/future)
@@ -55,20 +55,21 @@ textlint --rule preset-google README.md
     - instead, use "that is" or "for example," respectively.
   - [x] Periods with abbreviations
 - [Active voice](https://developers.google.com/style/voice)
-  - [ ] use active voice instead of passive voice
+  - :heavy_check_mark: `textlint-rule-google-active-voice`
+  - [x] use active voice instead of passive voice
 - [Anthropomorphism](https://developers.google.com/style/anthropomorphism)
 - [Articles (a, an, the)](https://developers.google.com/style/articles)
   - :heavy_check_mark: `textlint-rule-google-articles`
   - [x] a/an = indefinite article
-  - [ ] the = definite article
+  - [x] the = definite article
 - [Capitalization](https://developers.google.com/style/capitalization)
   - :heavy_check_mark: `textlint-rule-google-capitalization`
   - [x] Capitalization in titles and headings
-  - [ ] Capitalization and colons
+  - [x] Capitalization and colons
   - [x] Capitalization and figures
   - [x] Capitalization and hyphenated words
   - [x] Capitalization in lists
-  - [ ] Capitalization for tables in text
+  - [x] Capitalization for tables in text
 - [Clause order](https://developers.google.com/style/clause-order)
   - :heavy_check_mark: `textlint-rule-google-clause-order`
   - [x] For more details
@@ -83,16 +84,18 @@ textlint --rule preset-google README.md
   - [x] Don't put optional plurals in parentheses.
 - [Prepositions](https://developers.google.com/style/prepositions)
 - [Present tense](https://developers.google.com/style/tense)
-  - [ ] will
-  - [ ] would
+  - :heavy_check_mark: `textlint-rule-google-tense`
+  - [x] will
+  - [x] would
 - [Pronouns](https://developers.google.com/style/pronouns)
-  - [ ] Gender-neutral pronouns
-  - [ ] Personal pronouns/Second Person
+  - :heavy_check_mark: `textlint-rule-google-pronouns`
+  - [x] Gender-neutral pronouns
+  - [x] Personal pronouns/Second Person
 - [Second person](https://developers.google.com/style/person)
   - Use "you" rather than "we."
 - [Spelling](https://developers.google.com/style/spelling)
 - [Verb forms in reference documentation](https://developers.google.com/style/reference-verbs)
-  - [ ] Use "does" rather than "do" in a specification
+  - [x] Use "does" rather than "do" in a specification
 - [Word list](https://developers.google.com/style/word-list)
   - :heavy_check_mark: `textlint-rule-google-word-list`
   - [x] Word list
@@ -128,24 +131,25 @@ textlint --rule preset-google README.md
   - [x] Don't add words such as -from- or -between-.
 - [Parentheses](https://developers.google.com/style/parentheses)
 - [Periods](https://developers.google.com/style/periods)
-  - [ ] Periods with lists
-  - [ ] Periods with URLs
+  - :heavy_check_mark: `textlint-rule-google-periods`
+  - [x] Periods with lists
+  - [x] Periods with URLs
     - Avoid put a space URLs and period
-  - [ ] Periods with quotation marks
-  - [ ] Periods with parentheses
-  - [ ] Periods with headings
-  - [ ] Periods with numbers
-  - [ ] Periods with captions
-  - [ ] Periods with abbreviations
+  - [x] Periods with quotation marks
+  - [x] Periods with parentheses
+  - [x] Periods with headings
+  - [x] Periods with numbers
+  - [x] Periods with captions
+  - [x] Periods with abbreviations
 - [Pluralizing a single letter](https://developers.google.com/style/plural-single-letter)
 - [Quotation marks](https://developers.google.com/style/quotation-marks)
   - :heavy_check_mark: `textlint-rule-google-quotation-marks`
-  - [ ] American Style
+  - [x] American Style
   - [x] Single quotation marks
 - [Semicolons](https://developers.google.com/style/semicolons)
 - [Slashes](https://developers.google.com/style/slashes)
   - :heavy_check_mark: `textlint-rule-google-slashes`
-  - [ ] Slashes with dates
+  - [x] Slashes with dates
   - [x] Slashes with file paths and URLs
   - [x] Slashes with alternatives
   - [x] Slashes with fractions
@@ -154,7 +158,7 @@ textlint --rule preset-google README.md
 - [Dates and times](https://developers.google.com/style/dates-times)
 - [Figures and other images](https://developers.google.com/style/images)
 - [Headings and titles](https://developers.google.com/style/headings)
-  - [ ] Capitalization
+  - [x] Capitalization
 - [Lists](https://developers.google.com/style/lists)
 - [Notes and other notices](https://developers.google.com/style/notices)
 - [Numbers](https://developers.google.com/style/numbers)
@@ -164,6 +168,7 @@ textlint --rule preset-google README.md
   - :heavy_check_mark: `textlint-rule-google-sentence-spacing`
   - [x] Leave only one space between sentences
 - [Tables](https://developers.google.com/style/tables)
+  - :heavy_check_mark: `textlint-rule-google-tables`
 - [Units of measurement](https://developers.google.com/style/units-of-measure)
   - :heavy_check_mark: `textlint-rule-google-units-of-measure`
   - [x] Formatting units of measurement

@@ -87,6 +87,12 @@ importers:
         specifier: workspace:*
         version: link:../textlint-report-helper-for-google-preset
 
+  packages/textlint-rule-google-active-voice:
+    dependencies:
+      "@textlint-rule/textlint-report-helper-for-google-preset":
+        specifier: workspace:*
+        version: link:../textlint-report-helper-for-google-preset
+
   packages/textlint-rule-google-articles:
     dependencies:
       "@textlint-rule/textlint-report-helper-for-google-preset":
@@ -153,6 +159,12 @@ importers:
         specifier: workspace:*
         version: link:../textlint-report-helper-for-google-preset
 
+  packages/textlint-rule-google-periods:
+    dependencies:
+      "@textlint-rule/textlint-report-helper-for-google-preset":
+        specifier: workspace:*
+        version: link:../textlint-report-helper-for-google-preset
+
   packages/textlint-rule-google-plurals-parentheses:
     dependencies:
       "@textlint-rule/textlint-report-helper-for-google-preset":
@@ -160,6 +172,12 @@ importers:
         version: link:../textlint-report-helper-for-google-preset
 
   packages/textlint-rule-google-possessives:
+    dependencies:
+      "@textlint-rule/textlint-report-helper-for-google-preset":
+        specifier: workspace:*
+        version: link:../textlint-report-helper-for-google-preset
+
+  packages/textlint-rule-google-pronouns:
     dependencies:
       "@textlint-rule/textlint-report-helper-for-google-preset":
         specifier: workspace:*
@@ -192,6 +210,18 @@ importers:
         specifier: ^2.5.0
         version: 2.5.0
 
+  packages/textlint-rule-google-tables:
+    dependencies:
+      "@textlint-rule/textlint-report-helper-for-google-preset":
+        specifier: workspace:*
+        version: link:../textlint-report-helper-for-google-preset
+
+  packages/textlint-rule-google-tense:
+    dependencies:
+      "@textlint-rule/textlint-report-helper-for-google-preset":
+        specifier: workspace:*
+        version: link:../textlint-report-helper-for-google-preset
+
   packages/textlint-rule-google-tone:
     dependencies:
       "@textlint-rule/textlint-report-helper-for-google-preset":
@@ -222,6 +252,9 @@ importers:
       "@textlint-rule/textlint-rule-google-abbreviations":
         specifier: workspace:*
         version: link:../textlint-rule-google-abbreviations
+      "@textlint-rule/textlint-rule-google-active-voice":
+        specifier: workspace:*
+        version: link:../textlint-rule-google-active-voice
       "@textlint-rule/textlint-rule-google-articles":
         specifier: workspace:*
         version: link:../textlint-rule-google-articles
@@ -252,12 +285,18 @@ importers:
       "@textlint-rule/textlint-rule-google-hyphens":
         specifier: workspace:*
         version: link:../textlint-rule-google-hyphens
+      "@textlint-rule/textlint-rule-google-periods":
+        specifier: workspace:*
+        version: link:../textlint-rule-google-periods
       "@textlint-rule/textlint-rule-google-plurals-parentheses":
         specifier: workspace:*
         version: link:../textlint-rule-google-plurals-parentheses
       "@textlint-rule/textlint-rule-google-possessives":
         specifier: workspace:*
         version: link:../textlint-rule-google-possessives
+      "@textlint-rule/textlint-rule-google-pronouns":
+        specifier: workspace:*
+        version: link:../textlint-rule-google-pronouns
       "@textlint-rule/textlint-rule-google-quotation-marks":
         specifier: workspace:*
         version: link:../textlint-rule-google-quotation-marks
@@ -267,9 +306,18 @@ importers:
       "@textlint-rule/textlint-rule-google-slashes":
         specifier: workspace:*
         version: link:../textlint-rule-google-slashes
+      "@textlint-rule/textlint-rule-google-tables":
+        specifier: workspace:*
+        version: link:../textlint-rule-google-tables
+      "@textlint-rule/textlint-rule-google-tense":
+        specifier: workspace:*
+        version: link:../textlint-rule-google-tense
       "@textlint-rule/textlint-rule-google-tone":
         specifier: workspace:*
         version: link:../textlint-rule-google-tone
+      "@textlint-rule/textlint-rule-google-units-of-measure":
+        specifier: workspace:*
+        version: link:../textlint-rule-google-units-of-measure
       "@textlint-rule/textlint-rule-google-word-list":
         specifier: workspace:*
         version: link:../textlint-rule-google-word-list

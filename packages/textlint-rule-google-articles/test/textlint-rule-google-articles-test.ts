@@ -2,6 +2,8 @@
 import TextLintTester from "textlint-tester";
 import rule from "../src/textlint-rule-google-articles.js";
 const tester = new TextLintTester();
+const definiteArticleMessage =
+  'Use the definite article "the" when referring to a specific item (for example, "the following section").\nhttps://developers.google.com/style/articles';
 tester.run("textlint-rule-google-", rule as GoogleRuleModule, {
   valid: [
     "An hour.",
@@ -18,6 +20,8 @@ tester.run("textlint-rule-google-", rule as GoogleRuleModule, {
         a: ["FAQ"],
       },
     },
+    "See the following section for details.",
+    "Use the same value in both requests.",
   ],
   invalid: [
     // multiple
@@ -39,6 +43,24 @@ tester.run("textlint-rule-google-", rule as GoogleRuleModule, {
         },
         {
           index: 28,
+        },
+      ],
+    },
+    {
+      text: "See following section for details.",
+      output: "See following section for details.",
+      errors: [
+        {
+          message: definiteArticleMessage,
+        },
+      ],
+    },
+    {
+      text: "Use same value in both requests.",
+      output: "Use same value in both requests.",
+      errors: [
+        {
+          message: definiteArticleMessage,
         },
       ],
     },

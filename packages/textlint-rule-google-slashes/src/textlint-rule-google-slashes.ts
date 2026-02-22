@@ -4,6 +4,8 @@ import {
   paragraphReporter,
 } from "@textlint-rule/textlint-report-helper-for-google-preset";
 
+const SLASHES_URL = "https://developers.google.com/style/slashes";
+
 const REPLACE_ABBR_DICT: Record<string, string> = {
   "c/o": "care of",
   "w/": "with",
@@ -53,6 +55,36 @@ const isFilePathOrUrlContext = (
   );
 };
 
+const isBetween = (value: number, min: number, max: number): boolean => {
+  return value >= min && value <= max;
+};
+
+const isLikelySlashDate = (
+  monthOrYear: string,
+  monthOrDay: string,
+  dayOrYear: string,
+): boolean => {
+  const first = Number(monthOrYear);
+  const second = Number(monthOrDay);
+  const third = Number(dayOrYear);
+  if (Number.isNaN(first) || Number.isNaN(second) || Number.isNaN(third)) {
+    return false;
+  }
+  // yyyy/mm/dd
+  if (monthOrYear.length === 4) {
+    return isBetween(second, 1, 12) && isBetween(third, 1, 31);
+  }
+  // mm/dd/yy(yy) or dd/mm/yy(yy)
+  if (dayOrYear.length >= 2) {
+    return (
+      isBetween(first, 1, 31) &&
+      isBetween(second, 1, 31) &&
+      (first <= 12 || second <= 12)
+    );
+  }
+  return false;
+};
+
 const report: GoogleRuleReporter = (context) => {
   const {
     Syntax,
@@ -62,7 +94,18 @@ const report: GoogleRuleReporter = (context) => {
     report: reportError,
   } = bindRuleContext(context);
   const dictionaries: MatchReplaceDictionary[] = [
-    // Slashes with dates => other rule
+    // Slashes with dates
+    // https://developers.google.com/style/slashes#slashes-with-dates
+    {
+      pattern: /\b(\d{1,4})\/(\d{1,2})\/(\d{1,4})\b/g,
+      test: ({ captures }) => {
+        return isLikelySlashDate(captures[0], captures[1], captures[2]);
+      },
+      message: () => `Don't use slashes with dates.
+${SLASHES_URL}#slashes-with-dates
+`,
+    },
+
     {
       pattern: /\b([a-zA-Z-]+)\/([a-zA-Z-]+)\b/g,
       test: (args) => {
@@ -82,9 +125,15 @@ https://developers.google.com/style/slashes#slashes-with-alternatives
     // https://developers.google.com/style/slashes#slashes-with-alternatives
     {
       pattern: /\b(\d+)\/(\d+)\b/g,
+      test: ({ all, index, match }) => {
+        const before = all[index - 1];
+        const after = all[index + match.length];
+        // Skip chained slash segments like dates (10/31/2025)
+        return before !== "/" && after !== "/";
+      },
       message:
         () => `Don't use slashes with fractions, as they can be ambiguous.
-https://developers.google.com/style/slashes#slashes-with-fractions
+${SLASHES_URL}#slashes-with-fractions
 `,
     },
     // Slashes with abbreviations

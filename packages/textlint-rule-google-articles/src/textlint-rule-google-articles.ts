@@ -7,6 +7,59 @@ import {
 import { classifyArticle } from "english-article-classifier";
 
 const DocumentURL = "https://developers.google.com/style/articles";
+const DEFINITE_REFERENCE_NOUNS = [
+  "section",
+  "sections",
+  "example",
+  "examples",
+  "table",
+  "tables",
+  "figure",
+  "figures",
+  "list",
+  "lists",
+  "step",
+  "steps",
+  "command",
+  "commands",
+  "field",
+  "fields",
+  "value",
+  "values",
+  "option",
+  "options",
+  "page",
+  "pages",
+  "paragraph",
+  "paragraphs",
+  "chapter",
+  "chapters",
+  "file",
+  "files",
+  "directory",
+  "directories",
+  "method",
+  "methods",
+  "setting",
+  "settings",
+];
+const DEFINITE_REFERENCE_NOUN_PATTERN = DEFINITE_REFERENCE_NOUNS.join("|");
+const missingDefiniteArticlePattern = new RegExp(
+  `(^|[.!?]\\s+|\\b(?:in|on|at|for|from|to|see|refer to)\\s+)(following|previous|same)\\s+(${DEFINITE_REFERENCE_NOUN_PATTERN})\\b`,
+  "gi",
+);
+const determinerPattern =
+  /\b(the|this|that|these|those|its|their|our|your|my|his|her|a|an)$/i;
+
+const isMissingDefiniteBeforeSame = (
+  args: MatchReplaceDictionaryArgs,
+): boolean => {
+  const before = args.all.slice(0, args.index).trimEnd();
+  if (before.length === 0) {
+    return true;
+  }
+  return !determinerPattern.test(before);
+};
 interface ArticleOptions {
   a?: unknown;
   an?: unknown;
@@ -67,6 +120,20 @@ const report: GoogleRuleReporter = (context, options = {}) => {
           DocumentURL
         );
       },
+    },
+    {
+      pattern: missingDefiniteArticlePattern,
+      message: () =>
+        `Use the definite article "the" when referring to a specific item (for example, "the following section").\n${DocumentURL}`,
+    },
+    {
+      pattern: new RegExp(
+        `\\b(same)\\s+(${DEFINITE_REFERENCE_NOUN_PATTERN})\\b`,
+        "gi",
+      ),
+      test: isMissingDefiniteBeforeSame,
+      message: () =>
+        `Use the definite article "the" when referring to a specific item (for example, "the following section").\n${DocumentURL}`,
     },
   ];
   return {
