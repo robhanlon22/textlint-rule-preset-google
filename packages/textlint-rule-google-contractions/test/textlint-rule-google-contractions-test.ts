@@ -18,8 +18,8 @@ tester.run("textlint-rule-google-contractions", rule as GoogleRuleModule, {
   ],
   invalid: [
     {
-      text: "The browser's fast, simple, and secure.",
-      output: "The browser is fast, simple, and secure.",
+      text: "The browser's quickly becoming popular.",
+      output: "The browser's quickly becoming popular.",
       errors: [
         {
           message: nounVerbMessage,
@@ -28,7 +28,7 @@ tester.run("textlint-rule-google-contractions", rule as GoogleRuleModule, {
     },
     {
       text: "These machines're slow.",
-      output: "These machines are slow.",
+      output: "These machines're slow.",
       errors: [
         {
           message: nounVerbMessage,
@@ -38,7 +38,7 @@ tester.run("textlint-rule-google-contractions", rule as GoogleRuleModule, {
     {
       text: "The following guides're a good way to learn to use Universal Analytics.",
       output:
-        "The following guides are a good way to learn to use Universal Analytics.",
+        "The following guides're a good way to learn to use Universal Analytics.",
       errors: [
         {
           message: nounVerbMessage,

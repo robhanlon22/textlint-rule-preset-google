@@ -19,24 +19,24 @@ tester.run("textlint-rule-google-dashes", rule as GoogleRuleModule, {
     {
       text: "To indicate a break in the flow of a sentence - or an interruption—use an em dash, also known as a long dash. Don't put a space before or after it.",
       output:
-        "To indicate a break in the flow of a sentence—or an interruption—use an em dash, also known as a long dash. Don't put a space before or after it.",
+        "To indicate a break in the flow of a sentence - or an interruption—use an em dash, also known as a long dash. Don't put a space before or after it.",
       errors: [{}],
     },
     {
       text: "The food - which was delicious - reminded me of home.",
-      output: "The food—which was delicious—reminded me of home.",
+      output: "The food - which was delicious - reminded me of home.",
       errors: [{}, {}],
     },
     // — dash
     {
       text: "example — This is an example.",
-      output: "example: This is an example.",
+      output: "example — This is an example.",
       errors: [{}],
     },
     // - hyphen
     {
       text: "example - This is an example.",
-      output: "example: This is an example.",
+      output: "example - This is an example.",
       errors: [
         // prefer use colons:
         {

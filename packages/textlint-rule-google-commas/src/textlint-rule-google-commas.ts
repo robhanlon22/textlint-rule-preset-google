@@ -45,10 +45,6 @@ const report: GoogleRuleReporter = (context) => {
         // Word1 is NN, Word2 is NNP, Word3 is NN => true
         return isSameGroupPosType(pos1, pos2) && isSameGroupPosType(pos2, pos3);
       },
-      replace: ({ captures }) => {
-        return `${captures[0]}, ${captures[1]}, ${captures[3]} ${captures[4]}`;
-        //                                    ^ <= add ,
-      },
       message: () => {
         return `In a series of three or more items, use a comma before the final "and" or "or.".
 https://developers.google.com/style/commas#serial-commas
@@ -59,7 +55,6 @@ https://developers.google.com/style/commas#serial-commas
     {
       pattern:
         /^(finally|first|second|third|overall|instead|meanwhile|specifically|generally) ([^,\n].*)$/i,
-      replace: ({ captures }) => `${captures[0]}, ${captures[1]}`,
       message: () => {
         return `Use a comma after introductory words and phrases.
 https://developers.google.com/style/commas#commas-after-introductory-words-and-phrases
@@ -81,8 +76,6 @@ https://developers.google.com/style/commas#commas-after-introductory-words-and-p
         }
         return CLAUSE_SUBJECT_POS.has(getPosFromSingleWord(subjectCandidate));
       },
-      replace: ({ captures }) =>
-        `${captures[0]}, ${captures[1]} ${captures[2]}`,
       message: () => {
         return `Use a comma to separate two independent clauses joined by a coordinating conjunction.
 https://developers.google.com/style/commas#commas-separating-two-independent-clauses
@@ -93,8 +86,6 @@ https://developers.google.com/style/commas#commas-separating-two-independent-cla
     {
       pattern:
         /^([^,]+), (and|or|but) (can|could|should|would|will|may|might|must)\b(.*)$/,
-      replace: ({ captures }) =>
-        `${captures[0]} ${captures[1]} ${captures[2]}${captures[3]}`,
       message: () => {
         return `Avoid a comma before a dependent clause that begins with a coordinating conjunction and an auxiliary verb.
 https://developers.google.com/style/commas#commas-separating-independent-from-dependent-clauses
@@ -106,7 +97,6 @@ https://developers.google.com/style/commas#commas-separating-independent-from-de
       test: ({ captures }) => {
         return captures[0].trim().split(/\s+/).length >= 3;
       },
-      replace: ({ captures }) => `${captures[0]}, and ${captures[1]}`,
       message: () => {
         return `Use a comma when needed to separate an independent clause from a preceding dependent clause.
 https://developers.google.com/style/commas#commas-separating-independent-from-dependent-clauses
@@ -117,7 +107,6 @@ https://developers.google.com/style/commas#commas-separating-independent-from-de
     {
       pattern:
         /([A-Za-z0-9)]) which (has|have|is|are|was|were|can|could|should|would|will|may|might|must)\b/g,
-      replace: ({ captures }) => `${captures[0]}, which ${captures[1]}`,
       message: () => {
         return `Set off nonrestrictive clauses with commas.
 https://developers.google.com/style/commas#setting-off-other-kinds-of-clauses
@@ -126,7 +115,6 @@ https://developers.google.com/style/commas#setting-off-other-kinds-of-clauses
     },
     {
       pattern: /^(however|otherwise|therefore) /i,
-      replace: ({ captures }) => `${captures[0]}, `,
       message: () => {
         return `In general, put a semicolon or a period or a dash before a conjunctive adverb, such as "otherwise" or "however" or "therefore," and put a comma after the conjunctive adverb.
 https://developers.google.com/style/commas#setting-off-other-kinds-of-clauses
@@ -135,7 +123,6 @@ https://developers.google.com/style/commas#setting-off-other-kinds-of-clauses
     },
     {
       pattern: /([.;–]) (however|otherwise|therefore) /g,
-      replace: ({ captures }) => `${captures[0]} ${captures[1]}, `,
       message: () => {
         return `In general, put a semicolon or a period or a dash before a conjunctive adverb, such as "otherwise" or "however" or "therefore," and put a comma after the conjunctive adverb.
 https://developers.google.com/style/commas#setting-off-other-kinds-of-clauses

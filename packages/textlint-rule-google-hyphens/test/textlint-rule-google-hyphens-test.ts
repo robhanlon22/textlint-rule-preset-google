@@ -11,19 +11,19 @@ tester.run("textlint-rule-google-hyphens", rule as GoogleRuleModule, {
     // When to hyphenate
     {
       text: "The app uses Android specific techniques.",
-      output: "The app uses Android-specific techniques.",
+      output: "The app uses Android specific techniques.",
       errors: [{}],
     },
     // Compound words
     {
       text: "Provide a command line interface.",
-      output: "Provide a command-line interface.",
+      output: "Provide a command line interface.",
       errors: [{}],
     },
     // Adverbs ending in "ly"
     {
       text: "Free, simple, and publicly-available implementations",
-      output: "Free, simple, and publicly available implementations",
+      output: "Free, simple, and publicly-available implementations",
       errors: [
         {
           index: 18,
@@ -32,7 +32,7 @@ tester.run("textlint-rule-google-hyphens", rule as GoogleRuleModule, {
     },
     {
       text: "To get profile information for the currently-authorized user",
-      output: "To get profile information for the currently authorized user",
+      output: "To get profile information for the currently-authorized user",
       errors: [
         {
           index: 35,

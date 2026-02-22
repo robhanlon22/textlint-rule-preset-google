@@ -50,9 +50,6 @@ const report: GoogleRuleReporter = (context) => {
         const pos = getPos(all, captures[1]);
         return pos === PosType.Noun;
       },
-      replace: ({ captures }) => {
-        return `${captures[0]}: ${captures[3]}`;
-      },
       message: () =>
         "Use colons(:) instead of dashes(-) in lists" + "\n" + DocumentURL,
     },
@@ -73,23 +70,6 @@ const report: GoogleRuleReporter = (context) => {
       pattern: /([a-zA-Z]+) - ([a-zA-Z]+)/g,
       test: ({ all }) => {
         return !/^[A-Z][A-Za-z0-9]+ [A-Z0-9]+ [—-] [A-Z]/.test(all);
-      },
-      replace: ({ all, captures }) => {
-        const beforeWord = captures[0];
-        const afterWord = captures[1];
-        const dashCount = (all.match(/ - /g) ?? []).length;
-        const beforeWordPos = getPos(all, beforeWord);
-        const afterWordPos = getPos(all, afterWord);
-        const isListStyle =
-          dashCount === 1 &&
-          beforeWordPos === PosType.Noun &&
-          (afterWordPos === PosType.WhDeterminer ||
-            afterWordPos === PosType.WhPronoun ||
-            afterWordPos === PosType.Determiner);
-        if (isListStyle) {
-          return;
-        }
-        return `${captures[0]}—${captures[1]}`;
       },
       message: () =>
         'Use "—"(em dash) instead of " - "(hyphen)' + "\n" + DocumentURL,

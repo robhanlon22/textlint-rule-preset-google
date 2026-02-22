@@ -24,9 +24,6 @@ const report: GoogleRuleReporter = (context) => {
           /^(VB|NN)/.test(getPos(all, captures[2]))
         );
       },
-      replace: ({ captures }) => {
-        return `To ${captures[0]} ${captures[1]}, ${captures[2]}`;
-      },
       message:
         () => `using "please" in a set of instructions is overdoing the politeness.\n
         URL: https://developers.google.com/style/tone#politeness-and-use-of-please`,
@@ -35,9 +32,6 @@ const report: GoogleRuleReporter = (context) => {
       pattern: /(For more \w+), please (\w+)/,
       test: ({ all, captures }) => {
         return getPos(all, captures[1]).startsWith("VB");
-      },
-      replace: ({ captures }) => {
-        return `${captures[0]}, ${captures[1]}`;
       },
       message:
         () => `using "please" in a set of instructions is overdoing the politeness.\n

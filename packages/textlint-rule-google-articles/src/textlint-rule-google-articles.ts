@@ -18,9 +18,6 @@ const toStringArray = (value: unknown): string[] => {
     : [];
 };
 
-const isCapital = (text: string) => {
-  return /^[A-Z]/.test(text);
-};
 const report: GoogleRuleReporter = (context, options = {}) => {
   const {
     Syntax,
@@ -43,10 +40,6 @@ const report: GoogleRuleReporter = (context, options = {}) => {
         const result = classifyArticle(captures[1], classifyOptions);
         return result.type === "an";
       },
-      replace: ({ captures }) => {
-        const an = isCapital(captures[0]) ? "An" : "an";
-        return `${an} ${captures[1]}`;
-      },
       message: ({ captures }) => {
         const result = classifyArticle(captures[1], classifyOptions);
         return (
@@ -63,10 +56,6 @@ const report: GoogleRuleReporter = (context, options = {}) => {
       test: ({ captures }) => {
         const result = classifyArticle(captures[1], classifyOptions);
         return result.type === "a";
-      },
-      replace: ({ captures }) => {
-        const a = isCapital(captures[0]) ? "A" : "a";
-        return `${a} ${captures[1]}`;
       },
       message: ({ captures }) => {
         const result = classifyArticle(captures[1], classifyOptions);

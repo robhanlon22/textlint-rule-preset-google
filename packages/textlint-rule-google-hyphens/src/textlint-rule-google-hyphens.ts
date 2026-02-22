@@ -22,9 +22,6 @@ const report: GoogleRuleReporter = (context) => {
         const pos = getPosFromSingleWord(captures[0]);
         return pos === PosType.Adverb;
       },
-      replace: ({ captures }) => {
-        return `${captures[0]} ${captures[1]}`;
-      },
       message: () =>
         `Don't hyphenate adverbs ending in "ly" except where needed for clarity.`,
     },
@@ -37,7 +34,6 @@ const report: GoogleRuleReporter = (context) => {
         const modifiedWordPos = getPosFromSingleWord(captures[2]);
         return modifiedWordPos.startsWith("NN");
       },
-      replace: ({ captures }) => `${captures[0]}-${captures[1]} ${captures[2]}`,
       message: () => "Hyphenate compound modifiers that appear before a noun.",
     },
     // Compound words
@@ -48,7 +44,6 @@ const report: GoogleRuleReporter = (context) => {
         const modifiedWordPos = getPosFromSingleWord(captures[2]);
         return modifiedWordPos.startsWith("NN");
       },
-      replace: ({ captures }) => `${captures[0]}-${captures[1]} ${captures[2]}`,
       message: () =>
         "Use a hyphen for common two-word compound modifiers before a noun.",
     },

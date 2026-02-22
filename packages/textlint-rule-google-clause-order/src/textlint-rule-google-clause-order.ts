@@ -1,8 +1,5 @@
 // MIT © 2017 azu
-import {
-  bindRuleContext,
-  getPos,
-} from "@textlint-rule/textlint-report-helper-for-google-preset";
+import { bindRuleContext } from "@textlint-rule/textlint-report-helper-for-google-preset";
 
 // https://developers.google.com/style/clause-order
 export const defaultMessage =
@@ -36,9 +33,6 @@ const report: GoogleRuleReporter = (context) => {
         );
       }
       for (const match of text.matchAll(clickPattern)) {
-        if (!getPos(text, match[1]).startsWith("VB")) {
-          continue;
-        }
         reportError(
           node,
           new RuleError(defaultMessage, {

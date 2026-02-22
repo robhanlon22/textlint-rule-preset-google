@@ -23,7 +23,7 @@ tester.run("textlint-rule-google-", rule as GoogleRuleModule, {
     // multiple
     {
       text: "This is an pen.",
-      output: "This is a pen.",
+      output: "This is an pen.",
       errors: [
         {
           index: 8,
@@ -32,7 +32,7 @@ tester.run("textlint-rule-google-", rule as GoogleRuleModule, {
     },
     {
       text: "This is an pen. This is not A umbrella",
-      output: "This is a pen. This is not An umbrella",
+      output: "This is an pen. This is not A umbrella",
       errors: [
         {
           index: 8,

@@ -32,9 +32,6 @@ const report: GoogleRuleReporter = (context) => {
           getPos(all, captures[1]).startsWith("RB")
         );
       },
-      replace: ({ captures }) => {
-        return `${captures[0]} is ${captures[1]}`;
-      },
       message: () => nounVerbMessage,
     },
     {
@@ -47,9 +44,6 @@ const report: GoogleRuleReporter = (context) => {
           // Adverb or Adjective
           /^(RB|JJ)/.test(getPos(all, captures[1]))
         );
-      },
-      replace: ({ captures }) => {
-        return `${captures[0]} are ${captures[1]}`;
       },
       message: () => nounVerbMessage,
     },
@@ -65,9 +59,6 @@ const report: GoogleRuleReporter = (context) => {
           // Adverb or Adjective
           /^(RB|JJ)/.test(getPos(all, captures[2]))
         );
-      },
-      replace: ({ captures }) => {
-        return `${captures[0]} are ${captures[1]} ${captures[2]}`;
       },
       message: () => nounVerbMessage,
     },

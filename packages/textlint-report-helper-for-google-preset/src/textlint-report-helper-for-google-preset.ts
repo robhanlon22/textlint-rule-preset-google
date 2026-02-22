@@ -82,6 +82,7 @@ export const bindRuleContext = (
 export interface StrReporterArgs {
   node: GoogleRuleNode;
   dictionaries: MatchReplaceDictionary[];
+  requireExactMatch?: boolean;
   report: ReportFunction;
   RuleError: RuleErrorCtor;
   fixer: RuleFixer;
@@ -91,6 +92,7 @@ export interface StrReporterArgs {
 export const strReporter = ({
   node,
   dictionaries,
+  requireExactMatch = true,
   report,
   RuleError,
   fixer,
@@ -119,6 +121,16 @@ export const strReporter = ({
       }
       const endIndex = result.index + result.match.length;
       const range: [number, number] = [index, endIndex];
+      const beforeText = text.slice(index, endIndex);
+      if (requireExactMatch && beforeText !== result.match) {
+        report(
+          node,
+          new RuleError(message, {
+            index,
+          }),
+        );
+        return;
+      }
       report(
         node,
         new RuleError(message, {

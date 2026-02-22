@@ -14,7 +14,7 @@ tester.run("textlint-rule-google-tone", rule as GoogleRuleModule, {
   invalid: [
     {
       text: "To view the document, please click View.",
-      output: "To view the document, click View.",
+      output: "To view the document, please click View.",
       errors: [
         {
           message: message,
@@ -24,7 +24,7 @@ tester.run("textlint-rule-google-tone", rule as GoogleRuleModule, {
     },
     {
       text: "For more information, please see document.",
-      output: "For more information, see document.",
+      output: "For more information, please see document.",
       errors: [
         {
           message: message,
