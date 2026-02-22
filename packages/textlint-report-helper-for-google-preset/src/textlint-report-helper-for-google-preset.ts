@@ -11,7 +11,7 @@ const { RuleHelper, IgnoreNodeManager } = textlintRuleHelper;
 
 interface StringSourceLike {
   toString(): string;
-  originalIndexFromIndex(index: number): number;
+  originalIndexFromIndex(index: number): number | undefined;
 }
 type StringSourceConstructor = new (node: GoogleRuleNode) => StringSourceLike;
 const StringSourceValue = StringSourceModule as unknown as
@@ -201,6 +201,17 @@ export const paragraphReporter = ({
       const endIndexFromNode = source.originalIndexFromIndex(
         result.index + result.match.length,
       );
+      if (indexFromNode === undefined || endIndexFromNode === undefined) {
+        return;
+      }
+      if (
+        !Number.isFinite(indexFromNode) ||
+        !Number.isFinite(endIndexFromNode) ||
+        indexFromNode < 0 ||
+        endIndexFromNode < indexFromNode
+      ) {
+        return;
+      }
       const rangeFromNode: [number, number] = [indexFromNode, endIndexFromNode];
       // absolute index
       const absoluteRange: [number, number] = [

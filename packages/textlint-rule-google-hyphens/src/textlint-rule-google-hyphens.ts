@@ -50,9 +50,6 @@ const report: GoogleRuleReporter = (context) => {
     // Range of numbers
     {
       pattern: /(from|between) (\d+-\d+)/g,
-      replace: ({ captures }) => {
-        return captures[1];
-      },
       message: () =>
         'Use a hyphen to indicate a range of numbers. Don\'t add words such as "from" or "between".',
     },

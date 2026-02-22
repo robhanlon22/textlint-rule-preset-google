@@ -127,6 +127,57 @@ const getNodeChildrenByType = (
   return node.children.filter((child) => child.type === type);
 };
 
+const getNodeStartOffset = (node: GoogleRuleNode): number => {
+  if (!Array.isArray(node.range)) {
+    return 0;
+  }
+  return node.range[0];
+};
+
+const toRelativeIndex = (absoluteIndex: number, baseOffset: number): number => {
+  return Math.max(0, absoluteIndex - baseOffset);
+};
+
+const nodeContainsTableBlock = (
+  node: GoogleRuleNode | undefined,
+  syntax: GoogleRuleContext["Syntax"],
+  getSource: GoogleRuleContext["getSource"],
+): boolean => {
+  if (!node || typeof node.type !== "string") {
+    return false;
+  }
+  if (node.type === syntax.Table) {
+    return true;
+  }
+  if (node.type === syntax.Html || node.type === syntax.HtmlBlock) {
+    return /<table\b/i.test(getSource(node));
+  }
+  return false;
+};
+
+const isCaptionAssociatedWithTable = (
+  node: GoogleRuleNode,
+  syntax: GoogleRuleContext["Syntax"],
+  getSource: GoogleRuleContext["getSource"],
+): boolean => {
+  const siblings = Array.isArray(node.parent?.children)
+    ? node.parent.children
+    : [];
+  if (siblings.length === 0) {
+    return false;
+  }
+  const currentIndex = siblings.findIndex((sibling) => sibling === node);
+  if (currentIndex === -1) {
+    return false;
+  }
+  const previousNode = siblings[currentIndex - 1];
+  if (nodeContainsTableBlock(previousNode, syntax, getSource)) {
+    return true;
+  }
+  const nextNode = siblings[currentIndex + 1];
+  return nodeContainsTableBlock(nextNode, syntax, getSource);
+};
+
 const getHtmlNodeChildren = (node: HtmlNode): HtmlNode[] => {
   return Array.isArray(node.childNodes) ? node.childNodes : [];
 };
@@ -169,6 +220,7 @@ const inspectMarkdownTableNode = (
     return [];
   }
   const headerRow = rows[0];
+  const tableStartOffset = getNodeStartOffset(headerRow);
 
   const findings: TableFinding[] = [];
   const headerCells = getNodeChildrenByType(headerRow, syntax.TableCell);
@@ -184,7 +236,7 @@ const inspectMarkdownTableNode = (
 
     if (!isSentenceCase(visible)) {
       findings.push({
-        index: textInfo.start,
+        index: toRelativeIndex(textInfo.start, tableStartOffset),
         messageText:
           "Use sentence case for table headers. In tables, headings should use sentence case.",
       });
@@ -192,7 +244,7 @@ const inspectMarkdownTableNode = (
 
     if (HEADER_TERMINAL_PUNCTUATION.test(visible)) {
       findings.push({
-        index: textInfo.start,
+        index: toRelativeIndex(textInfo.start, tableStartOffset),
         messageText: "Table headers should not end with punctuation.",
       });
     }
@@ -265,10 +317,15 @@ const inspectHtmlSource = (source: string): TableFinding[] => {
 const inspectMarkdownCaptionParagraph = (
   node: GoogleRuleNode,
   source: string,
+  syntax: GoogleRuleContext["Syntax"],
+  getSource: GoogleRuleContext["getSource"],
 ): TableFinding[] => {
   const normalized = normalizeText(source);
   const match = TABLE_CAPTION_PATTERN.exec(normalized);
   if (!match) {
+    return [];
+  }
+  if (!isCaptionAssociatedWithTable(node, syntax, getSource)) {
     return [];
   }
   const caption = match[1];
@@ -315,7 +372,15 @@ const createReporter: GoogleRuleReporter = (context) => {
       reportAll(node, inspectMarkdownTableNode(node, Syntax));
     },
     [Syntax.Paragraph](node) {
-      reportAll(node, inspectMarkdownCaptionParagraph(node, getSource(node)));
+      reportAll(
+        node,
+        inspectMarkdownCaptionParagraph(
+          node,
+          getSource(node),
+          Syntax,
+          getSource,
+        ),
+      );
     },
     [Syntax.Html](node) {
       reportAll(node, inspectHtmlSource(getSource(node)));

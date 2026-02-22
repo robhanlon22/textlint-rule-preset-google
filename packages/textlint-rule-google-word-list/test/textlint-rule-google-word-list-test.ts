@@ -194,6 +194,7 @@ tester.run("textlint-rule-google-word-list", rule as GoogleRuleModule, {
     "zip",
     // allow
     "touch & hold is ok",
+    "Touch & hold is ok",
   ],
   invalid: [
     {
@@ -211,7 +212,18 @@ tester.run("textlint-rule-google-word-list", rule as GoogleRuleModule, {
       errors: [{}],
     },
     {
+      text: "Check the checkbox to continue.",
+      output: "Check the checkbox to continue.",
+      errors: [{}],
+    },
+    {
       text: "touch the display",
+      output: "tap the display",
+      errors: [{}],
+    },
+    {
+      text: "Touch the display",
+      output: "Tap the display",
       errors: [{}],
     },
     {

@@ -83,19 +83,22 @@ declare module "textlint-util-to-string" {
   class StringSource {
     constructor(node: GoogleRuleNode);
     toString(): string;
-    originalIndexFromIndex(generatedIndex: number, isEnd?: boolean): number;
+    originalIndexFromIndex(
+      generatedIndex: number,
+      isEnd?: boolean,
+    ): number | undefined;
     originalPositionFromPosition(
       position: { line: number; column: number },
       isEnd?: boolean,
-    ): { line: number; column: number };
+    ): { line: number; column: number } | undefined;
     originalIndexFromPosition(
       generatedPosition: { line: number; column: number },
       isEnd?: boolean,
-    ): number;
+    ): number | undefined;
     originalPositionFromIndex(
       generatedIndex: number,
       isEnd?: boolean,
-    ): { line: number; column: number };
+    ): { line: number; column: number } | undefined;
   }
 
   export { StringSource };

@@ -91,11 +91,10 @@ const report: GoogleRuleReporter = (context) => {
       message: 'Don\'t use. Instead, use "mobile network."',
     },
     {
-      word: /check (.*)/,
+      word: /\bcheck\b/i,
       test: ({ all }) => {
         return /checkbox/i.test(all);
       },
-      replace: ({ captures }) => `select ${captures[0]}`,
       message:
         'Don\'t use to refer to marking a checkbox. Instead, use "select."',
     },
@@ -255,14 +254,16 @@ const report: GoogleRuleReporter = (context) => {
       message: "Don't use. Instead, use words like stop, exit, cancel, or end.",
     },
     {
-      word: /touch (.*?)/,
+      word: /\btouch\b/i,
       test: ({ all }) => {
-        if (all.includes("touch & hold")) {
+        if (/\btouch\s*&\s*hold\b/i.test(all)) {
           return false;
         }
         return true;
       },
-      replace: ({ captures }) => `tap ${captures[0]}`,
+      replace: ({ match }) => {
+        return /^[A-Z]/.test(match) ? "Tap" : "tap";
+      },
       message:
         'Don\'t use. Instead, use "tap." However, "touch & hold" is OK to use.',
     },

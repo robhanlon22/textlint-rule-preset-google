@@ -42,12 +42,12 @@ tester.run("textlint-rule-google-hyphens", rule as GoogleRuleModule, {
     //Range of numbers
     {
       text: "from 8-20 files",
-      output: "8-20 files",
+      output: "from 8-20 files",
       errors: [{}],
     },
     {
       text: "between 8-20 files",
-      output: "8-20 files",
+      output: "between 8-20 files",
       errors: [{}],
     },
   ],

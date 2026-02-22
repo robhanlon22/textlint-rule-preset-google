@@ -14,10 +14,14 @@ tester.run("textlint-rule-google-tables", rule, {
 | --- | --- |
 | GET | Retry |`,
     `<table><caption>Table 2. API response codes</caption><tr><th>API name</th><th>HTTP code</th></tr></table>`,
+    "Table 3. Request Retry Matrix",
+    "For details, see Table 3. Request Retry Matrix in the appendix.",
   ],
   invalid: [
     {
-      text: `| Request Type | Retry Policy |
+      text: `Intro paragraph.
+
+| Request Type | Retry Policy |
 | --- | --- |
 | GET | Retry |`,
       errors: [
@@ -25,11 +29,13 @@ tester.run("textlint-rule-google-tables", rule, {
           message: withUrl(
             "Use sentence case for table headers. In tables, headings should use sentence case.",
           ),
+          index: 20,
         },
         {
           message: withUrl(
             "Use sentence case for table headers. In tables, headings should use sentence case.",
           ),
+          index: 35,
         },
       ],
     },
@@ -47,15 +53,20 @@ tester.run("textlint-rule-google-tables", rule, {
       ],
     },
     {
-      text: "Table 3. Request Retry Matrix",
+      text: `Table 4. Request Retry Matrix
+
+| Request type | Retry policy |
+| --- | --- |
+| GET | Retry |`,
       errors: [
         {
           message: withUrl("Use sentence case for table captions."),
+          index: 0,
         },
       ],
     },
     {
-      text: `<table><caption>Table 4. Request Retry Matrix</caption><tr><th>Request Type</th><th>Retry policy.</th></tr></table>`,
+      text: `<table><caption>Table 5. Request Retry Matrix</caption><tr><th>Request Type</th><th>Retry policy.</th></tr></table>`,
       errors: [{}, {}, {}],
     },
   ],
