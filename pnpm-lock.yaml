@@ -215,6 +215,9 @@ importers:
       "@textlint-rule/textlint-report-helper-for-google-preset":
         specifier: workspace:*
         version: link:../textlint-report-helper-for-google-preset
+      parse5:
+        specifier: ^8.0.0
+        version: 8.0.0
 
   packages/textlint-rule-google-tense:
     dependencies:
@@ -1280,12 +1283,6 @@ packages:
         integrity: sha512-xFbRxM1tahm08yHBP16MMjVUAvDaBMD38zsM9EMAUN61omwLmKlOpB/Zku5QkjZ8TZ4vn53pj+t518cH0S03RQ==,
       }
 
-  balanced-match@1.0.2:
-    resolution:
-      {
-        integrity: sha512-3oSeUO0TMV67hN1AmbXsK4yaqU7tjiHlbxRDZOpH0KW9+CeX4bRAaX0Anxt0tx2MrpRpWwQaPwIlISEJhYU5Pw==,
-      }
-
   balanced-match@4.0.3:
     resolution:
       {
@@ -1315,12 +1312,6 @@ packages:
     resolution:
       {
         integrity: sha512-rJKn5ooC9u8q13IMCrW0RSp31pxBCHE3y9V/tp3TdWSLf8Em3p6Di4NBpfzbJge9YjjFEsD0RtFEjtvHL5VyEA==,
-      }
-
-  brace-expansion@2.0.2:
-    resolution:
-      {
-        integrity: sha512-Jt0vHyM+jmUBqojB7E1NIYadt0vI0Qxjxd2TErW94wDz+E2LAm5vKMXXwg6ZZBTHPuUlDgQHKXvjGBdfcF1ZDQ==,
       }
 
   brace-expansion@5.0.2:
@@ -2796,10 +2787,10 @@ packages:
       }
     engines: { node: 18 || 20 || >=22 }
 
-  minimatch@9.0.5:
+  minimatch@9.0.6:
     resolution:
       {
-        integrity: sha512-G6T0ZX48xgozx7587koeX9Ys2NYy6Gmv//P89sEte9V9whIapMNF4idKxnW2QtCcLiTWlb/wfCabAtAFWhhBow==,
+        integrity: sha512-kQAVowdR33euIqeA0+VZTDqU+qo1IeVY+hrKYtZMio3Pg0P0vuh/kwRylLUddJhB6pf3q/botcOvRtx4IN1wqQ==,
       }
     engines: { node: ">=16 || 14 >=14.17" }
 
@@ -3040,6 +3031,12 @@ packages:
     resolution:
       {
         integrity: sha512-IInvU7fabl34qmi9gY8XOVxhYyMyuH2xUNpb2q8/Y+7552KlejkRvqvD19nMoUW/uQGGbqNpA6Tufu5FL5BZgw==,
+      }
+
+  parse5@8.0.0:
+    resolution:
+      {
+        integrity: sha512-9m4m5GSgXjL4AjumKzq1Fgfp3Z8rsvjRNbnkVwfu2ImRqE5D0LnY2QfDen18FSY9C573YU5XxSapdHZTZ2WolA==,
       }
 
   path-exists@4.0.0:
@@ -4313,7 +4310,7 @@ snapshots:
       "@typescript-eslint/types": 8.56.0
       "@typescript-eslint/visitor-keys": 8.56.0
       debug: 4.4.3
-      minimatch: 9.0.5
+      minimatch: 9.0.6
       semver: 7.7.4
       tinyglobby: 0.2.15
       ts-api-utils: 2.4.0(typescript@5.9.3)
@@ -4419,8 +4416,6 @@ snapshots:
 
   bail@1.0.5: {}
 
-  balanced-match@1.0.2: {}
-
   balanced-match@4.0.3: {}
 
   bcrypt-pbkdf@1.0.2:
@@ -4432,10 +4427,6 @@ snapshots:
   boundary@1.0.1: {}
 
   boundary@2.0.0: {}
-
-  brace-expansion@2.0.2:
-    dependencies:
-      balanced-match: 1.0.2
 
   brace-expansion@5.0.2:
     dependencies:
@@ -5366,9 +5357,9 @@ snapshots:
     dependencies:
       brace-expansion: 5.0.2
 
-  minimatch@9.0.5:
+  minimatch@9.0.6:
     dependencies:
-      brace-expansion: 2.0.2
+      brace-expansion: 5.0.2
 
   minimist@1.2.8: {}
 
@@ -5504,6 +5495,10 @@ snapshots:
   parse5@5.1.1: {}
 
   parse5@7.3.0:
+    dependencies:
+      entities: 6.0.1
+
+  parse5@8.0.0:
     dependencies:
       entities: 6.0.1
 

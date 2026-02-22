@@ -6,7 +6,7 @@ const tester = new TextLintTester();
 const URL = "https://developers.google.com/style/tables";
 const withUrl = (reason: string): string => `${reason}\n${URL}`;
 
-tester.run("textlint-rule-google-tables", rule as GoogleRuleModule, {
+tester.run("textlint-rule-google-tables", rule, {
   valid: [
     `Table 1. Request retry behavior
 
@@ -23,12 +23,12 @@ tester.run("textlint-rule-google-tables", rule as GoogleRuleModule, {
       errors: [
         {
           message: withUrl(
-            "Heuristic check: use sentence case for table headers; avoid title case unless capitalization is required.",
+            "Use sentence case for table headers. In tables, headings should use sentence case.",
           ),
         },
         {
           message: withUrl(
-            "Heuristic check: use sentence case for table headers; avoid title case unless capitalization is required.",
+            "Use sentence case for table headers. In tables, headings should use sentence case.",
           ),
         },
       ],
@@ -50,9 +50,7 @@ tester.run("textlint-rule-google-tables", rule as GoogleRuleModule, {
       text: "Table 3. Request Retry Matrix",
       errors: [
         {
-          message: withUrl(
-            "Heuristic check: use sentence case for table captions.",
-          ),
+          message: withUrl("Use sentence case for table captions."),
         },
       ],
     },

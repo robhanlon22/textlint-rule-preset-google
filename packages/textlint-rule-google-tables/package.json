@@ -26,7 +26,8 @@
   },
   "homepage": "https://github.com/textlint-rule/textlint-rule-preset-google/tree/master/packages/textlint-rule-google-tables/",
   "dependencies": {
-    "@textlint-rule/textlint-report-helper-for-google-preset": "workspace:*"
+    "@textlint-rule/textlint-report-helper-for-google-preset": "workspace:*",
+    "parse5": "^8.0.0"
   },
   "publishConfig": {
     "access": "public"

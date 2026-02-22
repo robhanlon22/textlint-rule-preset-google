@@ -1,4 +1,5 @@
 // MIT © 2017 azu
+import { parseFragment } from "parse5";
 import { bindRuleContext } from "@textlint-rule/textlint-report-helper-for-google-preset";
 
 const STYLE_URL = "https://developers.google.com/style/tables";
@@ -6,21 +7,34 @@ const message = (reason: string): string => `${reason}\n${STYLE_URL}`;
 const HEADER_TERMINAL_PUNCTUATION = /[.!?:;]$/;
 const WORD_PATTERN = /[A-Za-z][A-Za-z0-9'-]*/g;
 const ACRONYM_PATTERN = /^[A-Z0-9]{2,}$/;
+const TABLE_CAPTION_PATTERN = /^\s*Table\s+\d+[.:]?\s+(.+?)\s*$/i;
 
-interface LineInfo {
-  line: string;
-  offset: number;
+interface HtmlLocationRange {
+  startOffset?: number;
+  endOffset?: number;
 }
 
-interface TableCellInfo {
-  absoluteStart: number;
-  trimmed: string;
-  trimmedStart: number;
+interface HtmlNode {
+  nodeName: string;
+  tagName?: string;
+  value?: string;
+  childNodes?: HtmlNode[];
+  sourceCodeLocation?: {
+    startOffset?: number;
+    endOffset?: number;
+    startTag?: HtmlLocationRange;
+    endTag?: HtmlLocationRange;
+  };
 }
 
 interface TableFinding {
   index: number;
   messageText: string;
+}
+
+interface TextSegment {
+  text: string;
+  start: number;
 }
 
 const stripMarkdown = (text: string): string =>
@@ -36,64 +50,6 @@ const stripMarkdown = (text: string): string =>
 const normalizeText = (text: string): string =>
   stripMarkdown(text).replace(/\s+/g, " ").trim();
 
-const isTableRow = (line: string): boolean => {
-  const normalized = line.trim();
-  const pipeCount = (normalized.match(/\|/g) ?? []).length;
-  return normalized.length >= 3 && pipeCount >= 2;
-};
-
-const splitLines = (source: string): LineInfo[] => {
-  const lines: LineInfo[] = [];
-  const linePattern = /([^\r\n]*)(\r\n|\n|\r|$)/g;
-
-  for (const match of source.matchAll(linePattern)) {
-    const line = match[1];
-    const newline = match[2];
-    const offset = match.index;
-    if (line === "" && newline === "" && lines.length > 0) {
-      break;
-    }
-    lines.push({ line, offset });
-  }
-
-  return lines;
-};
-
-const splitTableCells = (line: string, lineOffset: number): TableCellInfo[] => {
-  const normalized = line.trim();
-  const trimStart = line.length - line.trimStart().length;
-  const hasLeadingPipe = normalized.startsWith("|");
-  const hasTrailingPipe = normalized.endsWith("|");
-  const bodyStart = hasLeadingPipe ? 1 : 0;
-  const bodyEnd = hasTrailingPipe ? normalized.length - 1 : normalized.length;
-
-  const cells: TableCellInfo[] = [];
-  let cellStart = bodyStart;
-  for (let cursor = bodyStart; cursor <= bodyEnd; cursor += 1) {
-    if (cursor === bodyEnd || normalized[cursor] === "|") {
-      const raw = normalized.slice(cellStart, cursor);
-      const trimmed = raw.trim();
-      if (trimmed) {
-        const absoluteStart = lineOffset + trimStart + cellStart;
-        const trimmedStart = raw.indexOf(trimmed);
-        cells.push({
-          absoluteStart,
-          trimmed,
-          trimmedStart: trimmedStart < 0 ? 0 : trimmedStart,
-        });
-      }
-      cellStart = cursor + 1;
-    }
-  }
-
-  return cells;
-};
-
-const isSeparatorRow = (line: string): boolean =>
-  splitTableCells(line, 0).every((cell) =>
-    /^\s*:?-{3,}:?\s*$/.test(cell.trimmed),
-  );
-
 const isSentenceCase = (text: string): boolean => {
   const normalized = normalizeText(text);
   if (!normalized) {
@@ -105,11 +61,10 @@ const isSentenceCase = (text: string): boolean => {
     return true;
   }
 
-  const firstWord = words[0];
+  const firstWord = words[0] ?? "";
   if (!firstWord) {
     return true;
   }
-
   if (/^[a-z]/.test(firstWord)) {
     return false;
   }
@@ -126,88 +81,118 @@ const isSentenceCase = (text: string): boolean => {
   return true;
 };
 
-const inspectPipeTables = (source: string): TableFinding[] => {
-  const findings: TableFinding[] = [];
-  const lines = splitLines(source);
-
-  for (let i = 0; i < lines.length; i += 1) {
-    const current = lines[i];
-    if (!isTableRow(current.line)) {
-      continue;
-    }
-
-    let pointer = i;
-    const block: LineInfo[] = [];
-    while (pointer < lines.length && isTableRow(lines[pointer].line)) {
-      const lineInfo = lines[pointer];
-      block.push(lineInfo);
-      pointer += 1;
-    }
-
-    if (block.length < 2) {
-      i = pointer - 1;
-      continue;
-    }
-
-    const header = block[0];
-    const separator = block[1];
-    if (!isSeparatorRow(separator.line)) {
-      i = pointer - 1;
-      continue;
-    }
-
-    const cells = splitTableCells(header.line, header.offset);
-    for (const cell of cells) {
-      const visible = normalizeText(cell.trimmed);
-      if (!visible) {
-        continue;
-      }
-
-      const sentenceCaseIndex = cell.absoluteStart + cell.trimmedStart;
-      if (!isSentenceCase(visible)) {
-        findings.push({
-          index: sentenceCaseIndex,
-          messageText:
-            "Heuristic check: use sentence case for table headers; avoid title case unless capitalization is required.",
-        });
-      }
-
-      if (HEADER_TERMINAL_PUNCTUATION.test(visible)) {
-        findings.push({
-          index: sentenceCaseIndex + Math.max(0, visible.length - 1),
-          messageText: "Table headers should not end with punctuation.",
-        });
-      }
-    }
-
-    i = pointer - 1;
+const collectTextSegmentsFromRuleNode = (
+  node: GoogleRuleNode,
+  segments: TextSegment[],
+): void => {
+  if (
+    typeof node.value === "string" &&
+    node.value.length > 0 &&
+    Array.isArray(node.range)
+  ) {
+    segments.push({
+      text: node.value,
+      start: node.range[0],
+    });
   }
-
-  return findings;
+  if (!Array.isArray(node.children)) {
+    return;
+  }
+  for (const child of node.children) {
+    collectTextSegmentsFromRuleNode(child, segments);
+  }
 };
 
-const inspectHtmlTableHeaders = (source: string): TableFinding[] => {
-  const findings: TableFinding[] = [];
-  const pattern = /<th\b[^>]*>([\s\S]*?)<\/th>/gi;
+const textInfoFromRuleNode = (
+  node: GoogleRuleNode,
+): TextSegment | undefined => {
+  const segments: TextSegment[] = [];
+  collectTextSegmentsFromRuleNode(node, segments);
+  if (segments.length === 0) {
+    return undefined;
+  }
+  return {
+    text: segments.map((segment) => segment.text).join(" "),
+    start: segments[0].start,
+  };
+};
 
-  for (const match of source.matchAll(pattern)) {
-    const visible = normalizeText(match[1]);
+const getNodeChildrenByType = (
+  node: GoogleRuleNode,
+  type: string,
+): GoogleRuleNode[] => {
+  if (!Array.isArray(node.children)) {
+    return [];
+  }
+  return node.children.filter((child) => child.type === type);
+};
+
+const getHtmlNodeChildren = (node: HtmlNode): HtmlNode[] => {
+  return Array.isArray(node.childNodes) ? node.childNodes : [];
+};
+
+const visitHtmlTree = (
+  node: HtmlNode,
+  visit: (node: HtmlNode) => void,
+): void => {
+  visit(node);
+  for (const child of getHtmlNodeChildren(node)) {
+    visitHtmlTree(child, visit);
+  }
+};
+
+const getHtmlNodeText = (node: HtmlNode): string => {
+  if (node.nodeName === "#text") {
+    return typeof node.value === "string" ? node.value : "";
+  }
+  return getHtmlNodeChildren(node).map(getHtmlNodeText).join("");
+};
+
+const getHtmlNodeStartOffset = (node: HtmlNode): number => {
+  const startTagOffset = node.sourceCodeLocation?.startTag?.startOffset;
+  if (typeof startTagOffset === "number") {
+    return startTagOffset;
+  }
+  const startOffset = node.sourceCodeLocation?.startOffset;
+  if (typeof startOffset === "number") {
+    return startOffset;
+  }
+  return 0;
+};
+
+const inspectMarkdownTableNode = (
+  node: GoogleRuleNode,
+  syntax: GoogleRuleContext["Syntax"],
+): TableFinding[] => {
+  const rows = getNodeChildrenByType(node, syntax.TableRow);
+  if (rows.length === 0) {
+    return [];
+  }
+  const headerRow = rows[0];
+
+  const findings: TableFinding[] = [];
+  const headerCells = getNodeChildrenByType(headerRow, syntax.TableCell);
+  for (const cell of headerCells) {
+    const textInfo = textInfoFromRuleNode(cell);
+    if (!textInfo) {
+      continue;
+    }
+    const visible = normalizeText(textInfo.text);
     if (!visible) {
       continue;
     }
 
-    const index = match.index;
     if (!isSentenceCase(visible)) {
       findings.push({
-        index,
+        index: textInfo.start,
         messageText:
-          "Heuristic check: use sentence case for table headers; avoid title case unless capitalization is required.",
+          "Use sentence case for table headers. In tables, headings should use sentence case.",
       });
     }
 
     if (HEADER_TERMINAL_PUNCTUATION.test(visible)) {
       findings.push({
-        index,
+        index: textInfo.start,
         messageText: "Table headers should not end with punctuation.",
       });
     }
@@ -216,99 +201,134 @@ const inspectHtmlTableHeaders = (source: string): TableFinding[] => {
   return findings;
 };
 
-const inspectTableCaptions = (source: string): TableFinding[] => {
+const inspectHtmlTableNode = (tableNode: HtmlNode): TableFinding[] => {
   const findings: TableFinding[] = [];
 
-  const htmlCaptionPattern = /<caption\b[^>]*>([\s\S]*?)<\/caption>/gi;
-  for (const match of source.matchAll(htmlCaptionPattern)) {
-    const captionText = normalizeText(match[1]).replace(
-      /^Table\s+\d+[.:]?\s*/i,
-      "",
-    );
-    if (!captionText) {
-      continue;
+  visitHtmlTree(tableNode, (node) => {
+    if (node.tagName === "th") {
+      const visible = normalizeText(getHtmlNodeText(node));
+      if (!visible) {
+        return;
+      }
+      if (!isSentenceCase(visible)) {
+        findings.push({
+          index: getHtmlNodeStartOffset(node),
+          messageText:
+            "Use sentence case for table headers. In tables, headings should use sentence case.",
+        });
+      }
+      if (HEADER_TERMINAL_PUNCTUATION.test(visible)) {
+        findings.push({
+          index: getHtmlNodeStartOffset(node),
+          messageText: "Table headers should not end with punctuation.",
+        });
+      }
+      return;
     }
 
-    if (!isSentenceCase(captionText)) {
-      findings.push({
-        index: match.index,
-        messageText: "Heuristic check: use sentence case for table captions.",
-      });
+    if (node.tagName === "caption") {
+      const visible = normalizeText(getHtmlNodeText(node)).replace(
+        /^Table\s+\d+[.:]?\s*/i,
+        "",
+      );
+      if (!visible) {
+        return;
+      }
+      if (!isSentenceCase(visible)) {
+        findings.push({
+          index: getHtmlNodeStartOffset(node),
+          messageText: "Use sentence case for table captions.",
+        });
+      }
     }
-  }
-
-  const markdownCaptionPattern =
-    /^\s*(?:\*\*)?Table\s+\d+[.:]?(?:\*\*)?\s+(.+?)\s*$/gim;
-  for (const match of source.matchAll(markdownCaptionPattern)) {
-    const captionText = normalizeText(match[1]);
-    if (!captionText) {
-      continue;
-    }
-
-    if (!isSentenceCase(captionText)) {
-      findings.push({
-        index: match.index,
-        messageText: "Heuristic check: use sentence case for table captions.",
-      });
-    }
-  }
+  });
 
   return findings;
 };
 
-const report: GoogleRuleReporter = (context) => {
+const inspectHtmlSource = (source: string): TableFinding[] => {
+  if (!/<table\b/i.test(source)) {
+    return [];
+  }
+  const fragment = parseFragment(source, {
+    sourceCodeLocationInfo: true,
+  }) as unknown as HtmlNode;
+  const findings: TableFinding[] = [];
+  visitHtmlTree(fragment, (node) => {
+    if (node.tagName === "table") {
+      findings.push(...inspectHtmlTableNode(node));
+    }
+  });
+  return findings;
+};
+
+const inspectMarkdownCaptionParagraph = (
+  node: GoogleRuleNode,
+  source: string,
+): TableFinding[] => {
+  const normalized = normalizeText(source);
+  const match = TABLE_CAPTION_PATTERN.exec(normalized);
+  if (!match) {
+    return [];
+  }
+  const caption = match[1];
+  if (isSentenceCase(caption)) {
+    return [];
+  }
+  return [
+    {
+      index: 0,
+      messageText: "Use sentence case for table captions.",
+    },
+  ];
+};
+
+const createReporter: GoogleRuleReporter = (context) => {
   const {
     Syntax,
     RuleError,
     report: reportError,
     getSource,
   } = bindRuleContext(context);
-
   const emitted = new Set<string>();
-  const reportFinding = (
-    node: GoogleRuleNode,
-    index: number,
-    messageText: string,
-  ): void => {
-    const key = `${String(node.range[0])}:${String(index)}:${messageText}`;
+
+  const reportFinding = (node: GoogleRuleNode, finding: TableFinding): void => {
+    const key = `${String(node.range[0])}:${String(finding.index)}:${finding.messageText}`;
     if (emitted.has(key)) {
       return;
     }
     emitted.add(key);
-    reportError(node, new RuleError(message(messageText), { index }));
+    reportError(
+      node,
+      new RuleError(message(finding.messageText), { index: finding.index }),
+    );
   };
 
-  const inspectTableSource = (node: GoogleRuleNode, source: string): void => {
-    const findings = [
-      ...inspectPipeTables(source),
-      ...inspectHtmlTableHeaders(source),
-      ...inspectTableCaptions(source),
-    ];
-
+  const reportAll = (node: GoogleRuleNode, findings: TableFinding[]): void => {
     for (const finding of findings) {
-      reportFinding(node, finding.index, finding.messageText);
+      reportFinding(node, finding);
     }
   };
 
   return {
+    [Syntax.Table](node) {
+      reportAll(node, inspectMarkdownTableNode(node, Syntax));
+    },
     [Syntax.Paragraph](node) {
-      inspectTableSource(node, getSource(node));
+      reportAll(node, inspectMarkdownCaptionParagraph(node, getSource(node)));
     },
     [Syntax.Html](node) {
-      inspectTableSource(node, getSource(node));
+      reportAll(node, inspectHtmlSource(getSource(node)));
     },
     [Syntax.HtmlBlock](node) {
-      inspectTableSource(node, getSource(node));
-    },
-    [Syntax.Table](node) {
-      inspectTableSource(node, getSource(node));
+      reportAll(node, inspectHtmlSource(getSource(node)));
     },
   };
 };
 
-const rule = {
-  linter: report,
-  fixer: report,
+const rule: GoogleRuleModule = {
+  linter: createReporter,
+  fixer: createReporter,
 };
 
 export default rule;
